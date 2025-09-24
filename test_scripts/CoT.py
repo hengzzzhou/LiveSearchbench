@@ -4,10 +4,9 @@ Usage:
     python CoT.py data/2025/level2.json --model Qwen14b
 
 Features:
-    - 多线程并行评测
-    - 简单包含式匹配判定正确率
-    - 统一的输出文件命名和结果保存
-    - 支持多模型（含 *search-preview* 与 *deep-research* 特殊分支）
+    - Multi-threaded parallel evaluation.
+    - Simple containment-based accuracy matching.
+    - Standardized output file naming and result saving.
 """
 
 from __future__ import annotations
@@ -20,16 +19,16 @@ import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 from openai import OpenAI
 
 # =============================
 # User Configurable Parameters
 # =============================
-DEFAULT_DATA_PATH = "data/2025/level2.json"
-MODEL_NAME = "Qwen14b"  # 例如: "gpt-4o", "gpt-4o-search-preview", "o3-deep-research"
-OPENAI_BASE_URL = "YOUR_API_BASE_URL"  # e.g. https://api.openai.com/v1/
+DEFAULT_DATA_PATH = ""
+MODEL_NAME = ""  
+OPENAI_BASE_URL = "YOUR_API_BASE_URL"
 OPENAI_API_KEY = "YOUR_API_KEY"
 MAX_THREADS = 4
 MAX_TOKENS = 2048
@@ -45,40 +44,25 @@ client = OpenAI(base_url=OPENAI_BASE_URL, api_key=OPENAI_API_KEY)
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="QA Test Runner (CoT, no search)")
-    parser.add_argument("data", type=str, nargs="?", default=DEFAULT_DATA_PATH, help="测试数据文件路径")
-    parser.add_argument("--model", type=str, default=MODEL_NAME, help="模型名称覆盖默认值")
-    parser.add_argument("--threads", type=int, default=MAX_THREADS, help="并行线程数")
-    parser.add_argument("--temperature", type=float, default=TEMPERATURE, help="采样温度")
-    parser.add_argument("--max-tokens", type=int, default=MAX_TOKENS, help="生成最大 tokens")
+    parser.add_argument("data", type=str, nargs="?", default=DEFAULT_DATA_PATH, help="Path to the test data file")
+    parser.add_argument("--model", type=str, default=MODEL_NAME, help="Model name to override the default")
+    parser.add_argument("--threads", type=int, default=MAX_THREADS, help="Number of parallel threads")
+    parser.add_argument("--temperature", type=float, default=TEMPERATURE, help="Sampling temperature")
+    parser.add_argument("--max-tokens", type=int, default=MAX_TOKENS, help="Maximum tokens to generate")
     return parser.parse_args()
 
 def simple_match(predicted: str, expected: str) -> bool:
-    """简单包含判断（大小写不敏感）。"""
+    """Simple case-insensitive containment check."""
     predicted = predicted.lower().strip()
     expected = expected.lower().strip()
     return expected in predicted
 
 def call_model(messages: List[Dict[str, Any]], *, model_name: str, max_tokens: int, temperature: float) -> Any:
-    """统一的模型调用，含指数退避。"""
+    """Wrapper for model calls with exponential backoff."""
     retry_count = 0
     delay = RETRY_INITIAL_DELAY
     while True:
         try:
-            if "search-preview" in model_name:
-                response = client.chat.completions.create(
-                    model="gpt-4o-search-preview",
-                    web_search_options={},
-                    messages=messages,
-                )
-                return response.choices[0].message
-            if "deep-research" in model_name:
-                response = client.responses.create(
-                    model="o3-deep-research",
-                    input=messages,
-                    background=True,
-                    tools=[{"type": "web_search"}],
-                )
-                return response.output_text
             response = client.chat.completions.create(
                 model=model_name,
                 messages=messages,
@@ -97,7 +81,7 @@ results: List[Dict[str, Any]] = []
 results_lock = threading.Lock()
 correct_count = 0
 correct_count_lock = threading.Lock()
-total_count = 0  # 将在 main 中赋值
+total_count = 0  # Will be assigned in main
 
 def process_qa_item(item_data, *, model_name: str, temperature: float, max_tokens: int, total: int):
     idx, item = item_data
@@ -117,15 +101,9 @@ def process_qa_item(item_data, *, model_name: str, temperature: float, max_token
 
     messages = [{"role": "user", "content": prompt}]
     response = call_model(messages, model_name=model_name, max_tokens=max_tokens, temperature=temperature)
-    search_cnt = 0
 
     if response:
-        if "deep-research" in model_name:
-            content = response
-        else:
-            content = response.content
-            if "search-preview" in model_name:
-                search_cnt = len(getattr(response, "annotations", []) or [])
+        content = response.content
         if "<answer>" in content and "</answer>" in content:
             ans = content[content.find("<answer>") + 8: content.find("</answer>")].strip()
         else:
@@ -136,8 +114,6 @@ def process_qa_item(item_data, *, model_name: str, temperature: float, max_token
     is_correct = simple_match(ans, expected_answer)
     print(f"Model Answer: {ans}")
     print(f"Correct: {'✓' if is_correct else '✗'}")
-    if "search-preview" in model_name:
-        print(f"Search Count: {search_cnt}")
 
     result = {
         "question": question,
@@ -145,8 +121,6 @@ def process_qa_item(item_data, *, model_name: str, temperature: float, max_token
         "model_answer": ans,
         "is_correct": is_correct,
     }
-    if "search-preview" in model_name:
-        result["search_count"] = search_cnt
 
     with results_lock:
         results.append(result)

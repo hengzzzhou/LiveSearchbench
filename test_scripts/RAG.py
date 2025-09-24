@@ -1,16 +1,10 @@
 """Retrieval-Augmented (iterative search) QA runner.
 
-流程概要:
-    1. 以包含 <search> 指令形式提示模型, 若模型返回 <search>query</search> 则执行外部搜索 (Serper)
-    2. 将抓取的前若干 organic 结果格式化注入 <information> 块继续对话
-    3. 循环直至模型给出 <answer>...</answer> 或达最大迭代次数
-    4. 统计正确率并输出详细过程 (含推理与搜索步骤)
-
-改进点:
-    - 集中 CONFIG 配置, CLI 可覆盖关键参数
-    - 统一函数化结构: parse_args / call_model / search / process_qa_item / save_results / main
-    - 去除重复写文件与多余打印
-    - 支持将 MODEL_NAME 设为 "gpt-5" / search-preview / deep-research 分支
+Workflow:
+  1. The model is prompted with instructions to use a <search> tag. If it returns <search>query</search>, an external search is performed (Serper).
+  2. The top organic results are formatted and injected into a <information> block for the next turn.
+  3. This loop continues until the model provides an <answer>...</answer> or the max iteration count is reached.
+  4. Accuracy is calculated, and a detailed log (including reasoning and search steps) is saved.
 """
 
 from __future__ import annotations
@@ -29,45 +23,45 @@ import requests
 from openai import OpenAI
 
 ################################
-# CONFIG (用户可配置参数集中区)
+# CONFIG (User-configurable parameters)
 ################################
-DEFAULT_DATA_PATH = "data/2025/level2.json"
-MODEL_NAME = "gpt-5"  # 可选: gpt-5 / gpt-4o / gpt-4o-search-preview / o3-deep-research / 自定义
+DEFAULT_DATA_PATH = ""
+MODEL_NAME = ""  
 
-# OpenAI (或兼容) 接口配置
+# OpenAI (or compatible) API configuration
 OPENAI_BASE_URL = "YOUR_API_BASE_URL"
 OPENAI_API_KEY = "YOUR_API_KEY"
 
-# 搜索 (Serper) 配置
+# Search (Serper) configuration
 SERPER_API_KEY = "YOUR_SERPER_API_KEY"
 SERPER_ENDPOINT = "https://google.serper.dev/search"
-SERPER_TOP_DOCS = 3  # 取前多少 organic 结果拼接
+SERPER_TOP_DOCS = 3  # Number of top organic results to include
 
-# 生成参数
+# Generation parameters
 MAX_TOKENS = 4096
 TEMPERATURE = 0.7
 MAX_ITERATIONS = 10
 MAX_THREADS = 4
 
-# 重试指数退避
+# Exponential backoff for retries
 RETRY_INITIAL_DELAY = 0.5
 RETRY_MAX_DELAY = 10
 
 ################################
-# Client 初始化
+# Client Initialization
 ################################
 client = OpenAI(base_url=OPENAI_BASE_URL, api_key=OPENAI_API_KEY)
 
 
 def parse_args() -> argparse.Namespace:
         parser = argparse.ArgumentParser(description="QA Test Runner (Iterative Search / RAG)")
-        parser.add_argument("data", type=str, nargs="?", default=DEFAULT_DATA_PATH, help="测试数据文件路径")
-        parser.add_argument("--model", type=str, default=MODEL_NAME, help="模型名称覆盖默认值")
-        parser.add_argument("--threads", type=int, default=MAX_THREADS, help="并行线程数")
-        parser.add_argument("--temperature", type=float, default=TEMPERATURE, help="采样温度")
-        parser.add_argument("--max-tokens", type=int, default=MAX_TOKENS, help="生成最大 tokens")
-        parser.add_argument("--max-iter", type=int, default=MAX_ITERATIONS, help="最大迭代搜索次数")
-        parser.add_argument("--serper-key", type=str, default=SERPER_API_KEY, help="Serper API Key 覆盖")
+        parser.add_argument("data", type=str, nargs="?", default=DEFAULT_DATA_PATH, help="Path to the test data file")
+        parser.add_argument("--model", type=str, default=MODEL_NAME, help="Model name to override the default")
+        parser.add_argument("--threads", type=int, default=MAX_THREADS, help="Number of parallel threads")
+        parser.add_argument("--temperature", type=float, default=TEMPERATURE, help="Sampling temperature")
+        parser.add_argument("--max-tokens", type=int, default=MAX_TOKENS, help="Maximum tokens to generate")
+        parser.add_argument("--max-iter", type=int, default=MAX_ITERATIONS, help="Maximum search iterations")
+        parser.add_argument("--serper-key", type=str, default=SERPER_API_KEY, help="Override for Serper API Key")
         return parser.parse_args()
 
 def get_query(text: str) -> Optional[str]:
@@ -110,21 +104,6 @@ def call_model(messages: List[Dict[str, Any]], *, model_name: str, max_tokens: i
     delay = RETRY_INITIAL_DELAY
     while True:
         try:
-            if "search-preview" in model_name:
-                response = client.chat.completions.create(
-                    model="gpt-4o-search-preview",
-                    web_search_options={},
-                    messages=messages,
-                )
-                return response.choices[0].message.content
-            if "deep-research" in model_name:
-                response = client.responses.create(
-                    model="o3-deep-research",
-                    input=messages,
-                    background=True,
-                    tools=[{"type": "web_search"}],
-                )
-                return response.output_text
             response = client.chat.completions.create(
                 model=model_name,
                 messages=messages,
@@ -143,7 +122,7 @@ results: List[Dict[str, Any]] = []
 results_lock = threading.Lock()
 correct_count = 0
 correct_count_lock = threading.Lock()
-total_count = 0  # 运行时赋值
+total_count = 0  # Assigned at runtime
 
 
 def process_qa_item(item_data, *, model_name: str, temperature: float, max_tokens: int, max_iterations: int, serper_key: str, total: int):
