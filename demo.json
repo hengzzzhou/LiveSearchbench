@@ -1,0 +1,212 @@
+[
+  {
+    "question": "In which mountain range is the Astakhov Glacier located?",
+    "answer": "Bowers Mountains",
+    "level": 1,
+    "year": 2021,
+    "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q4810517 wdt:P4552 ?object .\n}"
+  },
+  {
+    "question": "Who composed the music for the film Anmol Ghadi?",
+    "answer": "Naushad",
+    "level": 1,
+    "year": 2021,
+    "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q4766155 wdt:P86 ?object .\n}"
+  },
+  {
+    "question": "What was the cause of Obren Joksimović's death?",
+    "answer": "COVID-19",
+    "level": 1,
+    "year": 2021,
+    "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3348270 wdt:P509 ?object .\n}"
+  },
+  {
+    "question": "On which continent are the Lashly Mountains located?",
+    "answer": "Antarctica",
+    "level": 1,
+    "year": 2021,
+    "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6493234 wdt:P30 ?object .\n}"
+  },
+  {
+    "question": "At which stadium does IK Oddevold play its home matches?",
+    "answer": "Rimnersvallen",
+    "level": 1,
+    "year": 2021,
+    "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1483030 wdt:P115 ?object .\n}"
+  },
+  {
+    "question": "Which traditional dance originated in Bolivia and is widely performed in Chile?",
+    "answer": "Diablada",
+    "level": 2,
+    "year": 2021,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P495 wd:Q750 . ?entity wdt:P17 wd:Q298 .\n}"
+  },
+  {
+    "question": "Who has written for The American Conservative and was a candidate in the 1994 California gubernatorial election?",
+    "answer": "Ron Unz",
+    "level": 2,
+    "year": 2021,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P6872 wd:Q159664 . ?entity wdt:P3602 wd:Q5021259 .\n}"
+  },
+  {
+    "question": "Which U.S. waterway passes through the states of Alabama, Florida, and Mississippi?",
+    "answer": "Gulf Intracoastal Waterway",
+    "level": 2,
+    "year": 2021,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P131 wd:Q173 . ?entity wdt:P17 wd:Q30 . ?entity wdt:P131 wd:Q812 . ?entity wdt:P131 wd:Q1494 . ?entity wdt:P31 wd:Q1267889 .\n}"
+  },
+  {
+    "question": "Which American artist and member of the Fugees is known for soul and contemporary R&B?",
+    "answer": "Lauryn Hill",
+    "level": 2,
+    "year": 2021,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P27 wd:Q30 . ?entity wdt:P136 wd:Q131272 . ?entity wdt:P136 wd:Q850412 . ?entity wdt:P463 wd:Q159329 .\n}"
+  },
+  {
+    "question": "Which religion encompasses the Bhakti movement and emphasizes the practice of bhakti?",
+    "answer": "Hinduism",
+    "level": 2,
+    "year": 2021,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P361 wd:Q2914617 . ?entity wdt:P1552 wd:Q507417 .\n}"
+  },
+  {
+    "question": "Which Mexican state, famous for mariachi and tequila, is home to a scenic lake that shares its name with a lively town popular with expatriates?",
+    "answer": "Jalisco",
+    "level": 3,
+    "year": 2021,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P31 wd:Q15149663 . ?entity wdt:P150 wd:Q5260647 .\n}"
+  },
+  {
+    "question": "Which film pairs an actress known for a role exploring racial identity with a director who transitioned to screenwriting, in a story set in 1920s Harlem?",
+    "answer": "Passing",
+    "level": 3,
+    "year": 2021,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P161 wd:Q3453629 . ?entity wdt:P58 wd:Q230534 .\n}"
+  },
+  {
+    "question": "Which cultural community is officially recognized in the Czech Republic, has historical ties to Ukraine (once led by an actor-turned-president), and also has a presence in Hungary, famed for its hearty goulash?",
+    "answer": "Rusyns",
+    "level": 3,
+    "year": 2021,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P17 wd:Q213 . ?entity wdt:P17 wd:Q159 . ?entity wdt:P17 wd:Q212 . ?entity wdt:P17 wd:Q681964 .\n}"
+  },
+  {
+    "question": "Which Nobel laureate is known for seminal contributions to the theory of disordered systems and stochastic growth processes?",
+    "answer": "Giorgio Parisi",
+    "level": 3,
+    "year": 2021,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P101 wd:Q6369122 . ?entity wdt:P101 wd:Q1490646 .\n}"
+  },
+  {
+    "question": "Which artist, a key member of a Grammy-winning trio that covered a Roberta Flack classic, channels Harlem Renaissance poetry in her soul and contemporary R&B, and hails from the birthplace of jazz?",
+    "answer": "Lauryn Hill",
+    "level": 3,
+    "year": 2021,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P27 wd:Q30 . ?entity wdt:P136 wd:Q131272 . ?entity wdt:P136 wd:Q850412 . ?entity wdt:P463 wd:Q159329 .\n}"
+  },
+  {
+    "question": "In which borough (give its full official name) is Trinity Hospice located?",
+    "answer": "London Borough of Lambeth",
+    "level": 1,
+    "year": 2025,
+    "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q7842847 wdt:P131 ?object .\n}"
+  },
+  {
+    "question": "What is Romuald Montézuma Gendron's birthplace?",
+    "answer": "Montmorency",
+    "level": 1,
+    "year": 2025,
+    "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3441278 wdt:P19 ?object .\n}"
+  },
+  {
+    "question": "Where did Jürgen Schornagel pass away?",
+    "answer": "Wester-Ohrstedt",
+    "level": 1,
+    "year": 2025,
+    "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1647736 wdt:P20 ?object .\n}"
+  },
+  {
+    "question": "What is the name of Iorwerth Peate's child?",
+    "answer": "Dafydd Peate",
+    "level": 1,
+    "year": 2025,
+    "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3402172 wdt:P40 ?object .\n}"
+  },
+  {
+    "question": "Which railway company operates Fukuonji Station?",
+    "answer": "Iyotetsu",
+    "level": 1,
+    "year": 2025,
+    "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q11594481 wdt:P137 ?object .\n}"
+  },
+  {
+    "question": "Which military unit has the California Military Department as its parent organization and took part in the Mexican–American War?",
+    "answer": "California State Guard",
+    "level": 2,
+    "year": 2025,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P749 wd:Q5020692 . ?entity wdt:P607 wd:Q6683 .\n}"
+  },
+  {
+    "question": "Which butter-based confection was invented by Jan Wedel?",
+    "answer": "ptasie mleczko",
+    "level": 2,
+    "year": 2025,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P186 wd:Q34172 . ?entity wdt:P61 wd:Q100334190 .\n}"
+  },
+  {
+    "question": "Which borough shares borders with Munhall, Braddock, Whitaker, and Swissvale?",
+    "answer": "Rankin",
+    "level": 2,
+    "year": 2025,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P47 wd:Q659120 . ?entity wdt:P47 wd:Q1132991 . ?entity wdt:P47 wd:Q1185782 . ?entity wdt:P47 wd:Q1180427 .\n}"
+  },
+  {
+    "question": "Which author, born in Cincinnati and affiliated with the University at Buffalo, has been nominated for the Arthur C. Clarke Award?",
+    "answer": "Nnedi Okorafor",
+    "level": 2,
+    "year": 2025,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P19 wd:Q43196 . ?entity wdt:P108 wd:Q681025 . ?entity wdt:P1411 wd:Q708830 .\n}"
+  },
+  {
+    "question": "Which rugby league player played for the Hunter Mariners, South Sydney Rabbitohs, and St. George Dragons?",
+    "answer": "Nick Zisti",
+    "level": 2,
+    "year": 2025,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P54 wd:Q3143357 . ?entity wdt:P54 wd:Q3325289 . ?entity wdt:P54 wd:Q3495256 .\n}"
+  },
+  {
+    "question": "Which award, associated with the night and the macabre, has honored both a leading satirical illustrator and a perennial speculative-fiction shortlist favorite?",
+    "answer": "Bram Stoker Award for Lifetime Achievement",
+    "level": 3,
+    "year": 2025,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1346 wd:Q462714 . ?entity wdt:P1346 wd:Q7613696 .\n}"
+  },
+  {
+    "question": "Which athletic conference includes a football program from a university in DeKalb, Illinois, and a university whose mascot is an antelope?",
+    "answer": "Mountain West Conference",
+    "level": 3,
+    "year": 2025,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P527 wd:Q7058416 . ?entity wdt:P527 wd:Q5594342 .\n}"
+  },
+  {
+    "question": "Which U.S. river has a tributary in Pocahontas County and another named Price Run?",
+    "answer": "Greenbrier River",
+    "level": 3,
+    "year": 2025,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P974 wd:Q25025334 . ?entity wdt:P974 wd:Q25025397 .\n}"
+  },
+  {
+    "question": "Which metropolitan area that overlaps a U.S. region includes a notable location in Cook County?",
+    "answer": "Chicago metropolitan area",
+    "level": 3,
+    "year": 2025,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P3179 wd:Q134718040 . ?entity wdt:P7153 wd:Q386961 .\n}"
+  },
+  {
+    "question": "Which BCP-300 bus satellite was associated with both a spacecraft decommissioning and a contract award?",
+    "answer": "NEXTSat",
+    "level": 3,
+    "year": 2025,
+    "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P707 wd:Q106457215 . ?entity wdt:P793 wd:Q119055914 . ?entity wdt:P793 wd:Q5165664 .\n}"
+  }
+]
