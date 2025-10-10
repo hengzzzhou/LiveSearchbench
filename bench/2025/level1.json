@@ -1,0 +1,3469 @@
+{
+  "metadata": {
+    "source_file": "level1_passed_at_least_one.json",
+    "failed_questions_source": "output/unknown/level1_remaining_after_pass4_20250913_155327.json",
+    "total_extracted": 83,
+    "extraction_method": "question_text_match",
+    "description": "83 questions that answered 0 times correctly out of 4 attempts",
+    "restored_timestamp": "20250914",
+    "total_questions": 150,
+    "composition": {
+      "failed_4_times": 83,
+      "correct_answers": 17,
+      "sampled_incorrect": 50
+    },
+    "deduplication_note": "Avoided 4 overlapping questions between level1_passed_at_least_one.json and final/2025/level1.json"
+  },
+  "qa_pairs": [
+    {
+      "question": "Which borough, in its full official name, is Trinity Hospice located in?",
+      "answer": "London Borough of Lambeth",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Trinity Hospice",
+          "located in the administrative territorial entity",
+          "London Borough of Lambeth"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q7842847 wdt:P131 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q7842847",
+        "subject_label": "Trinity Hospice",
+        "predicate_id": "P131",
+        "predicate_label": "located in the administrative territorial entity",
+        "object_id": "Q202059",
+        "object_label": "London Borough of Lambeth"
+      }
+    },
+    {
+      "question": "Which country is Juan Báez a citizen of?",
+      "answer": "United States",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Juan Báez",
+          "country of citizenship",
+          "United States"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3810782 wdt:P27 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q3810782",
+        "subject_label": "Juan Báez",
+        "predicate_id": "P27",
+        "predicate_label": "country of citizenship",
+        "object_id": "Q30",
+        "object_label": "United States"
+      }
+    },
+    {
+      "question": "Which Wikimedia project has the Ministry of Human Resources on its focus list?",
+      "answer": "Govdirectory",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Ministry of Human Resources",
+          "on focus list of Wikimedia project",
+          "Govdirectory"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6867162 wdt:P5008 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6867162",
+        "subject_label": "Ministry of Human Resources",
+        "predicate_id": "P5008",
+        "predicate_label": "on focus list of Wikimedia project",
+        "object_id": "Q108109790",
+        "object_label": "Govdirectory"
+      }
+    },
+    {
+      "question": "Which league did soccer player Michael Collins play in?",
+      "answer": "North American Soccer League",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Michael Collins",
+          "league",
+          "North American Soccer League"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6829387 wdt:P118 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6829387",
+        "subject_label": "Michael Collins",
+        "predicate_id": "P118",
+        "predicate_label": "league",
+        "object_id": "Q1095556",
+        "object_label": "North American Soccer League"
+      }
+    },
+    {
+      "question": "Which league did Les Wilson play in?",
+      "answer": "North American Soccer League",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Les Wilson",
+          "league",
+          "North American Soccer League"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6530106 wdt:P118 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6530106",
+        "subject_label": "Les Wilson",
+        "predicate_id": "P118",
+        "predicate_label": "league",
+        "object_id": "Q1095556",
+        "object_label": "North American Soccer League"
+      }
+    },
+    {
+      "question": "Which league did Alberto Baeza play in?",
+      "answer": "North American Soccer League",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Alberto Baeza",
+          "league",
+          "North American Soccer League"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q2639318 wdt:P118 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q2639318",
+        "subject_label": "Alberto Baeza",
+        "predicate_id": "P118",
+        "predicate_label": "league",
+        "object_id": "Q1095556",
+        "object_label": "North American Soccer League"
+      }
+    },
+    {
+      "question": "What group was Thomas Holme part of?",
+      "answer": "Valiant Sixty",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Thomas Holme",
+          "part of",
+          "Valiant Sixty"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q7790767 wdt:P361 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q7790767",
+        "subject_label": "Thomas Holme",
+        "predicate_id": "P361",
+        "predicate_label": "part of",
+        "object_id": "Q7911644",
+        "object_label": "Valiant Sixty"
+      }
+    },
+    {
+      "question": "Was “The Long Way” released on cassette, vinyl, or compact disc?",
+      "answer": "compact disc",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "The Long Way",
+          "distribution format",
+          "compact disc"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q7748281 wdt:P437 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q7748281",
+        "subject_label": "The Long Way",
+        "predicate_id": "P437",
+        "predicate_label": "distribution format",
+        "object_id": "Q34467",
+        "object_label": "compact disc"
+      }
+    },
+    {
+      "question": "What kind of creative work is \"Fear of the Dark\"?",
+      "answer": "novel",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Fear of the Dark",
+          "form of creative work",
+          "novel"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q5439402 wdt:P7937 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q5439402",
+        "subject_label": "Fear of the Dark",
+        "predicate_id": "P7937",
+        "predicate_label": "form of creative work",
+        "object_id": "Q8261",
+        "object_label": "novel"
+      }
+    },
+    {
+      "question": "Where was Romuald Montézuma Gendron born?",
+      "answer": "Montmorency",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Romuald Montézuma Gendron",
+          "place of birth",
+          "Montmorency"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3441278 wdt:P19 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q3441278",
+        "subject_label": "Romuald Montézuma Gendron",
+        "predicate_id": "P19",
+        "predicate_label": "place of birth",
+        "object_id": "Q25395102",
+        "object_label": "Montmorency"
+      }
+    },
+    {
+      "question": "Where was Andrea Sisson born?",
+      "answer": "Cleves",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Andrea Sisson",
+          "place of birth",
+          "Cleves"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q19663216 wdt:P19 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q19663216",
+        "subject_label": "Andrea Sisson",
+        "predicate_id": "P19",
+        "predicate_label": "place of birth",
+        "object_id": "Q667720",
+        "object_label": "Cleves"
+      }
+    },
+    {
+      "question": "In which city was Juan Alfonso Enríquez de Cabrera born?",
+      "answer": "Medina de Rioseco",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Juan Alfonso Enríquez de Cabrera",
+          "place of birth",
+          "Medina de Rioseco"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3766371 wdt:P19 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q3766371",
+        "subject_label": "Juan Alfonso Enríquez de Cabrera",
+        "predicate_id": "P19",
+        "predicate_label": "place of birth",
+        "object_id": "Q1648251",
+        "object_label": "Medina de Rioseco"
+      }
+    },
+    {
+      "question": "Where was Petar Kralj born?",
+      "answer": "Roviška",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Petar Kralj",
+          "place of birth",
+          "Roviška"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1566279 wdt:P19 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1566279",
+        "subject_label": "Petar Kralj",
+        "predicate_id": "P19",
+        "predicate_label": "place of birth",
+        "object_id": "Q2656681",
+        "object_label": "Roviška"
+      }
+    },
+    {
+      "question": "Which competition did Erik Håker compete in?",
+      "answer": "FIS Alpine Ski World Cup",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Erik Håker",
+          "participant in",
+          "FIS Alpine Ski World Cup"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1353980 wdt:P1344 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1353980",
+        "subject_label": "Erik Håker",
+        "predicate_id": "P1344",
+        "predicate_label": "participant in",
+        "object_id": "Q982",
+        "object_label": "FIS Alpine Ski World Cup"
+      }
+    },
+    {
+      "question": "Who did Haruo Wakō work for?",
+      "answer": "Wakamatsu Production",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Haruo Wakō",
+          "employer",
+          "Wakamatsu Production"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q5675981 wdt:P108 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q5675981",
+        "subject_label": "Haruo Wakō",
+        "predicate_id": "P108",
+        "predicate_label": "employer",
+        "object_id": "Q11616378",
+        "object_label": "Wakamatsu Production"
+      }
+    },
+    {
+      "question": "What sport does Ryan Scott play?",
+      "answer": "wheelchair rugby",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Ryan Scott",
+          "sport",
+          "wheelchair rugby"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q7384496 wdt:P641 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q7384496",
+        "subject_label": "Ryan Scott",
+        "predicate_id": "P641",
+        "predicate_label": "sport",
+        "object_id": "Q844443",
+        "object_label": "wheelchair rugby"
+      }
+    },
+    {
+      "question": "Where did Jürgen Schornagel die?",
+      "answer": "Wester-Ohrstedt",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Jürgen Schornagel",
+          "place of death",
+          "Wester-Ohrstedt"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1647736 wdt:P20 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1647736",
+        "subject_label": "Jürgen Schornagel",
+        "predicate_id": "P20",
+        "predicate_label": "place of death",
+        "object_id": "Q572982",
+        "object_label": "Wester-Ohrstedt"
+      }
+    },
+    {
+      "question": "In which city did Malini Fonseka die?",
+      "answer": "Colombo",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Malini Fonseka",
+          "place of death",
+          "Colombo"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6743748 wdt:P20 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6743748",
+        "subject_label": "Malini Fonseka",
+        "predicate_id": "P20",
+        "predicate_label": "place of death",
+        "object_id": "Q35381",
+        "object_label": "Colombo"
+      }
+    },
+    {
+      "question": "Where did Stere Adamache die?",
+      "answer": "Crișan",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Stere Adamache",
+          "place of death",
+          "Crișan"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1377714 wdt:P20 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1377714",
+        "subject_label": "Stere Adamache",
+        "predicate_id": "P20",
+        "predicate_label": "place of death",
+        "object_id": "Q16427771",
+        "object_label": "Crișan"
+      }
+    },
+    {
+      "question": "Where did Kurt von Priesdorff die?",
+      "answer": "Naumburg",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Kurt von Priesdorff",
+          "place of death",
+          "Naumburg"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1253676 wdt:P20 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1253676",
+        "subject_label": "Kurt von Priesdorff",
+        "predicate_id": "P20",
+        "predicate_label": "place of death",
+        "object_id": "Q15986",
+        "object_label": "Naumburg"
+      }
+    },
+    {
+      "question": "What's the name of Iorwerth Peate's child?",
+      "answer": "Dafydd Peate",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Iorwerth Peate",
+          "child",
+          "Dafydd Peate"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3402172 wdt:P40 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q3402172",
+        "subject_label": "Iorwerth Peate",
+        "predicate_id": "P40",
+        "predicate_label": "child",
+        "object_id": "Q135256010",
+        "object_label": "Dafydd Peate"
+      }
+    },
+    {
+      "question": "Which company operates Fukuonji Station?",
+      "answer": "Iyotetsu",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Fukuonji Station",
+          "operator",
+          "Iyotetsu"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q11594481 wdt:P137 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q11594481",
+        "subject_label": "Fukuonji Station",
+        "predicate_id": "P137",
+        "predicate_label": "operator",
+        "object_id": "Q3138970",
+        "object_label": "Iyotetsu"
+      }
+    },
+    {
+      "question": "Who is William Molson's sibling?",
+      "answer": "John Molson Jr.",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "William Molson",
+          "sibling",
+          "John Molson Jr."
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3568829 wdt:P3373 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q3568829",
+        "subject_label": "William Molson",
+        "predicate_id": "P3373",
+        "predicate_label": "sibling",
+        "object_id": "Q6249114",
+        "object_label": "John Molson Jr."
+      }
+    },
+    {
+      "question": "Who produced the movie Virasat?",
+      "answer": "Mushir Alam",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Virasat",
+          "producer",
+          "Mushir Alam"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q7933652 wdt:P162 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q7933652",
+        "subject_label": "Virasat",
+        "predicate_id": "P162",
+        "predicate_label": "producer",
+        "object_id": "Q104830603",
+        "object_label": "Mushir Alam"
+      }
+    },
+    {
+      "question": "Where is Tristram Dalton buried?",
+      "answer": "St. Paul's Episcopal Churchyard",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Tristram Dalton",
+          "place of burial",
+          "St. Paul's Episcopal Churchyard"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1365791 wdt:P119 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1365791",
+        "subject_label": "Tristram Dalton",
+        "predicate_id": "P119",
+        "predicate_label": "place of burial",
+        "object_id": "Q134619013",
+        "object_label": "St. Paul's Episcopal Churchyard"
+      }
+    },
+    {
+      "question": "Where is L. Birge Harrison buried?",
+      "answer": "Woodstock Cemetery",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "L. Birge Harrison",
+          "place of burial",
+          "Woodstock Cemetery"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6456364 wdt:P119 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6456364",
+        "subject_label": "L. Birge Harrison",
+        "predicate_id": "P119",
+        "predicate_label": "place of burial",
+        "object_id": "Q89550249",
+        "object_label": "Woodstock Cemetery"
+      }
+    },
+    {
+      "question": "Where is Terra Santa headquartered?",
+      "answer": "Nova Mutum",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Terra Santa",
+          "headquarters location",
+          "Nova Mutum"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q2923931 wdt:P159 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q2923931",
+        "subject_label": "Terra Santa",
+        "predicate_id": "P159",
+        "predicate_label": "headquarters location",
+        "object_id": "Q263731",
+        "object_label": "Nova Mutum"
+      }
+    },
+    {
+      "question": "Which street does Walton Street connect with?",
+      "answer": "Little Clarendon Street",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Walton Street",
+          "connects with",
+          "Little Clarendon Street"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q7966784 wdt:P2789 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q7966784",
+        "subject_label": "Walton Street",
+        "predicate_id": "P2789",
+        "predicate_label": "connects with",
+        "object_id": "Q6649582",
+        "object_label": "Little Clarendon Street"
+      }
+    },
+    {
+      "question": "What record label released \"1992-1998\"?",
+      "answer": "The Numero Group",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "1992-1998",
+          "record label",
+          "The Numero Group"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q18713500 wdt:P264 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q18713500",
+        "subject_label": "1992-1998",
+        "predicate_id": "P264",
+        "predicate_label": "record label",
+        "object_id": "Q7754493",
+        "object_label": "The Numero Group"
+      }
+    },
+    {
+      "question": "Who owns Ushibuchi Station?",
+      "answer": "Iyotetsu",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Ushibuchi Station",
+          "owned by",
+          "Iyotetsu"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q11570181 wdt:P127 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q11570181",
+        "subject_label": "Ushibuchi Station",
+        "predicate_id": "P127",
+        "predicate_label": "owned by",
+        "object_id": "Q3138970",
+        "object_label": "Iyotetsu"
+      }
+    },
+    {
+      "question": "Who owns Ehime University Hospital Station?",
+      "answer": "Iyotetsu",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Ehime Univ. Hospital Station",
+          "owned by",
+          "Iyotetsu"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q11493498 wdt:P127 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q11493498",
+        "subject_label": "Ehime Univ. Hospital Station",
+        "predicate_id": "P127",
+        "predicate_label": "owned by",
+        "object_id": "Q3138970",
+        "object_label": "Iyotetsu"
+      }
+    },
+    {
+      "question": "Who owns WJRT-TV?",
+      "answer": "Allen Media Group",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "WJRT-TV",
+          "owned by",
+          "Allen Media Group"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3564703 wdt:P127 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q3564703",
+        "subject_label": "WJRT-TV",
+        "predicate_id": "P127",
+        "predicate_label": "owned by",
+        "object_id": "Q5380468",
+        "object_label": "Allen Media Group"
+      }
+    },
+    {
+      "question": "Who owns Masaki Station?",
+      "answer": "Iyotetsu",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Masaki Station",
+          "owned by",
+          "Iyotetsu"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q11529329 wdt:P127 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q11529329",
+        "subject_label": "Masaki Station",
+        "predicate_id": "P127",
+        "predicate_label": "owned by",
+        "object_id": "Q3138970",
+        "object_label": "Iyotetsu"
+      }
+    },
+    {
+      "question": "Where did Seaborne Davies live?",
+      "answer": "Pwllheli",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Seaborne Davies",
+          "residence",
+          "Pwllheli"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q7440197 wdt:P551 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q7440197",
+        "subject_label": "Seaborne Davies",
+        "predicate_id": "P551",
+        "predicate_label": "residence",
+        "object_id": "Q1025821",
+        "object_label": "Pwllheli"
+      }
+    },
+    {
+      "question": "How would you classify Emmeline regarding diacritical marks?",
+      "answer": "name without diacritical marks",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Emmeline",
+          "has quality",
+          "name without diacritical marks"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q5373423 wdt:P1552 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q5373423",
+        "subject_label": "Emmeline",
+        "predicate_id": "P1552",
+        "predicate_label": "has quality",
+        "object_id": "Q89410507",
+        "object_label": "name without diacritical marks"
+      }
+    },
+    {
+      "question": "Which political party is Marat Täjin a member of?",
+      "answer": "Amanat",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Marat Täjin",
+          "member of political party",
+          "Amanat"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1377798 wdt:P102 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1377798",
+        "subject_label": "Marat Täjin",
+        "predicate_id": "P102",
+        "predicate_label": "member of political party",
+        "object_id": "Q111077075",
+        "object_label": "Amanat"
+      }
+    },
+    {
+      "question": "What was Prince Alexander of Kartli’s social class?",
+      "answer": "noble",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Prince Alexander of Kartli",
+          "social classification",
+          "noble"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q4718121 wdt:P3716 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q4718121",
+        "subject_label": "Prince Alexander of Kartli",
+        "predicate_id": "P3716",
+        "predicate_label": "social classification",
+        "object_id": "Q16744001",
+        "object_label": "noble"
+      }
+    },
+    {
+      "question": "What was Shamadavle Dadiani’s social class?",
+      "answer": "noble",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Shamadavle Dadiani",
+          "social classification",
+          "noble"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q12870566 wdt:P3716 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q12870566",
+        "subject_label": "Shamadavle Dadiani",
+        "predicate_id": "P3716",
+        "predicate_label": "social classification",
+        "object_id": "Q16744001",
+        "object_label": "noble"
+      }
+    },
+    {
+      "question": "What was Vakhtang I Gurieli’s social class?",
+      "answer": "noble",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Vakhtang I Gurieli",
+          "social classification",
+          "noble"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q16369075 wdt:P3716 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q16369075",
+        "subject_label": "Vakhtang I Gurieli",
+        "predicate_id": "P3716",
+        "predicate_label": "social classification",
+        "object_id": "Q16744001",
+        "object_label": "noble"
+      }
+    },
+    {
+      "question": "What was Demetrius the Hypatos’s social class?",
+      "answer": "noble",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Demetrius the Hypatos",
+          "social classification",
+          "noble"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3651985 wdt:P3716 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q3651985",
+        "subject_label": "Demetrius the Hypatos",
+        "predicate_id": "P3716",
+        "predicate_label": "social classification",
+        "object_id": "Q16744001",
+        "object_label": "noble"
+      }
+    },
+    {
+      "question": "What is Dimitri Amilakhvari’s social classification?",
+      "answer": "noble",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Dimitri Amilakhvari",
+          "social classification",
+          "noble"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q2735867 wdt:P3716 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q2735867",
+        "subject_label": "Dimitri Amilakhvari",
+        "predicate_id": "P3716",
+        "predicate_label": "social classification",
+        "object_id": "Q16744001",
+        "object_label": "noble"
+      }
+    },
+    {
+      "question": "Who is the chairperson of the French National Olympic and Sports Committee?",
+      "answer": "Amélie Oudéa-Castéra",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "French National Olympic and Sports Committee",
+          "chairperson",
+          "Amélie Oudéa-Castéra"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1650165 wdt:P488 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1650165",
+        "subject_label": "French National Olympic and Sports Committee",
+        "predicate_id": "P488",
+        "predicate_label": "chairperson",
+        "object_id": "Q33104697",
+        "object_label": "Amélie Oudéa-Castéra"
+      }
+    },
+    {
+      "question": "Who is the chairperson of the Roman Catholic Archdiocese of Hobart?",
+      "answer": "Anthony John Ireland",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Roman Catholic Archdiocese of Hobart",
+          "chairperson",
+          "Anthony John Ireland"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1364615 wdt:P488 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1364615",
+        "subject_label": "Roman Catholic Archdiocese of Hobart",
+        "predicate_id": "P488",
+        "predicate_label": "chairperson",
+        "object_id": "Q106832858",
+        "object_label": "Anthony John Ireland"
+      }
+    },
+    {
+      "question": "Who is the chairperson of the Roman Catholic Territorial Prelature of Mission de France?",
+      "answer": "Dominique Blanchet",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Roman Catholic Territorial Prelature of Mission de France",
+          "chairperson",
+          "Dominique Blanchet"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1566434 wdt:P488 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1566434",
+        "subject_label": "Roman Catholic Territorial Prelature of Mission de France",
+        "predicate_id": "P488",
+        "predicate_label": "chairperson",
+        "object_id": "Q19960432",
+        "object_label": "Dominique Blanchet"
+      }
+    },
+    {
+      "question": "What is Chasoň named after?",
+      "answer": "Sun",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Chasoň",
+          "named after",
+          "Sun"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1147427 wdt:P138 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1147427",
+        "subject_label": "Chasoň",
+        "predicate_id": "P138",
+        "predicate_label": "named after",
+        "object_id": "Q525",
+        "object_label": "Sun"
+      }
+    },
+    {
+      "question": "Who is the chairperson of the Roman Catholic Archdiocese of Mobile?",
+      "answer": "Mark Steven Rivituso",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Roman Catholic Archdiocese of Mobile",
+          "chairperson",
+          "Mark Steven Rivituso"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1365034 wdt:P488 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1365034",
+        "subject_label": "Roman Catholic Archdiocese of Mobile",
+        "predicate_id": "P488",
+        "predicate_label": "chairperson",
+        "object_id": "Q28912397",
+        "object_label": "Mark Steven Rivituso"
+      }
+    },
+    {
+      "question": "Which electoral constituency is Bistrenci in?",
+      "answer": "Constituency 4",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Bistrenci",
+          "associated electoral district",
+          "Constituency 4"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q2904791 wdt:P7938 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q2904791",
+        "subject_label": "Bistrenci",
+        "predicate_id": "P7938",
+        "predicate_label": "associated electoral district",
+        "object_id": "Q12906680",
+        "object_label": "Constituency 4"
+      }
+    },
+    {
+      "question": "Which electoral constituency is Čelevec in?",
+      "answer": "Constituency 4",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Čelevec",
+          "associated electoral district",
+          "Constituency 4"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3135774 wdt:P7938 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q3135774",
+        "subject_label": "Čelevec",
+        "predicate_id": "P7938",
+        "predicate_label": "associated electoral district",
+        "object_id": "Q12906680",
+        "object_label": "Constituency 4"
+      }
+    },
+    {
+      "question": "What was Hannah Atkins’s cause of death?",
+      "answer": "natural causes",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Hannah Atkins",
+          "manner of death",
+          "natural causes"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q5648785 wdt:P1196 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q5648785",
+        "subject_label": "Hannah Atkins",
+        "predicate_id": "P1196",
+        "predicate_label": "manner of death",
+        "object_id": "Q3739104",
+        "object_label": "natural causes"
+      }
+    },
+    {
+      "question": "Which mountain range is Melungtse part of?",
+      "answer": "Rolwaling Himal",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Melungtse",
+          "mountain range",
+          "Rolwaling Himal"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1421508 wdt:P4552 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1421508",
+        "subject_label": "Melungtse",
+        "predicate_id": "P4552",
+        "predicate_label": "mountain range",
+        "object_id": "Q7361436",
+        "object_label": "Rolwaling Himal"
+      }
+    },
+    {
+      "question": "In which German city does the State Oil Company of the Azerbaijan Republic have an office?",
+      "answer": "Frankfurt",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "State Oil Company of Azerbaijan Republic",
+          "work location",
+          "Frankfurt"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1622293 wdt:P937 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1622293",
+        "subject_label": "State Oil Company of Azerbaijan Republic",
+        "predicate_id": "P937",
+        "predicate_label": "work location",
+        "object_id": "Q1794",
+        "object_label": "Frankfurt"
+      }
+    },
+    {
+      "question": "What is Sanave Thomas’s native language?",
+      "answer": "English",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Sanave Thomas",
+          "native language",
+          "English"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q2220266 wdt:P103 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q2220266",
+        "subject_label": "Sanave Thomas",
+        "predicate_id": "P103",
+        "predicate_label": "native language",
+        "object_id": "Q1860",
+        "object_label": "English"
+      }
+    },
+    {
+      "question": "Which Polish club did Edward Iordănescu coach?",
+      "answer": "Legia Warsaw",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Edward Iordănescu",
+          "coach of sports team",
+          "Legia Warsaw"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q5340416 wdt:P6087 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q5340416",
+        "subject_label": "Edward Iordănescu",
+        "predicate_id": "P6087",
+        "predicate_label": "coach of sports team",
+        "object_id": "Q193749",
+        "object_label": "Legia Warsaw"
+      }
+    },
+    {
+      "question": "Who is Melissa Hortman married to?",
+      "answer": "Mark Hortman",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Melissa Hortman",
+          "spouse",
+          "Mark Hortman"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6812738 wdt:P26 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6812738",
+        "subject_label": "Melissa Hortman",
+        "predicate_id": "P26",
+        "predicate_label": "spouse",
+        "object_id": "Q134895131",
+        "object_label": "Mark Hortman"
+      }
+    },
+    {
+      "question": "What culture does Parsi cuisine belong to?",
+      "answer": "Parsi culture",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Parsi cuisine",
+          "culture",
+          "Parsi culture"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q7139975 wdt:P2596 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q7139975",
+        "subject_label": "Parsi cuisine",
+        "predicate_id": "P2596",
+        "predicate_label": "culture",
+        "object_id": "Q12437711",
+        "object_label": "Parsi culture"
+      }
+    },
+    {
+      "question": "What is Shamil Qala's heritage designation?",
+      "answer": "cultural heritage monument in Azerbaijan",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Shamil Qala",
+          "heritage designation",
+          "cultural heritage monument in Azerbaijan"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q12844152 wdt:P1435 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q12844152",
+        "subject_label": "Shamil Qala",
+        "predicate_id": "P1435",
+        "predicate_label": "heritage designation",
+        "object_id": "Q117197960",
+        "object_label": "cultural heritage monument in Azerbaijan"
+      }
+    },
+    {
+      "question": "What is Riverfront station’s commuter rail system?",
+      "answer": "WeGo Star",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Riverfront station",
+          "highway system",
+          "WeGo Star"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6966995 wdt:P16 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6966995",
+        "subject_label": "Riverfront station",
+        "predicate_id": "P16",
+        "predicate_label": "highway system",
+        "object_id": "Q6941488",
+        "object_label": "WeGo Star"
+      }
+    },
+    {
+      "question": "Who founded Isenhagen Abbey?",
+      "answer": "Agnes of Landsberg",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Isenhagen Abbey",
+          "founded by",
+          "Agnes of Landsberg"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1775396 wdt:P112 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1775396",
+        "subject_label": "Isenhagen Abbey",
+        "predicate_id": "P112",
+        "predicate_label": "founded by",
+        "object_id": "Q110630",
+        "object_label": "Agnes of Landsberg"
+      }
+    },
+    {
+      "question": "To whom did Gilbert Crispin swear allegiance?",
+      "answer": "Henry I of England",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Gilbert Crispin",
+          "allegiance",
+          "Henry I of England"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1524158 wdt:P945 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1524158",
+        "subject_label": "Gilbert Crispin",
+        "predicate_id": "P945",
+        "predicate_label": "allegiance",
+        "object_id": "Q101384",
+        "object_label": "Henry I of England"
+      }
+    },
+    {
+      "question": "Who is the father of Mubarak al Fadil al Mahdi?",
+      "answer": "Abdallah al-Fadil al-Mahdi",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Mubarak al Fadil al Mahdi",
+          "father",
+          "Abdallah al-Fadil al-Mahdi"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6930870 wdt:P22 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6930870",
+        "subject_label": "Mubarak al Fadil al Mahdi",
+        "predicate_id": "P22",
+        "predicate_label": "father",
+        "object_id": "Q122571314",
+        "object_label": "Abdallah al-Fadil al-Mahdi"
+      }
+    },
+    {
+      "question": "Who was Henri-Edgar Lavigueur's father?",
+      "answer": "Célestin Lavigueur",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Henri-Edgar Lavigueur",
+          "father",
+          "Célestin Lavigueur"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3130364 wdt:P22 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q3130364",
+        "subject_label": "Henri-Edgar Lavigueur",
+        "predicate_id": "P22",
+        "predicate_label": "father",
+        "object_id": "Q3010086",
+        "object_label": "Célestin Lavigueur"
+      }
+    },
+    {
+      "question": "Who is Samuel Emile Harvey's father?",
+      "answer": "Robert Harvey",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Samuel Emile Harvey",
+          "father",
+          "Robert Harvey"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q7411330 wdt:P22 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q7411330",
+        "subject_label": "Samuel Emile Harvey",
+        "predicate_id": "P22",
+        "predicate_label": "father",
+        "object_id": "Q7345301",
+        "object_label": "Robert Harvey"
+      }
+    },
+    {
+      "question": "Who is the head coach of Panserraikos F.C.?",
+      "answer": "Cristiano Bacci",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Panserraikos F.C.",
+          "head coach",
+          "Cristiano Bacci"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1417287 wdt:P286 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1417287",
+        "subject_label": "Panserraikos F.C.",
+        "predicate_id": "P286",
+        "predicate_label": "head coach",
+        "object_id": "Q5186291",
+        "object_label": "Cristiano Bacci"
+      }
+    },
+    {
+      "question": "Who is the head coach of the Orix Buffaloes?",
+      "answer": "Mamoru Kishida",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Orix Buffaloes",
+          "head coach",
+          "Mamoru Kishida"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1328038 wdt:P286 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1328038",
+        "subject_label": "Orix Buffaloes",
+        "predicate_id": "P286",
+        "predicate_label": "head coach",
+        "object_id": "Q867037",
+        "object_label": "Mamoru Kishida"
+      }
+    },
+    {
+      "question": "Who is the head coach of FC Petrolul Ploiești?",
+      "answer": "Liviu Ciobotariu",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "FC Petrolul Ploiești",
+          "head coach",
+          "Liviu Ciobotariu"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1322550 wdt:P286 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1322550",
+        "subject_label": "FC Petrolul Ploiești",
+        "predicate_id": "P286",
+        "predicate_label": "head coach",
+        "object_id": "Q926512",
+        "object_label": "Liviu Ciobotariu"
+      }
+    },
+    {
+      "question": "Who is the head coach of Gala Fairydean F.C.?",
+      "answer": "Martin Scott",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Gala Fairydean F.C.",
+          "head coach",
+          "Martin Scott"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q5517754 wdt:P286 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q5517754",
+        "subject_label": "Gala Fairydean F.C.",
+        "predicate_id": "P286",
+        "predicate_label": "head coach",
+        "object_id": "Q6776563",
+        "object_label": "Martin Scott"
+      }
+    },
+    {
+      "question": "Who’s the head coach of the Tohoku Rakuten Golden Eagles?",
+      "answer": "Hajime Miki",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Tohoku Rakuten Golden Eagles",
+          "head coach",
+          "Hajime Miki"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1375077 wdt:P286 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1375077",
+        "subject_label": "Tohoku Rakuten Golden Eagles",
+        "predicate_id": "P286",
+        "predicate_label": "head coach",
+        "object_id": "Q11355696",
+        "object_label": "Hajime Miki"
+      }
+    },
+    {
+      "question": "Which connecting line serves Osborn/Central Avenue?",
+      "answer": "B Line",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Osborn/Central Avenue",
+          "connecting line",
+          "B Line"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q11108138 wdt:P81 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q11108138",
+        "subject_label": "Osborn/Central Avenue",
+        "predicate_id": "P81",
+        "predicate_label": "connecting line",
+        "object_id": "Q120629715",
+        "object_label": "B Line"
+      }
+    },
+    {
+      "question": "Which transit line connects Encanto Boulevard and Central Avenue?",
+      "answer": "B Line",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Encanto Boulevard and Central Avenue",
+          "connecting line",
+          "B Line"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q14466736 wdt:P81 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q14466736",
+        "subject_label": "Encanto Boulevard and Central Avenue",
+        "predicate_id": "P81",
+        "predicate_label": "connecting line",
+        "object_id": "Q120629715",
+        "object_label": "B Line"
+      }
+    },
+    {
+      "question": "Which lake is located on the Black River?",
+      "answer": "Black Lake",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Black River",
+          "lakes on river",
+          "Black Lake"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q4921614 wdt:P469 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q4921614",
+        "subject_label": "Black River",
+        "predicate_id": "P469",
+        "predicate_label": "lakes on river",
+        "object_id": "Q4921142",
+        "object_label": "Black Lake"
+      }
+    },
+    {
+      "question": "Who was the architect of the Michigan Boulevard Garden Apartments?",
+      "answer": "Ernest Grunsfeld Jr",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Michigan Boulevard Garden Apartments",
+          "architect",
+          "Ernest Grunsfeld Jr"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6837465 wdt:P84 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6837465",
+        "subject_label": "Michigan Boulevard Garden Apartments",
+        "predicate_id": "P84",
+        "predicate_label": "architect",
+        "object_id": "Q19476130",
+        "object_label": "Ernest Grunsfeld Jr"
+      }
+    },
+    {
+      "question": "Who was the architect of the Buenos Aires City Legislature Palace?",
+      "answer": "Eduardo Le Monnier",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Buenos Aires City Legislature Palace",
+          "architect",
+          "Eduardo Le Monnier"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q4833194 wdt:P84 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q4833194",
+        "subject_label": "Buenos Aires City Legislature Palace",
+        "predicate_id": "P84",
+        "predicate_label": "architect",
+        "object_id": "Q5819361",
+        "object_label": "Eduardo Le Monnier"
+      }
+    },
+    {
+      "question": "Which church is St Volodymyr's Cathedral part of?",
+      "answer": "Orthodox Church of Ukraine",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "St Volodymyr's Cathedral",
+          "diocese",
+          "Orthodox Church of Ukraine"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1417441 wdt:P708 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1417441",
+        "subject_label": "St Volodymyr's Cathedral",
+        "predicate_id": "P708",
+        "predicate_label": "diocese",
+        "object_id": "Q59493657",
+        "object_label": "Orthodox Church of Ukraine"
+      }
+    },
+    {
+      "question": "Who was the architect of the Government Offices on Great George Street?",
+      "answer": "Henry Tanner",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Government Offices Great George Street",
+          "architect",
+          "Henry Tanner"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q5589008 wdt:P84 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q5589008",
+        "subject_label": "Government Offices Great George Street",
+        "predicate_id": "P84",
+        "predicate_label": "architect",
+        "object_id": "Q18750646",
+        "object_label": "Henry Tanner"
+      }
+    },
+    {
+      "question": "Who influenced John James Waterston?",
+      "answer": "John Leslie",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "John James Waterston",
+          "influenced by",
+          "John Leslie"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1700613 wdt:P737 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1700613",
+        "subject_label": "John James Waterston",
+        "predicate_id": "P737",
+        "predicate_label": "influenced by",
+        "object_id": "Q918958",
+        "object_label": "John Leslie"
+      }
+    },
+    {
+      "question": "Which musician influenced Michael Hurley?",
+      "answer": "Lead Belly",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Michael Hurley",
+          "influenced by",
+          "Lead Belly"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q5817598 wdt:P737 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q5817598",
+        "subject_label": "Michael Hurley",
+        "predicate_id": "P737",
+        "predicate_label": "influenced by",
+        "object_id": "Q314310",
+        "object_label": "Lead Belly"
+      }
+    },
+    {
+      "question": "What is Mohammad Pakpour’s military rank?",
+      "answer": "major general",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Mohammad Pakpour",
+          "military rank",
+          "major general"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q4342368 wdt:P410 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q4342368",
+        "subject_label": "Mohammad Pakpour",
+        "predicate_id": "P410",
+        "predicate_label": "military rank",
+        "object_id": "Q157148",
+        "object_label": "major general"
+      }
+    },
+    {
+      "question": "What company does Rodda Paint own?",
+      "answer": "Miller Paint",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Rodda Paint",
+          "owner of",
+          "Miller Paint"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q7356461 wdt:P1830 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q7356461",
+        "subject_label": "Rodda Paint",
+        "predicate_id": "P1830",
+        "predicate_label": "owner of",
+        "object_id": "Q110543288",
+        "object_label": "Miller Paint"
+      }
+    },
+    {
+      "question": "Which theater chain does CJ CGV own?",
+      "answer": "CGV Cinemas",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "CJ CGV",
+          "owner of",
+          "CGV Cinemas"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q5012261 wdt:P1830 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q5012261",
+        "subject_label": "CJ CGV",
+        "predicate_id": "P1830",
+        "predicate_label": "owner of",
+        "object_id": "Q135400010",
+        "object_label": "CGV Cinemas"
+      }
+    },
+    {
+      "question": "Which island is Hope Place on?",
+      "answer": "East Falkland",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Hope Place",
+          "located in/on physical feature",
+          "East Falkland"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q5899418 wdt:P706 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q5899418",
+        "subject_label": "Hope Place",
+        "predicate_id": "P706",
+        "predicate_label": "located in/on physical feature",
+        "object_id": "Q642226",
+        "object_label": "East Falkland"
+      }
+    },
+    {
+      "question": "What language is the surname \"Jena\" used in?",
+      "answer": "Odia",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Jena",
+          "language of work or name",
+          "Odia"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q16864313 wdt:P407 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q16864313",
+        "subject_label": "Jena",
+        "predicate_id": "P407",
+        "predicate_label": "language of work or name",
+        "object_id": "Q33810",
+        "object_label": "Odia"
+      }
+    },
+    {
+      "question": "In which country did the Siege of Privas take place?",
+      "answer": "France",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Siege of Privas",
+          "country",
+          "France"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3486002 wdt:P17 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q3486002",
+        "subject_label": "Siege of Privas",
+        "predicate_id": "P17",
+        "predicate_label": "country",
+        "object_id": "Q142",
+        "object_label": "France"
+      }
+    },
+    {
+      "question": "What country is Bancroft Middle School in?",
+      "answer": "United States",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Bancroft Middle School",
+          "country",
+          "United States"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q4854161 wdt:P17 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q4854161",
+        "subject_label": "Bancroft Middle School",
+        "predicate_id": "P17",
+        "predicate_label": "country",
+        "object_id": "Q30",
+        "object_label": "United States"
+      }
+    },
+    {
+      "question": "Which country was Louis of Anhalt-Köthen a citizen of?",
+      "answer": "Germany",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Louis of Anhalt-Köthen",
+          "country of citizenship",
+          "Germany"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1786986 wdt:P27 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1786986",
+        "subject_label": "Louis of Anhalt-Köthen",
+        "predicate_id": "P27",
+        "predicate_label": "country of citizenship",
+        "object_id": "Q183",
+        "object_label": "Germany"
+      }
+    },
+    {
+      "question": "Where was Ios Teper born?",
+      "answer": "Odesa",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Ios Teper",
+          "place of birth",
+          "Odesa"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q11808023 wdt:P19 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q11808023",
+        "subject_label": "Ios Teper",
+        "predicate_id": "P19",
+        "predicate_label": "place of birth",
+        "object_id": "Q1874",
+        "object_label": "Odesa"
+      }
+    },
+    {
+      "question": "Where is Alan J. Dixon buried?",
+      "answer": "Lake View Memorial Gardens",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Alan J. Dixon",
+          "place of burial",
+          "Lake View Memorial Gardens"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1886056 wdt:P119 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1886056",
+        "subject_label": "Alan J. Dixon",
+        "predicate_id": "P119",
+        "predicate_label": "place of burial",
+        "object_id": "Q117446645",
+        "object_label": "Lake View Memorial Gardens"
+      }
+    },
+    {
+      "question": "In which historic county is Treath located?",
+      "answer": "Cornwall",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Treath",
+          "historic county",
+          "Cornwall"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q7836859 wdt:P7959 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q7836859",
+        "subject_label": "Treath",
+        "predicate_id": "P7959",
+        "predicate_label": "historic county",
+        "object_id": "Q23148",
+        "object_label": "Cornwall"
+      }
+    },
+    {
+      "question": "Who is Marty Papazian married to?",
+      "answer": "Marina Benedict",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Marty Papazian",
+          "spouse",
+          "Marina Benedict"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6777518 wdt:P26 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6777518",
+        "subject_label": "Marty Papazian",
+        "predicate_id": "P26",
+        "predicate_label": "spouse",
+        "object_id": "Q11832231",
+        "object_label": "Marina Benedict"
+      }
+    },
+    {
+      "question": "Who's the head coach of Panserraikos F.C.?",
+      "answer": "Cristiano Bacci",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Panserraikos F.C.",
+          "head coach",
+          "Cristiano Bacci"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1417287 wdt:P286 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1417287",
+        "subject_label": "Panserraikos F.C.",
+        "predicate_id": "P286",
+        "predicate_label": "head coach",
+        "object_id": "Q5186291",
+        "object_label": "Cristiano Bacci"
+      }
+    },
+    {
+      "question": "What type of literature uses constrained writing?",
+      "answer": "potential literature",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "constrained writing",
+          "used by",
+          "potential literature"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q2999042 wdt:P1535 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q2999042",
+        "subject_label": "constrained writing",
+        "predicate_id": "P1535",
+        "predicate_label": "used by",
+        "object_id": "Q2106408",
+        "object_label": "potential literature"
+      }
+    },
+    {
+      "question": "What sparked the Siachen conflict?",
+      "answer": "Operation Meghdoot",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Siachen conflict",
+          "has cause",
+          "Operation Meghdoot"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q2000527 wdt:P828 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q2000527",
+        "subject_label": "Siachen conflict",
+        "predicate_id": "P828",
+        "predicate_label": "has cause",
+        "object_id": "Q3445917",
+        "object_label": "Operation Meghdoot"
+      }
+    },
+    {
+      "question": "Who was the director of photography for \"La Prochaine fois je viserai le cœur\"?",
+      "answer": "Thomas Hardmeier",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "La Prochaine fois je viserai le cœur",
+          "director of photography",
+          "Thomas Hardmeier"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q17632327 wdt:P344 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q17632327",
+        "subject_label": "La Prochaine fois je viserai le cœur",
+        "predicate_id": "P344",
+        "predicate_label": "director of photography",
+        "object_id": "Q2424522",
+        "object_label": "Thomas Hardmeier"
+      }
+    },
+    {
+      "question": "What is the official color of the University of Health and Allied Sciences?",
+      "answer": "white",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "University of Health and Allied Sciences",
+          "color",
+          "white"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q16734216 wdt:P462 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q16734216",
+        "subject_label": "University of Health and Allied Sciences",
+        "predicate_id": "P462",
+        "predicate_label": "color",
+        "object_id": "Q23444",
+        "object_label": "white"
+      }
+    },
+    {
+      "question": "What type of wing configuration does the Tupolev I-4 have?",
+      "answer": "sesquiplane",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Tupolev I-4",
+          "wing configuration",
+          "sesquiplane"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1491654 wdt:P1654 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1491654",
+        "subject_label": "Tupolev I-4",
+        "predicate_id": "P1654",
+        "predicate_label": "wing configuration",
+        "object_id": "Q3480586",
+        "object_label": "sesquiplane"
+      }
+    },
+    {
+      "question": "Who is the costume designer for Augustine?",
+      "answer": "Pascaline Chavanne",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Augustine",
+          "costume designer",
+          "Pascaline Chavanne"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q2871675 wdt:P2515 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q2871675",
+        "subject_label": "Augustine",
+        "predicate_id": "P2515",
+        "predicate_label": "costume designer",
+        "object_id": "Q21334430",
+        "object_label": "Pascaline Chavanne"
+      }
+    },
+    {
+      "question": "Who was the referee for the George Foreman vs. Tommy Morrison fight?",
+      "answer": "Mills Lane",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "George Foreman vs. Tommy Morrison",
+          "referee",
+          "Mills Lane"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q16992285 wdt:P1652 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q16992285",
+        "subject_label": "George Foreman vs. Tommy Morrison",
+        "predicate_id": "P1652",
+        "predicate_label": "referee",
+        "object_id": "Q324197",
+        "object_label": "Mills Lane"
+      }
+    },
+    {
+      "question": "Where was \"La pasión de Isabela\" filmed?",
+      "answer": "Mexico City",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "La pasión de Isabela",
+          "filming location",
+          "Mexico City"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q5967756 wdt:P915 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q5967756",
+        "subject_label": "La pasión de Isabela",
+        "predicate_id": "P915",
+        "predicate_label": "filming location",
+        "object_id": "Q1489",
+        "object_label": "Mexico City"
+      }
+    },
+    {
+      "question": "Who commissioned Fort Carlos III?",
+      "answer": "Spanish Empire",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Fort Carlos III",
+          "commissioned by",
+          "Spanish Empire"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q16931149 wdt:P88 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q16931149",
+        "subject_label": "Fort Carlos III",
+        "predicate_id": "P88",
+        "predicate_label": "commissioned by",
+        "object_id": "Q80702",
+        "object_label": "Spanish Empire"
+      }
+    },
+    {
+      "question": "Who is the head of government in Alfauir?",
+      "answer": "José Juan Bataller Rodríguez",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Alfauir",
+          "head of government",
+          "José Juan Bataller Rodríguez"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1917880 wdt:P6 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1917880",
+        "subject_label": "Alfauir",
+        "predicate_id": "P6",
+        "predicate_label": "head of government",
+        "object_id": "Q135451068",
+        "object_label": "José Juan Bataller Rodríguez"
+      }
+    },
+    {
+      "question": "What is the film rating of The Ninth Circle according to FSK?",
+      "answer": "FSK 12",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "The Ninth Circle",
+          "FSK film rating",
+          "FSK 12"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1632388 wdt:P1981 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1632388",
+        "subject_label": "The Ninth Circle",
+        "predicate_id": "P1981",
+        "predicate_label": "FSK film rating",
+        "object_id": "Q20644796",
+        "object_label": "FSK 12"
+      }
+    },
+    {
+      "question": "Is Zazpikaleak/Casco Viejo Station equipped for wheelchair access?",
+      "answer": "wheelchair accessible",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Zazpikaleak/Casco Viejo Station",
+          "wheelchair accessibility",
+          "wheelchair accessible"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3752228 wdt:P2846 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q3752228",
+        "subject_label": "Zazpikaleak/Casco Viejo Station",
+        "predicate_id": "P2846",
+        "predicate_label": "wheelchair accessibility",
+        "object_id": "Q24192067",
+        "object_label": "wheelchair accessible"
+      }
+    },
+    {
+      "question": "Where does the Little Indian Sioux River originate?",
+      "answer": "Otter Lake",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Little Indian Sioux River",
+          "origin of the watercourse",
+          "Otter Lake"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6650419 wdt:P885 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6650419",
+        "subject_label": "Little Indian Sioux River",
+        "predicate_id": "P885",
+        "predicate_label": "origin of the watercourse",
+        "object_id": "Q33296330",
+        "object_label": "Otter Lake"
+      }
+    },
+    {
+      "question": "Who commissioned the St. Margarethen Chapel?",
+      "answer": "Placidus Brunschwiler",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "St. Margarethen Chapel",
+          "commissioned by",
+          "Placidus Brunschwiler"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1728434 wdt:P88 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1728434",
+        "subject_label": "St. Margarethen Chapel",
+        "predicate_id": "P88",
+        "predicate_label": "commissioned by",
+        "object_id": "Q96270027",
+        "object_label": "Placidus Brunschwiler"
+      }
+    },
+    {
+      "question": "In which military branch did Raïs Hamidou serve?",
+      "answer": "Ottoman Navy",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Raïs Hamidou",
+          "military branch",
+          "Ottoman Navy"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1399623 wdt:P241 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1399623",
+        "subject_label": "Raïs Hamidou",
+        "predicate_id": "P241",
+        "predicate_label": "military branch",
+        "object_id": "Q1062125",
+        "object_label": "Ottoman Navy"
+      }
+    },
+    {
+      "question": "What is the main category of WNBA expansion draft history?",
+      "answer": "Category:WNBA expansion draft",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "WNBA expansion draft history",
+          "topic's main category",
+          "Category:WNBA expansion draft"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q7953244 wdt:P910 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q7953244",
+        "subject_label": "WNBA expansion draft history",
+        "predicate_id": "P910",
+        "predicate_label": "topic's main category",
+        "object_id": "Q135099822",
+        "object_label": "Category:WNBA expansion draft"
+      }
+    },
+    {
+      "question": "Where is the University of Hawaiʻi at Mānoa located?",
+      "answer": "Urban Honolulu",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "University of Hawaiʻi at Mānoa",
+          "located in the statistical territorial entity",
+          "Urban Honolulu"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q2000129 wdt:P8138 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q2000129",
+        "subject_label": "University of Hawaiʻi at Mānoa",
+        "predicate_id": "P8138",
+        "predicate_label": "located in the statistical territorial entity",
+        "object_id": "Q5693026",
+        "object_label": "Urban Honolulu"
+      }
+    },
+    {
+      "question": "Who is credited with inventing Benedictine?",
+      "answer": "Jennie C. Benedict",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Benedictine",
+          "discoverer or inventor",
+          "Jennie C. Benedict"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q16840256 wdt:P61 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q16840256",
+        "subject_label": "Benedictine",
+        "predicate_id": "P61",
+        "predicate_label": "discoverer or inventor",
+        "object_id": "Q135496516",
+        "object_label": "Jennie C. Benedict"
+      }
+    },
+    {
+      "question": "What is the parent taxon of Monstersauria?",
+      "answer": "Neoanguimorpha",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Monstersauria",
+          "parent taxon",
+          "Neoanguimorpha"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6902929 wdt:P171 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6902929",
+        "subject_label": "Monstersauria",
+        "predicate_id": "P171",
+        "predicate_label": "parent taxon",
+        "object_id": "Q21231332",
+        "object_label": "Neoanguimorpha"
+      }
+    },
+    {
+      "question": "Is Klaus Raffeiner right or left-handed?",
+      "answer": "right-handedness",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Klaus Raffeiner",
+          "playing hand",
+          "right-handedness"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1745590 wdt:P741 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1745590",
+        "subject_label": "Klaus Raffeiner",
+        "predicate_id": "P741",
+        "predicate_label": "playing hand",
+        "object_id": "Q3039938",
+        "object_label": "right-handedness"
+      }
+    },
+    {
+      "question": "What real animal is the bake-danuki a fictional analog of?",
+      "answer": "Nyctereutes",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "bake-danuki",
+          "fictional analog of",
+          "Nyctereutes"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1771860 wdt:P1074 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1771860",
+        "subject_label": "bake-danuki",
+        "predicate_id": "P1074",
+        "predicate_label": "fictional analog of",
+        "object_id": "Q2900104",
+        "object_label": "Nyctereutes"
+      }
+    },
+    {
+      "question": "Who was the production designer for French Provincial?",
+      "answer": "Philippe Galland",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "French Provincial",
+          "production designer",
+          "Philippe Galland"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3492401 wdt:P2554 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q3492401",
+        "subject_label": "French Provincial",
+        "predicate_id": "P2554",
+        "predicate_label": "production designer",
+        "object_id": "Q3379868",
+        "object_label": "Philippe Galland"
+      }
+    },
+    {
+      "question": "What type of undercarriage does the Boeing 737 Next Generation have?",
+      "answer": "retractable tricycle gear",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Boeing 737 Next Generation",
+          "undercarriage",
+          "retractable tricycle gear"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1084919 wdt:P1637 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1084919",
+        "subject_label": "Boeing 737 Next Generation",
+        "predicate_id": "P1637",
+        "predicate_label": "undercarriage",
+        "object_id": "Q18683433",
+        "object_label": "retractable tricycle gear"
+      }
+    },
+    {
+      "question": "Who developed B II Sausewind?",
+      "answer": "Siegfried Günter",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "B II Sausewind",
+          "developer",
+          "Siegfried Günter"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1019304 wdt:P178 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1019304",
+        "subject_label": "B II Sausewind",
+        "predicate_id": "P178",
+        "predicate_label": "developer",
+        "object_id": "Q69767",
+        "object_label": "Siegfried Günter"
+      }
+    },
+    {
+      "question": "What artistic movement is Raffaello Sorbi associated with?",
+      "answer": "Filippinism",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Raffaello Sorbi",
+          "movement",
+          "Filippinism"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3929275 wdt:P135 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q3929275",
+        "subject_label": "Raffaello Sorbi",
+        "predicate_id": "P135",
+        "predicate_label": "movement",
+        "object_id": "Q107297812",
+        "object_label": "Filippinism"
+      }
+    },
+    {
+      "question": "What's the RARS rating for Despair?",
+      "answer": "16+",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Despair",
+          "RARS rating",
+          "16+"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1962376 wdt:P2637 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1962376",
+        "subject_label": "Despair",
+        "predicate_id": "P2637",
+        "predicate_label": "RARS rating",
+        "object_id": "Q23308563",
+        "object_label": "16+"
+      }
+    },
+    {
+      "question": "When is the epoch date for 15436 Dexius?",
+      "answer": "May 5 2025",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "15436 Dexius",
+          "epoch",
+          "May 5 2025"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1480753 wdt:P6259 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1480753",
+        "subject_label": "15436 Dexius",
+        "predicate_id": "P6259",
+        "predicate_label": "epoch",
+        "object_id": "Q69307527",
+        "object_label": "May 5 2025"
+      }
+    },
+    {
+      "question": "Where was the Piaggio P.9 originally developed?",
+      "answer": "Kingdom of Italy",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Piaggio P.9",
+          "country of origin",
+          "Kingdom of Italy"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q7190026 wdt:P495 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q7190026",
+        "subject_label": "Piaggio P.9",
+        "predicate_id": "P495",
+        "predicate_label": "country of origin",
+        "object_id": "Q172579",
+        "object_label": "Kingdom of Italy"
+      }
+    },
+    {
+      "question": "Where did Gazi Hüseyin Pasha pass away?",
+      "answer": "Constantinople",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Gazi Hüseyin Pasha",
+          "place of death",
+          "Constantinople"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3827158 wdt:P20 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q3827158",
+        "subject_label": "Gazi Hüseyin Pasha",
+        "predicate_id": "P20",
+        "predicate_label": "place of death",
+        "object_id": "Q16869",
+        "object_label": "Constantinople"
+      }
+    },
+    {
+      "question": "Is Baishinji Station currently operational?",
+      "answer": "in use",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Baishinji Station",
+          "state of use",
+          "in use"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q11538554 wdt:P5817 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q11538554",
+        "subject_label": "Baishinji Station",
+        "predicate_id": "P5817",
+        "predicate_label": "state of use",
+        "object_id": "Q55654238",
+        "object_label": "in use"
+      }
+    },
+    {
+      "question": "Who wrote the Atma Shatakam?",
+      "answer": "Ādi Shankara",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Atma Shatakam",
+          "author",
+          "Ādi Shankara"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q2869521 wdt:P50 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q2869521",
+        "subject_label": "Atma Shatakam",
+        "predicate_id": "P50",
+        "predicate_label": "author",
+        "object_id": "Q180967",
+        "object_label": "Ādi Shankara"
+      }
+    },
+    {
+      "question": "Which parent organization did the 85th Landwehr Division belong to?",
+      "answer": "Naval Corps",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "85th Landwehr Division",
+          "parent organization",
+          "Naval Corps"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q4644874 wdt:P749 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q4644874",
+        "subject_label": "85th Landwehr Division",
+        "predicate_id": "P749",
+        "predicate_label": "parent organization",
+        "object_id": "Q6981797",
+        "object_label": "Naval Corps"
+      }
+    },
+    {
+      "question": "Who organizes the Uzbekistan Cup?",
+      "answer": "Uzbekistan Professional Football League Organization",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Uzbekistan Cup",
+          "organizer",
+          "Uzbekistan Professional Football League Organization"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1508046 wdt:P664 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1508046",
+        "subject_label": "Uzbekistan Cup",
+        "predicate_id": "P664",
+        "predicate_label": "organizer",
+        "object_id": "Q24255864",
+        "object_label": "Uzbekistan Professional Football League Organization"
+      }
+    },
+    {
+      "question": "What is the parent taxon of Oerane?",
+      "answer": "Erionotini",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Oerane",
+          "parent taxon",
+          "Erionotini"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1763858 wdt:P171 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1763858",
+        "subject_label": "Oerane",
+        "predicate_id": "P171",
+        "predicate_label": "parent taxon",
+        "object_id": "Q2842160",
+        "object_label": "Erionotini"
+      }
+    },
+    {
+      "question": "What type of undercarriage does the Bombardier CRJ100/200 have?",
+      "answer": "retractable tricycle gear",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Bombardier CRJ100/200",
+          "undercarriage",
+          "retractable tricycle gear"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3000403 wdt:P1637 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q3000403",
+        "subject_label": "Bombardier CRJ100/200",
+        "predicate_id": "P1637",
+        "predicate_label": "undercarriage",
+        "object_id": "Q18683433",
+        "object_label": "retractable tricycle gear"
+      }
+    },
+    {
+      "question": "Who was the film editor for Pirates?",
+      "answer": "Joey Pulgadas",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Pirates",
+          "film editor",
+          "Joey Pulgadas"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1538902 wdt:P1040 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1538902",
+        "subject_label": "Pirates",
+        "predicate_id": "P1040",
+        "predicate_label": "film editor",
+        "object_id": "Q134985976",
+        "object_label": "Joey Pulgadas"
+      }
+    },
+    {
+      "question": "What type of cuisine do Crozets de Savoie belong to?",
+      "answer": "French cuisine",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Crozets de Savoie",
+          "cuisine",
+          "French cuisine"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3005487 wdt:P2012 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q3005487",
+        "subject_label": "Crozets de Savoie",
+        "predicate_id": "P2012",
+        "predicate_label": "cuisine",
+        "object_id": "Q6661",
+        "object_label": "French cuisine"
+      }
+    },
+    {
+      "question": "Is Nicole Schaller right or left-handed?",
+      "answer": "right-handedness",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Nicole Schaller",
+          "playing hand",
+          "right-handedness"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1359559 wdt:P741 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1359559",
+        "subject_label": "Nicole Schaller",
+        "predicate_id": "P741",
+        "predicate_label": "playing hand",
+        "object_id": "Q3039938",
+        "object_label": "right-handedness"
+      }
+    },
+    {
+      "question": "Who owns Nokian Tyres?",
+      "answer": "Bridgestone",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Nokian Tyres",
+          "owned by",
+          "Bridgestone"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1481634 wdt:P127 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1481634",
+        "subject_label": "Nokian Tyres",
+        "predicate_id": "P127",
+        "predicate_label": "owned by",
+        "object_id": "Q179433",
+        "object_label": "Bridgestone"
+      }
+    },
+    {
+      "question": "Where does Jean-Guy Trépanier live?",
+      "answer": "Mont-Saint-Hilaire",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Jean-Guy Trépanier",
+          "residence",
+          "Mont-Saint-Hilaire"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6169324 wdt:P551 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6169324",
+        "subject_label": "Jean-Guy Trépanier",
+        "predicate_id": "P551",
+        "predicate_label": "residence",
+        "object_id": "Q139406",
+        "object_label": "Mont-Saint-Hilaire"
+      }
+    },
+    {
+      "question": "What was the Libyan resistance movement opposing?",
+      "answer": "Italian colonization of Libya",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Libyan resistance movement",
+          "in opposition to",
+          "Italian colonization of Libya"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6542946 wdt:P5004 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6542946",
+        "subject_label": "Libyan resistance movement",
+        "predicate_id": "P5004",
+        "predicate_label": "in opposition to",
+        "object_id": "Q4166328",
+        "object_label": "Italian colonization of Libya"
+      }
+    },
+    {
+      "question": "What religion does Nawaf Ghazaleh follow?",
+      "answer": "Druzism",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Nawaf Ghazaleh",
+          "religion",
+          "Druzism"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6982820 wdt:P140 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6982820",
+        "subject_label": "Nawaf Ghazaleh",
+        "predicate_id": "P140",
+        "predicate_label": "religion",
+        "object_id": "Q20945640",
+        "object_label": "Druzism"
+      }
+    },
+    {
+      "question": "What culture does the Arch of Caracalla belong to?",
+      "answer": "Ancient Rome",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Arch of Caracalla",
+          "culture",
+          "Ancient Rome"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1952148 wdt:P2596 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1952148",
+        "subject_label": "Arch of Caracalla",
+        "predicate_id": "P2596",
+        "predicate_label": "culture",
+        "object_id": "Q1747689",
+        "object_label": "Ancient Rome"
+      }
+    },
+    {
+      "question": "Who was the referee for the Riddick Bowe vs. Larry Donald fight?",
+      "answer": "Mills Lane",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Riddick Bowe vs. Larry Donald",
+          "referee",
+          "Mills Lane"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q16968593 wdt:P1652 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q16968593",
+        "subject_label": "Riddick Bowe vs. Larry Donald",
+        "predicate_id": "P1652",
+        "predicate_label": "referee",
+        "object_id": "Q324197",
+        "object_label": "Mills Lane"
+      }
+    },
+    {
+      "question": "Which school district is Maui High School part of?",
+      "answer": "Hawaii State Department of Education",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Maui High School",
+          "school district",
+          "Hawaii State Department of Education"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6792375 wdt:P5353 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6792375",
+        "subject_label": "Maui High School",
+        "predicate_id": "P5353",
+        "predicate_label": "school district",
+        "object_id": "Q597671",
+        "object_label": "Hawaii State Department of Education"
+      }
+    },
+    {
+      "question": "What heritage designation does the Liverpool Metropolitan Cathedral have?",
+      "answer": "Grade I listed building",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Liverpool Metropolitan Cathedral",
+          "heritage designation",
+          "Grade I listed building"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1470975 wdt:P1435 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1470975",
+        "subject_label": "Liverpool Metropolitan Cathedral",
+        "predicate_id": "P1435",
+        "predicate_label": "heritage designation",
+        "object_id": "Q15700818",
+        "object_label": "Grade I listed building"
+      }
+    },
+    {
+      "question": "Who was Albertus Willem Sijthoff's business partner?",
+      "answer": "P.M. Bazendijk",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Albertus Willem Sijthoff",
+          "partner in business or sport",
+          "P.M. Bazendijk"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q2000532 wdt:P1327 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q2000532",
+        "subject_label": "Albertus Willem Sijthoff",
+        "predicate_id": "P1327",
+        "predicate_label": "partner in business or sport",
+        "object_id": "Q83286904",
+        "object_label": "P.M. Bazendijk"
+      }
+    },
+    {
+      "question": "What type of establishment is Pinkberry?",
+      "answer": "frozen yogurt shop",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Pinkberry",
+          "has parts of the class",
+          "frozen yogurt shop"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q2904053 wdt:P2670 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q2904053",
+        "subject_label": "Pinkberry",
+        "predicate_id": "P2670",
+        "predicate_label": "has parts of the class",
+        "object_id": "Q18396676",
+        "object_label": "frozen yogurt shop"
+      }
+    },
+    {
+      "question": "Where was Krzysztof Szwernicki detained?",
+      "answer": "Warsaw Citadel",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Krzysztof Szwernicki",
+          "place of detention",
+          "Warsaw Citadel"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q4521773 wdt:P2632 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q4521773",
+        "subject_label": "Krzysztof Szwernicki",
+        "predicate_id": "P2632",
+        "predicate_label": "place of detention",
+        "object_id": "Q206212",
+        "object_label": "Warsaw Citadel"
+      }
+    },
+    {
+      "question": "Which electoral district is Vrtekica associated with?",
+      "answer": "Constituency 1",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Vrtekica",
+          "associated electoral district",
+          "Constituency 1"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q3133795 wdt:P7938 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q3133795",
+        "subject_label": "Vrtekica",
+        "predicate_id": "P7938",
+        "predicate_label": "associated electoral district",
+        "object_id": "Q20568308",
+        "object_label": "Constituency 1"
+      }
+    },
+    {
+      "question": "What book comes after The Dragon and the George?",
+      "answer": "A Spell for Chameleon",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "The Dragon and the George",
+          "followed by",
+          "A Spell for Chameleon"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1448428 wdt:P156 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1448428",
+        "subject_label": "The Dragon and the George",
+        "predicate_id": "P156",
+        "predicate_label": "followed by",
+        "object_id": "Q4507517",
+        "object_label": "A Spell for Chameleon"
+      }
+    },
+    {
+      "question": "What is the heritage designation of the Saint Augustin Basilica?",
+      "answer": "Cultural heritage monuments in Algeria",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Saint Augustin Basilica",
+          "heritage designation",
+          "Cultural heritage monuments in Algeria"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1015167 wdt:P1435 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1015167",
+        "subject_label": "Saint Augustin Basilica",
+        "predicate_id": "P1435",
+        "predicate_label": "heritage designation",
+        "object_id": "Q133819534",
+        "object_label": "Cultural heritage monuments in Algeria"
+      }
+    },
+    {
+      "question": "Which electoral district is Banište associated with?",
+      "answer": "Constituency 5",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Banište",
+          "associated electoral district",
+          "Constituency 5"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q2882520 wdt:P7938 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q2882520",
+        "subject_label": "Banište",
+        "predicate_id": "P7938",
+        "predicate_label": "associated electoral district",
+        "object_id": "Q12906678",
+        "object_label": "Constituency 5"
+      }
+    },
+    {
+      "question": "What religious order is Yothathep associated with?",
+      "answer": "Mahā Nikāya",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Yothathep",
+          "religious order",
+          "Mahā Nikāya"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6636893 wdt:P611 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6636893",
+        "subject_label": "Yothathep",
+        "predicate_id": "P611",
+        "predicate_label": "religious order",
+        "object_id": "Q6583816",
+        "object_label": "Mahā Nikāya"
+      }
+    },
+    {
+      "question": "Where do the Kitchener Panthers play their home games?",
+      "answer": "Kitchener Memorial Auditorium Complex",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Kitchener Panthers",
+          "home venue",
+          "Kitchener Memorial Auditorium Complex"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6418048 wdt:P115 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6418048",
+        "subject_label": "Kitchener Panthers",
+        "predicate_id": "P115",
+        "predicate_label": "home venue",
+        "object_id": "Q6418047",
+        "object_label": "Kitchener Memorial Auditorium Complex"
+      }
+    },
+    {
+      "question": "What ethnic group does Michael Eric Dyson belong to?",
+      "answer": "African Americans",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Michael Eric Dyson",
+          "ethnic group",
+          "African Americans"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q6830135 wdt:P172 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q6830135",
+        "subject_label": "Michael Eric Dyson",
+        "predicate_id": "P172",
+        "predicate_label": "ethnic group",
+        "object_id": "Q49085",
+        "object_label": "African Americans"
+      }
+    },
+    {
+      "question": "Where are Nachum Gutman's archives kept?",
+      "answer": "Gnazim Institute archive",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Nachum Gutman",
+          "archives at",
+          "Gnazim Institute archive"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q2915105 wdt:P485 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q2915105",
+        "subject_label": "Nachum Gutman",
+        "predicate_id": "P485",
+        "predicate_label": "archives at",
+        "object_id": "Q6886076",
+        "object_label": "Gnazim Institute archive"
+      }
+    },
+    {
+      "question": "What does pneumatology focus on?",
+      "answer": "God the Holy Spirit",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "pneumatology",
+          "studies",
+          "God the Holy Spirit"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1424668 wdt:P2578 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1424668",
+        "subject_label": "pneumatology",
+        "predicate_id": "P2578",
+        "predicate_label": "studies",
+        "object_id": "Q58646537",
+        "object_label": "God the Holy Spirit"
+      }
+    },
+    {
+      "question": "Which record label was associated with Siti binti Saad?",
+      "answer": "Columbia Graphophone Co. Ltd.",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Siti binti Saad",
+          "record label",
+          "Columbia Graphophone Co. Ltd."
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q1775216 wdt:P264 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q1775216",
+        "subject_label": "Siti binti Saad",
+        "predicate_id": "P264",
+        "predicate_label": "record label",
+        "object_id": "Q1112471",
+        "object_label": "Columbia Graphophone Co. Ltd."
+      }
+    },
+    {
+      "question": "Who owns the OPUS card?",
+      "answer": "Autorité régionale de transport métropolitain",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "OPUS card",
+          "owned by",
+          "Autorité régionale de transport métropolitain"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q2940463 wdt:P127 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q2940463",
+        "subject_label": "OPUS card",
+        "predicate_id": "P127",
+        "predicate_label": "owned by",
+        "object_id": "Q20656738",
+        "object_label": "Autorité régionale de transport métropolitain"
+      }
+    },
+    {
+      "question": "In which ecclesiastical territorial entity is the Notre-Dame Basilica-Cathedral located?",
+      "answer": "Notre-Dame-de-Québec",
+      "level": 1,
+      "type": "single_hop",
+      "reasoning_chain": [
+        [
+          "Notre-Dame Basilica-Cathedral",
+          "located in the ecclesiastical territorial entity",
+          "Notre-Dame-de-Québec"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?object) AS ?count) WHERE {\n  wd:Q2002465 wdt:P5607 ?object .\n}",
+      "verified_with_sparql": true,
+      "source_triple": {
+        "subject_id": "Q2002465",
+        "subject_label": "Notre-Dame Basilica-Cathedral",
+        "predicate_id": "P5607",
+        "predicate_label": "located in the ecclesiastical territorial entity",
+        "object_id": "Q112911724",
+        "object_label": "Notre-Dame-de-Québec"
+      }
+    }
+  ]
+}

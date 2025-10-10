@@ -1,0 +1,464 @@
+subject_id,subject_label,predicate_id,predicate_label,object_id,object_label,add or change
+Q28060457,Portrait of a Man in a High Beret,P793,significant event,Q107614552,claim for restitution of an artwork,added
+Q136467974,Q136467974,P276,location,Q13419743,Bohunice A1 Nuclear Power Plant,added
+Q69437210,Syme's amputation,P407,language of work or name,Q1860,English,added
+Q53867760,Wrinkle corner. Extended charnley compression device,P407,language of work or name,Q1860,English,added
+Q69283172,Fracture of the shaft of the femur: a tale of woe,P407,language of work or name,Q1860,English,added
+Q54180514,Non-union of fracture of the femoral shaft: report of a case,P407,language of work or name,Q1860,English,added
+Q54430070,Quadricepsplasty,P407,language of work or name,Q1860,English,added
+Q54171597,Quadricepsplasty,P407,language of work or name,Q1860,English,added
+Q69437196,Quadricepsplasty,P407,language of work or name,Q1860,English,added
+Q69283165,Sir Reginald Watson-Jones,P407,language of work or name,Q1860,English,added
+Q69437190,Accident services in Switzerland,P407,language of work or name,Q1860,English,added
+Q39324375,Accident services today. Accident services in America,P407,language of work or name,Q1860,English,added
+Q59823517,Investigation of dielectric spaced resonant mesh filter designs for PMIRR,P407,language of work or name,Q1860,English,added
+Q57759366,Photoresponse of a miniaturized metal film bolometer to ultrashort mid- and far-infrared laser pulses,P407,language of work or name,Q1860,English,added
+Q59823523,Calibration and performance of doped-Ge photoconductors for the ISO Long Wavelength Spectrometer,P407,language of work or name,Q1860,English,added
+Q57759360,100 ps far-infrared laser pulses from optically pumped D2O,P407,language of work or name,Q1860,English,added
+Q59823524,Long wavelength (sub-mm) telescope simulator,P407,language of work or name,Q1860,English,added
+Q126737375,2025 Gree-Tour of Guangxi,P710,participant,Q17580397,Max Walscheid,added
+Q59829025,The nature of the absorption bandshape density evolution for the first overtone of CO compressed by N2,P407,language of work or name,Q1860,English,added
+Q57759373,Generation of tunable high power far-infrared radiation by stimulated Raman scattering in gaseous methylhalides,P407,language of work or name,Q1860,English,added
+Q104630140,Terminal 3,P84,architect,Q124719,Christoph H. Mäckler,added
+Q59823532,High efficiency half-wave plates for submillimetre polarimetry,P407,language of work or name,Q1860,English,added
+Q136467974,Q136467974,P17,country,Q33946,Czechoslovakia,added
+Q57925764,Far-infrared anisotropy in polar end-substituted alkanes,P407,language of work or name,Q1860,English,added
+Q59829027,"Bound, metastable and free states of bimolecular complexes",P407,language of work or name,Q1860,English,added
+Q62476180,Improved tunable InSb FIR detectors,P407,language of work or name,Q1860,English,added
+Q59256994,Vibrational spectroscopy of as-prepared and ion-irradiated glycine films,P407,language of work or name,Q1860,English,added
+Q59833736,Optimal sampling and sensitivity limits of integrating detector arrays in a space environment,P407,language of work or name,Q1860,English,added
+Q59829030,On the influence of van der waals association on IR absorption band shapes of highly compressed carbon dioxide,P407,language of work or name,Q1860,English,added
+Q59321722,Ultrahigh resolution far-infrared spectroscopy of methanol,P407,language of work or name,Q1860,English,added
+Q62471981,Picosecond infrared spectroscopy of molecules and semiconductors,P407,language of work or name,Q1860,English,added
+Q570218,Q570218,P6259,epoch,Q69307730,"November 21, 2025",added
+Q62584197,Single mode operation of the p-Ge FIR laser,P407,language of work or name,Q1860,English,added
+Q57549433,A resonance wobbling secondary mirror for balloon-borne IR telescopes,P407,language of work or name,Q1860,English,added
+Q63245261,Interaction of electrons with the evanescent field in a free-electron device,P407,language of work or name,Q1860,English,added
+Q45161540,A corner-reflector mixer mount for far infrared wavelengths,P407,language of work or name,Q1860,English,added
+Q57549431,A 3-field differential photometer for far infrared anisotropy measurements,P407,language of work or name,Q1860,English,added
+Q63245263,Modified Ledatron and Orotron tubes with improved sub-mm performance,P407,language of work or name,Q1860,English,added
+Q57549438,A balloon borne millimetric telescope: Experimental study of the thermal gradients on the primary mirror,P407,language of work or name,Q1860,English,added
+Q57925758,Far infrared absorption spectra of the anymnetric addition of NEM and EMB to egg albumen,P407,language of work or name,Q1860,English,added
+Q57549439,Atmospheric transmission and noise measurements in Antarctica,P407,language of work or name,Q1860,English,added
+Q57549442,Ground-based atmospheric radiometry in the far-infrared,P407,language of work or name,Q1860,English,added
+Q57549441,A five-band differential IR photometer for balloon-borne observations of diffuse sky radiation,P407,language of work or name,Q1860,English,added
+Q62515074,Fast optical switching and bistability in room temperature CdHgTe at 10.6 μm,P407,language of work or name,Q1860,English,added
+Q58227509,Upconversion of IR radiation into the visible and UV ranges,P407,language of work or name,Q1860,English,added
+Q122198237,Birthday announcement,P407,language of work or name,Q1860,English,added
+Q22127941,Q22127941,P31,instance of,Q7889,video game,added
+Q57925753,FIR properties of glycoprotein mucose,P407,language of work or name,Q1860,English,added
+Q57549452,Stratospheric fluctuations in the FIR,P407,language of work or name,Q1860,English,added
+Q59823640,The Queen Mary College/University of Oregon photometer for submillimetre continuum observations,P407,language of work or name,Q1860,English,added
+Q57549456,FIR observations of stratospheric irregularities and fluctuations,P407,language of work or name,Q1860,English,added
+Q57549458,Non-polarizing far-infrared filters,P407,language of work or name,Q1860,English,added
+Q57549464,Polarization properties of Fluorogold∗ in the far-infrared,P407,language of work or name,Q1860,English,added
+Q60663230,Versatile optics for i.r. BLIP detectors,P407,language of work or name,Q1860,English,added
+Q59823677,Free-standing grids wound from 5 μm diameter wire for spectroscopy at far-infrared wavelengths,P407,language of work or name,Q1860,English,added
+Q59823681,Absolute measurements of the atmospheric transparency at short millimetre wavelengths,P407,language of work or name,Q1860,English,added
+Q59823684,Submillimetre multicolour photometry of astronomical sources,P407,language of work or name,Q1860,English,added
+Q59823682,Far-infrared composite bolometers using surface ION implanted Ge as an absorbing surface,P407,language of work or name,Q1860,English,added
+Q114685321,Planar Pb0.8Sn0.2Te photodiode array development at the night vision laboratory,P407,language of work or name,Q1860,English,added
+Q59823730,The high resolution millimetre wavelength spectrum of the atmosphere,P407,language of work or name,Q1860,English,added
+Q59823742,Reflection and absorption coefficient of melinex at 338μ,P407,language of work or name,Q1860,English,added
+Q56525403,The determination of refractive index spectra by fourier spectrometry,P407,language of work or name,Q1860,English,added
+Q47714088,Auto anti-hr' in the absence of anemia,P407,language of work or name,Q1860,English,added
+Q126737375,2025 Gree-Tour of Guangxi,P710,participant,Q3162848,Jasha Sütterlin,added
+Q115142804,"Security, accuracy and privacy in computer systems",P407,language of work or name,Q1860,English,added
+Q22127941,Q22127941,P179,part of the series,Q846727,Air Traffic Controller,added
+Q135678502,Angela Harding,P734,family name,Q16870507,Harding,added
+Q67016234,A method for the automatic classification of chemical structures,P407,language of work or name,Q1860,English,added
+Q136467968,Marina Boldova,P551,residence,Q4111453,Q4111453,added
+Q54296744,Index term weighting,P407,language of work or name,Q1860,English,added
+Q56049825,The use of hierarchic clustering in information retrieval,P407,language of work or name,Q1860,English,added
+Q56680973,Towards an effective on-line reference retrieval system,P407,language of work or name,Q1860,English,added
+Q57568940,An indirect method of information retrieval,P407,language of work or name,Q1860,English,added
+Q57568939,A searching procedure for information retrieval,P407,language of work or name,Q1860,English,added
+Q122904945,A cluster of algorithms relating the nomenclature of organic compounds to their structure matrices and ciphers,P407,language of work or name,Q1860,English,added
+Q60546774,Bibliographic coupling extended in time: Ten case histories,P407,language of work or name,Q1860,English,added
+Q5708511,President of Peru,P1308,position holder,Q107480088,José Jerí,added
+Q59552472,Experimenting with pattern-matching algorithms,P407,language of work or name,Q1860,English,added
+Q57518802,A probabilistic spatial data model,P407,language of work or name,Q1860,English,added
+Q57526138,Automatic entity extraction from an N-Ary relation: Toward a general law for information decomposition,P407,language of work or name,Q1860,English,added
+Q33533835,"28, Długa Street in Warsaw",P669,located on street,Q9364924,Barokowa Street,added
+Q58197983,PRACTIC: A concurrent object data model for a parallel object-oriented database system,P407,language of work or name,Q1860,English,added
+Q57526141,Signature extraction method in rectangular database,P407,language of work or name,Q1860,English,added
+Q113444239,A robust method for understanding NL interface commands in the ICI Intelligent Command Interpreter,P407,language of work or name,Q1860,English,added
+Q114016574,A fuzzy R1 separation axiom,P407,language of work or name,Q1860,English,added
+Q114685322,Revealing logical dependencies in fuzzy data with the aid of multilevel fuzzy relational equations,P407,language of work or name,Q1860,English,added
+Q136467974,Q136467974,P31,instance of,Q1620824,nuclear accident,added
+Q114685324,Constraints on fuzzy values and fuzzy functional dependencies,P407,language of work or name,Q1860,English,added
+Q57925749,A simple construction of a digital convex n-gon with almost minimal diameter,P407,language of work or name,Q1860,English,added
+Q60328196,Constrained tree editing,P407,language of work or name,Q1860,English,added
+Q57699712,HYPERSOLVER: A graphical tool for commonsense set theory,P407,language of work or name,Q1860,English,added
+Q60328168,"String alignment with substitution, insertion, deletion, squashing, and expansion operations",P407,language of work or name,Q1860,English,added
+Q122917489,Major issues on process software engineering environments,P407,language of work or name,Q1860,English,added
+Q135678502,Angela Harding,P19,place of birth,Q134902,Stoke-on-Trent,added
+Q114685325,Active interdatabase dependencies,P407,language of work or name,Q1860,English,added
+Q114462260,The Vanishing Stingray,P921,main subject,Q3754371,Eyed Flounder,added
+Q569967,Q569967,P6259,epoch,Q69307730,"November 21, 2025",added
+Q125020224,A Pumping lemma and the structure of derivations in the boundary NLC graph languages,P407,language of work or name,Q1860,English,added
+Q7524554,Sinkat,P131,located in the administrative territorial entity,Q33638075,Sinkat District,added
+Q114953811,Supervised learning based on “neurons” sensitive to similarities and dissimilarities in the stimulus features,P407,language of work or name,Q1860,English,added
+Q56675404,Generative learning structures and processes for generalized connectionist networks,P407,language of work or name,Q1860,English,added
+Q56863602,On explicit expressions in additive cellular automata theory,P407,language of work or name,Q1860,English,added
+Q60328251,On the problem of multiple mobile robots cluttering a workspace,P407,language of work or name,Q1860,English,added
+Q136365501,Stolperstein dedicated to Alfred Simon,P1889,different from,Q132854375,Stolperstein dedicated to Alfred Simon,added
+Q114685326,Unifying functional and multivalued dependencies for relational database design,P407,language of work or name,Q1860,English,added
+Q35854930,Case-only exome sequencing and complex disease susceptibility gene discovery: study design considerations,P921,main subject,Q1438035,research design,added
+Q35854930,Case-only exome sequencing and complex disease susceptibility gene discovery: study design considerations,P921,main subject,Q210506,molecular genetics,added
+Q35854930,Case-only exome sequencing and complex disease susceptibility gene discovery: study design considerations,P921,main subject,Q5532897,genetic epidemiology,added
+Q35854930,Case-only exome sequencing and complex disease susceptibility gene discovery: study design considerations,P921,main subject,Q55608248,complex trait,added
+Q35854930,Case-only exome sequencing and complex disease susceptibility gene discovery: study design considerations,P921,main subject,Q7162,genetics,added
+Q114685327,Functional dependencies and normal forms in the fuzzy relational database model,P407,language of work or name,Q1860,English,added
+Q33533835,"28, Długa Street in Warsaw",P669,located on street,Q9365107,Długa Street,added
+Q114462260,The Vanishing Stingray,P921,main subject,Q469958,southern stingray,added
+Q56992476,Distributed associative memory and the computation of membership functions,P407,language of work or name,Q1860,English,added
+Q56269113,The relative useful information measure: Some comments,P407,language of work or name,Q1860,English,added
+Q114685328,Join dependencies in relational-database design,P407,language of work or name,Q1860,English,added
+Q72373361,LINF_040017100,P684,ortholog,Q62133890,LmxM.04.1190,added
+Q135678502,Angela Harding,P735,given name,Q4851436,Angela,added
+Q22127166,Q22127166,P17,country,Q869,Thailand,added
+Q97574931,Stolperstein dedicated to Alfred Simon,P1889,different from,Q132854375,Stolperstein dedicated to Alfred Simon,added
+Q55835167,PayFit,P452,industry,Q1254596,software as a service,added
+Q136467968,Marina Boldova,P27,country of citizenship,Q159,Russia,added
+Q60468486,Finite axiomatization of languages for representation of system properties: Axiomatization of dependencies,P407,language of work or name,Q1860,English,added
+Q135678502,Angela Harding,P27,country of citizenship,Q145,United Kingdom,added
+Q568854,Q568854,P6259,epoch,Q69307730,"November 21, 2025",added
+Q114685329,"Relations, dependencies and some problems of systems theory",P407,language of work or name,Q1860,English,added
+Q121088978,Shannon's random-cipher result and the R-norm information,P407,language of work or name,Q1860,English,added
+Q136467902,Koos Scholtens,P19,place of birth,Q2235855,Aarlanderveen,added
+Q60328382,Multiaction learning automata possessing ergodicity of the mean,P407,language of work or name,Q1860,English,added
+Q122932159,A homomorphic characterization of principal semiAFLs without using intersection with regular sets,P407,language of work or name,Q1860,English,added
+Q123199862,An Inverse Homomorphic Characterization of Full Principal AFL,P407,language of work or name,Q1860,English,added
+Q118592645,A classification procedure using the multiple Fourier series,P407,language of work or name,Q1860,English,added
+Q60328427,An effective algorithm for string correction using generalized edit distance—II. Computational complexity of the algorithm and some applications,P407,language of work or name,Q1860,English,added
+Q60328425,An effective algorithm for string correction using generalized edit distances—I. Description of the algorithm and its optimality,P407,language of work or name,Q1860,English,added
+Q122981488,On nonstochastic languages and homomorphic images of stochastic languages,P407,language of work or name,Q1860,English,added
+Q60449042,Quasinatural language in consultation systems,P407,language of work or name,Q1860,English,added
+Q56157603,Note on fuzzy languages,P407,language of work or name,Q1860,English,added
+Q56093926,On the generative power of transformational grammars,P407,language of work or name,Q1860,English,added
+Q114685330,A note on the Axioms of Restriction and Fundierung,P407,language of work or name,Q1860,English,added
+Q57518801,Algorithms for parsimonious complete sets in directed graphs,P407,language of work or name,Q1860,English,added
+Q59446632,Output-sensitive peeling of convex and maximal layers,P407,language of work or name,Q1860,English,added
+Q135678502,Angela Harding,P106,occupation,Q1028181,painter,added
+Q57387867,Scheduling complete intrees on two uniform processors with communication delays,P407,language of work or name,Q1860,English,added
+Q11713220,"Institute of Art, Polish Academy of Sciences",P276,location,Q33533835,"28, Długa Street in Warsaw",added
+Q56474996,Fixed-parameter tractability of graph modification problems for hereditary properties,P407,language of work or name,Q1860,English,added
+Q5708511,President of Peru,P1308,position holder,Q103838608,Pedro Castillo,added
+Q5708511,President of Peru,P1308,position holder,Q20015136,Francisco Sagasti,added
+Q5708511,President of Peru,P1308,position holder,Q24030720,Martín Vizcarra,added
+Q5708511,President of Peru,P1308,position holder,Q5993760,Manuel Merino,added
+Q62398509,A note on PCP vs. MIP,P407,language of work or name,Q1860,English,added
+Q62042637,Drawing outerplanar minimum weight triangulations,P407,language of work or name,Q1860,English,added
+Q57360096,A simple linear-time algorithm for finding path-decompositions of small width,P407,language of work or name,Q1860,English,added
+Q59610793,A parallel algorithm for static program slicing,P407,language of work or name,Q1860,English,added
+Q56214718,On representation and querying incomplete information in databases with bags,P407,language of work or name,Q1860,English,added
+Q114462260,The Vanishing Stingray,P674,characters,Q135402001,Click,added
+Q58209372,A McCulloch-Pitts neural net to characterize even linear languages,P407,language of work or name,Q1860,English,added
+Q61677536,A remark on middle space bounded alternating Turing machines,P407,language of work or name,Q1860,English,added
+Q55980164,An attack on the Needham-Schroeder public-key authentication protocol,P407,language of work or name,Q1860,English,added
+Q59538632,Efficient learning with equivalence queries of conjunctions of modulo functions,P407,language of work or name,Q1860,English,added
+Q30047341,A note on the Horton-Strahler number for random trees,P407,language of work or name,Q1860,English,added
+Q57401568,Balanced allocations for tree-like inputs,P407,language of work or name,Q1860,English,added
+Q56324060,The worst-case running time of the random simplex algorithm is exponential in the height,P407,language of work or name,Q1860,English,added
+Q29011645,A short note on the approximability of the maximum leaves spanning tree problem,P407,language of work or name,Q1860,English,added
+Q114685331,Password authentication without using a password table,P407,language of work or name,Q1860,English,added
+Q60512317,Size-depth tradeoffs for Boolean formulae,P407,language of work or name,Q1860,English,added
+Q57387884,Scheduling multiprocessor tasks of three dedicated processors information processing letters 41 (5) (1992) 275–280,P407,language of work or name,Q1860,English,added
+Q19693384,Jozefa,P1552,has characteristic,Q89410507,name without diacritical marks,added
+Q114462260,The Vanishing Stingray,P674,characters,Q135402209,Whistle,added
+Q114215565,Computing values of a polynomial with only few multiplications,P407,language of work or name,Q1860,English,added
+Q57310094,On finding the strongly connected components in a directed graph,P407,language of work or name,Q1860,English,added
+Q56959109,On average time hierarchies,P407,language of work or name,Q1860,English,added
+Q57401584,On the problem of approximating the number of bases of a matriod,P407,language of work or name,Q1860,English,added
+Q29036205,Serializability by commitment ordering,P407,language of work or name,Q1860,English,added
+Q62654282,Using Hirschberg's algorithm to generate random alignments of strings,P407,language of work or name,Q1860,English,added
+Q58064552,Undecidability of ground reducibility for word rewriting systems with variables,P407,language of work or name,Q1860,English,added
+Q61687092,On collapsing the polynomial-time hierarchy,P407,language of work or name,Q1860,English,added
+Q126322776,Haskell overloading is DEXPTIME-complete,P407,language of work or name,Q1860,English,added
+Q115927015,Good and semi-strong colorings of oriented planar graphs,P407,language of work or name,Q1860,English,added
+Q59650035,Approximations for the maximum acyclic subgraph problem,P407,language of work or name,Q1860,English,added
+Q56083439,Counting trees in a graph is #P-complete,P407,language of work or name,Q1860,English,added
+Q61677537,An optimal lower bound for nonregular languages,P407,language of work or name,Q1860,English,added
+Q62037506,Uniform generation of forests of restricted height,P407,language of work or name,Q1860,English,added
+Q114685332,An algorithm for approximate membership checking with application to password security,P407,language of work or name,Q1860,English,added
+Q56269092,A still better performance guarantee for approximate graph coloring,P407,language of work or name,Q1860,English,added
+Q114462260,The Vanishing Stingray,P674,characters,Q135402347,Smiley (stingray),added
+Q122871253,A note on a conjecture concerning symmetric resilient functions,P407,language of work or name,Q1860,English,added
+Q56607630,Optimal slope selection via expanders,P407,language of work or name,Q1860,English,added
+Q57834864,The generic oracle hypothesis is false,P407,language of work or name,Q1860,English,added
+Q124873174,A proof of the substitution lemma in de Bruijn's notation,P407,language of work or name,Q1860,English,added
+Q62045990,Parametrized recurrent systems for image generation,P407,language of work or name,Q1860,English,added
+Q122186766,On injectivity of deterministic top–down tree transducers,P407,language of work or name,Q1860,English,added
+Q114685333,Models for the substitution axiom of UNITY logic,P407,language of work or name,Q1860,English,added
+Q121357388,A description of dynamic behavior for compilers based on object oriented modeling,P407,language of work or name,Q1860,English,added
+Q57531242,A string-matching algorithm for the CREW PRAM,P407,language of work or name,Q1860,English,added
+Q59650036,A fast and effective heuristic for the feedback arc set problem,P407,language of work or name,Q1860,English,added
+Q56959141,A well-characterized approximation problem,P407,language of work or name,Q1860,English,added
+Q5686400,Q5686400,P6259,epoch,Q69307730,"November 21, 2025",added
+Q57387898,Preemptive scheduling of multiprocessor tasks on the dedicated processor system subject to minimal lateness,P407,language of work or name,Q1860,English,added
+Q56287381,Fault tolerant routing in the star and pancake interconnection networks,P407,language of work or name,Q1860,English,added
+Q126298514,A recursive ascent Earley parser,P407,language of work or name,Q1860,English,added
+Q56390611,The greedy algorithm is optimal for on-line edge coloring,P407,language of work or name,Q1860,English,added
+Q62654289,Lazy dynamic-programming can be eager,P407,language of work or name,Q1860,English,added
+Q56210414,A simple lower bound for monotone clique using a communication game,P407,language of work or name,Q1860,English,added
+Q58329983,A simple proof of a completeness result for leads-to in the UNITY logic,P407,language of work or name,Q1860,English,added
+Q62037511,Generating binary trees at random,P407,language of work or name,Q1860,English,added
+Q135649543,Nikos Xydakis,P641,sport,Q1734,volleyball,added
+Q58329985,"A simple proof of a completeness result for leads-to, in the UNITY logic",P407,language of work or name,Q1860,English,added
+Q57711688,A truncation technique for clausal analytic tableaux,P407,language of work or name,Q1860,English,added
+Q114685334,Ensuring the existence of a BCNF- decomposition that preserves functional dependencies in O(N2) time,P407,language of work or name,Q1860,English,added
+Q114685335,Complete sets of axioms for finite basic LOTOS behavioural equivalences,P407,language of work or name,Q1860,English,added
+Q57255181,Maximum bounded 3-dimensional matching is MAX SNP-complete,P407,language of work or name,Q1860,English,added
+Q57925746,"On the number of linear partitions of the (m, n)-grid",P407,language of work or name,Q1860,English,added
+Q126322022,On matroids and hierarchial graphs,P407,language of work or name,Q1860,English,added
+Q33533835,"28, Długa Street in Warsaw",P466,occupant,Q11713220,"Institute of Art, Polish Academy of Sciences",added
+Q124989026,On learning from queries and counterexamples in the presence of noise,P407,language of work or name,Q1860,English,added
+Q62654291,Shortest path and closure algorithms for banded matrices,P407,language of work or name,Q1860,English,added
+Q56626048,Computing a maximum cardinality matching in a bipartite graph in time O(n1.5),P407,language of work or name,Q1860,English,added
+Q60299190,An extension of Khrapchenko's theorem,P407,language of work or name,Q1860,English,added
+Q56607631,Randomized optimal algorithm for slope selection,P407,language of work or name,Q1860,English,added
+Q57256235,Some observations on skip-lists,P407,language of work or name,Q1860,English,added
+Q34446365,"Safety and Immunogenicity of an Adjuvanted Herpes Zoster Subunit Candidate Vaccine in HIV-Infected Adults: A Phase 1/2a Randomized, Placebo-Controlled Study",P50,author,Q63936952,Elchonon M Berkowitz,added
+Q34446365,"Safety and Immunogenicity of an Adjuvanted Herpes Zoster Subunit Candidate Vaccine in HIV-Infected Adults: A Phase 1/2a Randomized, Placebo-Controlled Study",P50,author,Q97887824,Dirk Schürmann,added
+Q34446365,"Safety and Immunogenicity of an Adjuvanted Herpes Zoster Subunit Candidate Vaccine in HIV-Infected Adults: A Phase 1/2a Randomized, Placebo-Controlled Study",P921,main subject,Q8074572,herpes zoster vaccine,added
+Q22117701,I Tower,P17,country,Q17,Japan,added
+Q12019307,Q12019307,P527,has part(s),Q136467970,The accident of the Jaslovské Bohunice A1 power plant in 1976,added
+Q59405863,Linear time algorithms on circular-arc graphs,P407,language of work or name,Q1860,English,added
+Q129206357,Investigation of Irreversible Reference Tissue Models for Parametric Imaging,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q57904598,Deferred data structure for the nearest neighbor problem,P407,language of work or name,Q1860,English,added
+Q61609666,A note on set union with arbitrary deunions,P407,language of work or name,Q1860,English,added
+Q53674253,Myocardial perfusion in 3 dimensions.,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q36495076,Consensus recommendations for the use of 18F-FDG PET as an indicator of therapeutic response in patients in National Cancer Institute Trials.,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q59845204,Imaging of neuroinflammation: TSPO and beyond,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q114462260,The Vanishing Stingray,P674,characters,Q134963559,Zach Varmitech,added
+Q91048713,Quantification of PET Studies,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q136467971,Turbulence,P175,performer,Q3271844,Emilia,added
+Q126298024,Lower bounds for planar orthogonal drawings of graphs,P407,language of work or name,Q1860,English,added
+Q104134769,On the Origin of Hybrid Imaging,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q55968889,A simple algorithm for computing the smallest enclosing circle,P407,language of work or name,Q1860,English,added
+Q124820941,A counterexample for the sufficiency of edge guards in star polygons,P407,language of work or name,Q1860,English,added
+Q126737375,2025 Gree-Tour of Guangxi,P710,participant,Q28858866,Campbell Stewart,added
+Q57621013,DIAGNOSTIC VALUE OF TRANSLUMINAL ATTENUATION GRADIENT FOR THE PRESENCE OF ISCHEMIA AS DEFINED BY FRACTIONAL FLOW RESERVE AND QUANTITATIVE POSITRON EMISSION TOMOGRAPHY,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q57621019,IMPACT OF REVASCULARIZATION ON ABSOLUTE MYOCARDIAL BLOOD FLOW AS ASSESSED BY SERIAL [15O]H2O PET IMAGING: A COMPARISON WITH FRACTIONAL FLOW RESERVE,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q136467968,Marina Boldova,P735,given name,Q106654516,Marina,added
+Q57620989,Impact of Revascularization on Absolute Myocardial Blood Flow as Assessed by Serial [ 15 O]H 2 O Positron Emission Tomography Imaging,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q91429963,Diagnostic value of longitudinal flow gradient for the presence of haemodynamically significant coronary artery disease,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q91566764,Myocardial Blood Flow and Coronary Flow Reserve During 3 Years Following Bioresorbable Vascular Scaffold Versus Metallic Drug-Eluting Stent Implantation: The VANISH Trial,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q90779337,Impact of individualized segmentation on diagnostic performance of quantitative positron emission tomography for haemodynamically significant coronary artery disease,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q136467970,The accident of the Jaslovské Bohunice A1 power plant in 1976,P361,part of,Q12019307,Q12019307,added
+Q92153892,Adenosine single-photon emission computed tomography-derived transient ischemic dilatation and ejection fraction reserve fail to predict multivessel coronary artery disease,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q92051672,Continuous thermodilution to assess absolute flow and microvascular resistance: validation in humans using [15O]H2O positron emission tomography,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q132854375,Stolperstein dedicated to Alfred Simon,P1889,different from,Q130544068,Stolperstein dedicated to Alfred Simon,added
+Q90761387,Prognostic value of [15O]H2O positron emission tomography-derived global and regional myocardial perfusion,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q91856655,Comparison between quantitative cardiac magnetic resonance perfusion imaging and [15O]H2O positron emission tomography,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q99595627,"Incremental prognostic value of hybrid [15O]H2O positron emission tomography-computed tomography: combining myocardial blood flow, coronary stenosis severity, and high-risk plaque morphology",P50,author,Q52983347,Adriaan A Lammertsma,added
+Q5686250,Q5686250,P6259,epoch,Q69307730,"November 21, 2025",added
+Q44061899,Measurement of perfusion in stage IIIA-N2 non-small cell lung cancer using H(2)(15)O and positron emission tomography.,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q40628399,Methods to monitor response to chemotherapy in non-small cell lung cancer with 18F-FDG PET.,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q39127203,Quantitative 89Zr immuno-PET for in vivo scouting of 90Y-labeled monoclonal antibodies in xenograft-bearing nude mice,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q44681205,Measurement of 18F-FDG concentrations in blood samples: comparison of direct calibration and standard solution methods,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q44762703,Postinjection transmission scanning in myocardial 18F-FDG PET studies using both filtered backprojection and iterative reconstruction.,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q44780598,Validation of a multiwell gamma-counter for measuring high-pressure liquid chromatography metabolite profiles.,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q35753798,Measuring response to chemotherapy in locally advanced breast cancer: methodological considerations,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q34345807,"Effects of noise, image resolution, and ROI definition on the accuracy of standard uptake values: a simulation study",P50,author,Q52983347,Adriaan A Lammertsma,added
+Q57724366,A distributed join algorithm,P407,language of work or name,Q1860,English,added
+Q136467970,The accident of the Jaslovské Bohunice A1 power plant in 1976,P276,location,Q13419743,Bohunice A1 Nuclear Power Plant,added
+Q97574931,Stolperstein dedicated to Alfred Simon,P1889,different from,Q130544068,Stolperstein dedicated to Alfred Simon,added
+Q30051916,A simple randomized parallel algorithm for list-ranking,P407,language of work or name,Q1860,English,added
+Q56430039,A guided tour of chernoff bounds,P407,language of work or name,Q1860,English,added
+Q124799395,A generalization of chvátal's star-cutset lemma,P407,language of work or name,Q1860,English,added
+Q30991434,Delayed contrast enhancement and perfusable tissue index in hypertrophic cardiomyopathy: comparison between cardiac MRI and PET.,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q59568052,Bit-optimal election in synchronous rings,P407,language of work or name,Q1860,English,added
+Q55393320,A note on division orderings on strings,P407,language of work or name,Q1860,English,added
+Q42183322,Reproducible Analysis of Rat Brain PET Studies Using an Additional [18F]NaF Scan and an MR-Based ROI Template,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q123272515,Counterexample to a conjecture of szymanski on hypercube routing,P407,language of work or name,Q1860,English,added
+Q120379607,EFFECT OF CARDIAC HYBRID 150-WATER PET/CT IMAGING UPON DOWNSTREAM REFERRAL FOR INVASIVE CORONARY ANGIOGRAPHY AND REVASCULARIZATION RATE,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q114685336,An axiom system for database transactions,P407,language of work or name,Q1860,English,added
+Q126737375,2025 Gree-Tour of Guangxi,P710,participant,Q29364265,Kelland O'Brien,added
+Q51992324,Perfusable tissue index as a potential marker of fibrosis in patients with idiopathic dilated cardiomyopathy,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q45178285,Quantitative comparison of analytic and iterative reconstruction methods in 2- and 3-dimensional dynamic cardiac 18F-FDG PET.,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q29300501,A linear-time algorithm for concave one-dimensional dynamic programming,P407,language of work or name,Q1860,English,added
+Q56390758,Achromatic number is NP-complete for cographs and interval graphs,P407,language of work or name,Q1860,English,added
+Q57757530,18th European Symposium on Radiopharmacy and Radiopharmaceuticals,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q59259782,Magic semi-joins,P407,language of work or name,Q1860,English,added
+Q56018871,Bounded ordered dictionaries in O(log log N) time and O(n) space,P407,language of work or name,Q1860,English,added
+Q38779245,Development of carbon-11 labeled acryl amides for selective PET imaging of active tissue transglutaminase,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q56763506,Optimal node ranking of trees in linear time,P407,language of work or name,Q1860,English,added
+Q29302733,Finding the upper envelope of n line segments in O(n log n) time,P407,language of work or name,Q1860,English,added
+Q124820415,A pumping lemma for deterministic context-free languages,P407,language of work or name,Q1860,English,added
+Q56428731,An algorithm for drawing general undirected graphs,P407,language of work or name,Q1860,English,added
+Q56525213,A Distributed Algorithm for Multiple Entries to a Critical Section,P407,language of work or name,Q1860,English,added
+Q57824414,3'-Deoxy-3'-[18F]Fluorothymidine Positron Emission Tomography Depicts Heterogeneous Proliferation Pathology in Idiopathic Pulmonary Arterial Hypertension Patient Lung,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q62654300,Direct semantics and exceptions define jumps and coroutines,P407,language of work or name,Q1860,English,added
+Q61846810,Path integral methods for computer performance analysis,P407,language of work or name,Q1860,English,added
+Q57191515,Synthesis and preliminary preclinical evaluation of fluorine-18 labelled isatin-4-(4-methoxyphenyl)-3-thiosemicarbazone ([F]4FIMPTC) as a novel PET tracer of P-glycoprotein expression,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q114215567,A general implementation of relational recursion with speedup techniques for programmers,P407,language of work or name,Q1860,English,added
+Q56490243,The Steiner problem with edge lengths 1 and 2,P407,language of work or name,Q1860,English,added
+Q122480309,Fast Knuth-Bendix completion with a term rewriting system compiler,P407,language of work or name,Q1860,English,added
+Q57804307,Doppler Flow Velocity and Thermodilution to Assess Coronary Flow Reserve: A Head-to-Head Comparison With [O]HO PET,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q51221214,Boundedness is undecidable for datalog programs with a single recursive rule,P407,language of work or name,Q1860,English,added
+Q93211503,"Fractional flow reserve, instantaneous wave-free ratio, and resting Pd/Pa compared with [15O]H2O positron emission tomography myocardial perfusion imaging: a PACIFIC trial sub-study",P50,author,Q52983347,Adriaan A Lammertsma,added
+Q59568105,A better lower bound for distributed leader finding in bidirectional asynchronous rings of processors,P407,language of work or name,Q1860,English,added
+Q63367516,Noise-Induced Variability of Immuno-PET with Zirconium-89-Labeled Antibodies: an Analysis Based on Count-Reduced Clinical Images,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q90495111,F8-IL10: A New Potential Antirheumatic Drug Evaluated by a PET-Guided Translational Approach,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q136467970,The accident of the Jaslovské Bohunice A1 power plant in 1976,P17,country,Q33946,Czechoslovakia,added
+Q61609677,Finding paths and deleting edges in directed acyclic graphs,P407,language of work or name,Q1860,English,added
+Q57045640,The folate receptor β as a macrophage-mediated imaging and therapeutic target in rheumatoid arthritis,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q57401618,On the random construction of heaps,P407,language of work or name,Q1860,English,added
+Q114685337,Completeness issues for join dependencies derived from the universal relation join dependency,P407,language of work or name,Q1860,English,added
+Q29398646,On decomposing polygons into uniformly monotone parts,P407,language of work or name,Q1860,English,added
+Q57383758,A note on unification type zero,P407,language of work or name,Q1860,English,added
+Q114685340,Positive Boolean dependencies,P407,language of work or name,Q1860,English,added
+Q56210424,On generating all maximal independent sets,P407,language of work or name,Q1860,English,added
+Q92417917,89Zr-Immuno-PET: Toward a Noninvasive Clinical Tool to Measure Target Engagement of Therapeutic Antibodies In Vivo,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q59699419,Dynamic program slicing,P407,language of work or name,Q1860,English,added
+Q92968510,A new perspective for advanced positron emission tomography-based molecular imaging in neurodegenerative proteinopathies,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q56763504,Optimal node ranking of trees,P407,language of work or name,Q1860,English,added
+Q114685338,Testing unboundedness of database schemes and functional dependencies,P407,language of work or name,Q1860,English,added
+Q136467968,Marina Boldova,P19,place of birth,Q894,Samara,added
+Q59568115,The complexity of finding uniform emulations on fixed graphs,P407,language of work or name,Q1860,English,added
+Q57285353,Evaluation of the Novel PET Tracer [C]HACH242 for Imaging the GluN2B NMDA Receptor in Non-Human Primates,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q56959258,Does co-NP have short interactive proofs?,P407,language of work or name,Q1860,English,added
+Q56855015,541132 Leleākūhonua,P6259,epoch,Q69307730,"November 21, 2025",added
+Q57401626,Parallel algorithms for finding Hamilton cycles in random graphs,P407,language of work or name,Q1860,English,added
+Q93169837,In vivo imaging of TGFβ signalling components using positron emission tomography,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q124808236,Generalized lower bounds derived from Hastad's main lemma,P407,language of work or name,Q1860,English,added
+Q92235822,Assessment of Simplified Methods for Quantification of 18F-FDHT Uptake in Patients with Metastatic Castration-Resistant Prostate Cancer,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q57001803,"Super-exponentials nonprimitive recursive, but rudimentary",P407,language of work or name,Q1860,English,added
+Q92890693,First in man study of [18F]fluoro-PEG-folate PET: a novel macrophage imaging technique to visualize rheumatoid arthritis,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q57699720,An algorithm for determining an opaque minimal forest of a convex polygon,P407,language of work or name,Q1860,English,added
+Q56269666,Garbage collection can be faster than stack allocation,P407,language of work or name,Q1860,English,added
+Q89741073,Guidelines for the content and format of PET brain data in publications and archives: A consensus paper,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q136467971,Turbulence,P31,instance of,Q482994,album,added
+Q57387920,Minimizing mean weighted execution time loss on identical and uniform processors,P407,language of work or name,Q1860,English,added
+Q130313487,LINF_040017000,P684,ortholog,Q62133888,LmxM.04.1180,added
+Q56049339,A variant of heapsort with almost optimal number of comparisons,P407,language of work or name,Q1860,English,added
+Q95577045,Improved detection of diffuse glioma infiltration with imaging combinations: a diagnostic accuracy study,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q59491574,Stopping times of distributed consensus protocols: A probabilistic analysis,P407,language of work or name,Q1860,English,added
+Q90041899,Proven validity and management impact of amyloid imaging in Alzheimer's disease-repetita juvant,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q56019617,Counterexamples to termination for the direct sum of term rewriting systems,P407,language of work or name,Q1860,English,added
+Q115465352,A note on the effect of preemptive policies on the stability of a priority queue,P407,language of work or name,Q1860,English,added
+Q59259784,On the size of nonredundant FD-covers,P407,language of work or name,Q1860,English,added
+Q136467972,Q136467972,P170,creator,Q175130,Alfred Sisley,added
+Q136467972,Q136467972,P186,made from material,Q12321255,canvas,added
+Q136467972,Q136467972,P186,made from material,Q296955,oil paint,added
+Q136467972,Q136467972,P31,instance of,Q3305213,painting,added
+Q92037978,Value of CMR and PET in Predicting Ventricular Arrhythmias in Ischemic Cardiomyopathy Patients Eligible for ICD,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q59259785,Subsumption and implication,P407,language of work or name,Q1860,English,added
+Q57360197,Nonconstructive advances in polynomial-time complexity,P407,language of work or name,Q1860,English,added
+Q91851609,Simulating the effect of cerebral blood flow changes on regional quantification of [18F]flutemetamol and [18F]florbetaben studies,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q56959263,One-way permutations in NC0,P407,language of work or name,Q1860,English,added
+Q22123013,Q22123013,P279,subclass of,Q140588,typhoon,added
+Q94514230,Quantitative Assessment of Arthritis Activity in Rheumatoid Arthritis Patients Using [11C]DPA-713 Positron Emission Tomography,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q29041830,Dominating sets for split and bipartite graphs,P407,language of work or name,Q1860,English,added
+Q50457447,The influence of moderate-intensity physical effort on peripheral blood in adults with Down syndrome - a pilot study,P407,language of work or name,Q1860,English,added
+Q50457447,The influence of moderate-intensity physical effort on peripheral blood in adults with Down syndrome - a pilot study,P921,main subject,Q71151031,physical exertion,added
+Q121127025,NiftyPAD - Novel Python Package for Quantitative Analysis of Dynamic PET Data,P50,author,Q52983347,Adriaan A Lammertsma,added
+Q114685342,Functional dependencies in relations with null values,P407,language of work or name,Q1860,English,added
+Q63252976,A simple linear-time algorithm for in situ merging,P407,language of work or name,Q1860,English,added
+Q60366496,Integer linear programming for microprograms register allocation,P407,language of work or name,Q1860,English,added
+Q60164650,On computing the determinant in small parallel time using a small number of processors,P407,language of work or name,Q1860,English,added
+Q56324183,A partitioning algorithm for minimum weighted Euclidean matching,P407,language of work or name,Q1860,English,added
+Q114685343,A characterization of multivalued dependencies equivalent to a join dependency,P407,language of work or name,Q1860,English,added
+Q56115189,Smoothsort's behavior on presorted sequences,P407,language of work or name,Q1860,English,added
+Q124816981,An application of a transfer lemma,P407,language of work or name,Q1860,English,added
+Q114215571,A noncommutative algorithm for multiplying 5 × 5 matrices using 102 multiplications,P407,language of work or name,Q1860,English,added
+Q61051151,Log-logarithmic worst-case range queries are possible in space Θ(N),P407,language of work or name,Q1860,English,added
+Q114685344,The theory of functional and subset dependencies over relational expressions,P407,language of work or name,Q1860,English,added
+Q56658989,BPP and the polynomial hierarchy,P407,language of work or name,Q1860,English,added
+Q135649543,Nikos Xydakis,P69,educated at,Q4952508,Boylan Catholic High School,added
+Q62654315,Stable marriages by coroutines,P407,language of work or name,Q1860,English,added
+Q114262292,Open maths problems computer competition,P407,language of work or name,Q1860,English,added
+Q114685345,Armstrong databases for functional and inclusion dependencies,P407,language of work or name,Q1860,English,added
+Q56992526,On the size of projections: I,P407,language of work or name,Q1860,English,added
+Q136467970,The accident of the Jaslovské Bohunice A1 power plant in 1976,P31,instance of,Q1620824,nuclear accident,added
+Q124817934,Permutations are not context-free: An application of the interchange lemma,P407,language of work or name,Q1860,English,added
+Q60164218,On multiset orderings,P407,language of work or name,Q1860,English,added
+Q132854375,Stolperstein dedicated to Alfred Simon,P1889,different from,Q136365501,Stolperstein dedicated to Alfred Simon,added
+Q124818292,A simple transfer lemma for algebraic specifications,P407,language of work or name,Q1860,English,added
+Q57387935,Scheduling independent 2-processor tasks to minimize schedule length,P407,language of work or name,Q1860,English,added
+Q114685346,Strong equivalence of relational expressions under dependencies,P407,language of work or name,Q1860,English,added
+Q56388861,A labeling algorithm to recognize a line digraph and output its root graph,P407,language of work or name,Q1860,English,added
+Q6465616,Aciaty,P131,located in the administrative territorial entity,Q4134592,Hvoznicki Sieĺsaviet,added
+Q130492490,NP-completeness of some generalizations of the maximum matching problem,P407,language of work or name,Q1860,English,added
+Q61677990,An optimal test on finite unavoidable sets of words,P407,language of work or name,Q1860,English,added
+Q56340272,Multidimensional tries used for associative searching,P407,language of work or name,Q1860,English,added
+Q122911445,On the triangle conjecture,P407,language of work or name,Q1860,English,added
+Q5685273,Q5685273,P6259,epoch,Q69307730,"November 21, 2025",added
+Q113888134,Hardware address translation for machines with a large virtual memory,P407,language of work or name,Q1860,English,added
+Q57518727,On efficient computation of the coefficients of some polynomials with applications to some enumeration problems,P407,language of work or name,Q1860,English,added
+Q57568241,Optimal packing and covering in the plane are NP-complete,P407,language of work or name,Q1860,English,added
+Q85911515,Peroxisome proliferator activated receptor ligands affect progesterone and 17β-estradiol secretion by porcine corpus luteum during early pregnancy,P407,language of work or name,Q1860,English,added
+Q122983527,"The undecidability of a word problem: On a conjecture of strong, Maggiolo-Schettini and Rosen",P407,language of work or name,Q1860,English,added
+Q59411179,Testing a simple polygon for monotonicity,P407,language of work or name,Q1860,English,added
+Q2048239,Joseph Winlock,P1066,student of,Q467611,Benjamin Peirce,added
+Q85911512,Leukotrienes biosynthesis in vascular surgery patients during perioperative period,P407,language of work or name,Q1860,English,added
+Q97574931,Stolperstein dedicated to Alfred Simon,P1889,different from,Q136365501,Stolperstein dedicated to Alfred Simon,added
+Q56157600,Bunch theory: A simple set theory for computer science,P407,language of work or name,Q1860,English,added
+Q40184160,The role of local and systemic cytokines in patients infected with Clostridium difficile,P407,language of work or name,Q1860,English,added
+Q114685347,The decision problem for database dependencies,P407,language of work or name,Q1860,English,added
+Q56210434,The clique problem for planar graphs,P407,language of work or name,Q1860,English,added
+Q61677999,An optimal algorithm for computing the repetitions in a word,P407,language of work or name,Q1860,English,added
+Q114685348,Mixed transitivity for functional and multivalued dependencies in database relations,P407,language of work or name,Q1860,English,added
+Q55894542,An efficient variation of bubble sort,P407,language of work or name,Q1860,English,added
+Q29391507,Termination detection for diffusing computations,P407,language of work or name,Q1860,English,added
+Q113888135,International Conference on computer hardware description languages and their applications,P407,language of work or name,Q1860,English,added
+Q57694060,Tuning architecture via microprogramming,P407,language of work or name,Q1860,English,added
+Q57387941,Deadline scheduling of tasks with ready times and resource constraints,P407,language of work or name,Q1860,English,added
+Q5684826,Q5684826,P6259,epoch,Q69307730,"November 21, 2025",added
+Q123314029,A note on conjecture of Kam and Ullman concerning statistical databases,P407,language of work or name,Q1860,English,added
+Q56763501,Decomposable searching problems,P407,language of work or name,Q1860,English,added
+Q57518731,Three efficient algorithms for counting problems,P407,language of work or name,Q1860,English,added
+Q56070313,Voronoi diagrams from convex hulls,P407,language of work or name,Q1860,English,added
+Q136467969,Category:Albums produced by Andy York,P31,instance of,Q4167836,Wikimedia category,added
+Q55951483,Another efficient algorithm for convex hulls in two dimensions,P407,language of work or name,Q1860,English,added
+Q29543964,Traversing binary trees simply and cheaply,P407,language of work or name,Q1860,English,added
+Q125019626,A note on the pumping lemma for regular languages,P407,language of work or name,Q1860,English,added
+Q56138402,The np-completeness of the hamiltonian cycle problem in planar diagraphs with degree bound two,P407,language of work or name,Q1860,English,added
+Q29541131,A technique for implementing backtrack algorithms and its application,P407,language of work or name,Q1860,English,added
+Q29394502,A linear-time algorithm for testing the truth of certain quantified boolean formulas,P407,language of work or name,Q1860,English,added
+Q123010395,A counterexample to the generalized Aanderaa-Rosenberg conjecture,P407,language of work or name,Q1860,English,added
+Q62654322,"Phrase structures, non-determinism and backtracking",P407,language of work or name,Q1860,English,added
+Q61661701,A probabilistic remark on algebraic program testing,P407,language of work or name,Q1860,English,added
+Q114215573,A noncommutative algorithm for multiplying 5×5 matrices using 103 multiplications,P407,language of work or name,Q1860,English,added
+Q56944429,Arcade — a system for research and education in computer architecture,P407,language of work or name,Q1860,English,added
+Q55934324,An O(|V|3) algorithm for finding maximum flows in networks,P407,language of work or name,Q1860,English,added
+Q56050587,Understanding the complexity of interpolation search,P407,language of work or name,Q1860,English,added
+Q29394334,The complexity of finding fixed-radius near neighbors,P407,language of work or name,Q1860,English,added
+Q61450098,An optimization of the alternating semantic evaluator,P407,language of work or name,Q1860,English,added
+Q121872001,Error diagnosis and recovery in one pass compilers,P407,language of work or name,Q1860,English,added
+Q60198239,Selection of good algorithms from a family of algorithms for polynomial derivative evaluation,P407,language of work or name,Q1860,English,added
+Q29393236,A generalization of Dijkstra's algorithm,P407,language of work or name,Q1860,English,added
+Q56340228,Constructing optimal binary decision trees is NP-complete,P407,language of work or name,Q1860,English,added
+Q35394621,Effect of cannabinoid receptors 1 modulation on osteoporosis in a rat model of different ages,P407,language of work or name,Q1860,English,added
+Q123365848,Automatic generation of lexical analyzers in a compiler-compiler,P407,language of work or name,Q1860,English,added
+Q114215575,An algorithm for finding all shortest paths using N2.81 infinite-precision multiplications,P407,language of work or name,Q1860,English,added
+Q56269094,A note on the complexity of the chromatic number problem,P407,language of work or name,Q1860,English,added
+Q57254330,An almost optimal algorithm for unbounded searching,P407,language of work or name,Q1860,English,added
+Q114685349,On the complexity of finding the set of candidate keys for a given set of functional dependencies,P407,language of work or name,Q1860,English,added
+Q30053698,"Subgraph isomorphism, matching relational structures and maximal cliques",P407,language of work or name,Q1860,English,added
+Q121979142,On homomorphic images of transition graphs,P407,language of work or name,Q1860,English,added
+Q67576990,A rationale for the numerical differentiation of experimental data,P407,language of work or name,Q1860,English,added
+Q57614038,Seeking out profitable countertrade opportunities,P407,language of work or name,Q1860,English,added
+Q113444241,Sales managers' perception of compensation and security policies,P407,language of work or name,Q1860,English,added
+Q114685351,International consumerism: A threat or opportunity?,P407,language of work or name,Q1860,English,added
+Q113444243,Why ICI decided to move into continental Europe and how they did it,P407,language of work or name,Q1860,English,added
+Q123270162,Proof of a conjecture of W. Veys,P407,language of work or name,Q1860,English,added
+Q29398732,A common generalization of the Frölicher-Nijenhuis bracket and the Schouten bracket for symmetric multivector fields,P407,language of work or name,Q1860,English,added
+Q124843135,A weak Hopf lemma for holomorphic mappings,P407,language of work or name,Q1860,English,added
+Q5684740,216433 Milianleo,P6259,epoch,Q69307730,"November 21, 2025",added
+Q123015177,Clemens' conjecture for octic and nonic curves,P407,language of work or name,Q1860,English,added
+Q29042360,Efficient determination of the transitive closure of a directed graph,P407,language of work or name,Q1860,English,added
+Q56485278,A note on finding the bridges of a graph,P407,language of work or name,Q1860,English,added
+Q61835184,Automorphisms ofZd-subshifts of finite type,P407,language of work or name,Q1860,English,added
+Q123191813,"On Zariski tangent spaces of Schubert varieties, and a proof of a conjecture of Deodhar",P407,language of work or name,Q1860,English,added
+Q115368303,The geometry of differential difference equations,P407,language of work or name,Q1860,English,added
+Q56813088,Motivic ε-factors at infinity and regularized dimensions,P407,language of work or name,Q1860,English,added
+Q115368309,Cartan invariants for the restricted toral rank two contact Lie algebra,P407,language of work or name,Q1860,English,added
+Q115368307,Compact leaves in minimal Riemannian foliations,P407,language of work or name,Q1860,English,added
+Q125018568,Note on a counterexample to Hilbert's fourteenth problem given by P. Roberts,P407,language of work or name,Q1860,English,added
+Q115368323,Minimal foliations on lie groups,P407,language of work or name,Q1860,English,added
+Q64385411,Normal forms of real symmetric systems with multiplicity,P407,language of work or name,Q1860,English,added
+Q124878756,Dyson's lemma without tears,P407,language of work or name,Q1860,English,added
+Q114215577,On the injective C(T)-spaces,P407,language of work or name,Q1860,English,added

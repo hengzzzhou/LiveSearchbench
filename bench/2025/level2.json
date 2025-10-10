@@ -1,0 +1,3062 @@
+{
+  "metadata": {
+    "description": "Level 2 questions that were answered correctly by o3-deep-research model",
+    "total_questions": 100,
+    "bridge_questions": 0,
+    "multi_attribute_questions": 100,
+    "verification_method": "Filtered based on correct answers from o3-deep-research results",
+    "generation_date": "2025-09-13",
+    "source_file": "level2_removed.json",
+    "results_file": "output/unknown/level2_results_close_o3_deep_research_2025_06_26_20250913_121503.json"
+  },
+  "qa_pairs": [
+    {
+      "question": "Which entity has the California Military Department as its parent organization and was involved in the Mexican-American War?",
+      "answer": "California State Guard",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "California State Guard",
+          "parent organization",
+          "California Military Department"
+        ],
+        [
+          "California State Guard",
+          "conflict",
+          "Mexican-American War"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P749 wd:Q5020692 . ?entity wdt:P607 wd:Q6683 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "parent organization: California Military Department",
+          "conflict: Mexican-American War"
+        ]
+      }
+    },
+    {
+      "question": "Which artist taught both Pieter de Grebber and Pieter Jansz. Saenredam as his students?",
+      "answer": "Frans Pietersz de Grebber",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Frans Pietersz de Grebber",
+          "student",
+          "Pieter de Grebber"
+        ],
+        [
+          "Frans Pietersz de Grebber",
+          "student",
+          "Pieter Jansz. Saenredam"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P802 wd:Q512817 . ?entity wdt:P802 wd:Q433804 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "student: Pieter de Grebber",
+          "student: Pieter Jansz. Saenredam"
+        ]
+      }
+    },
+    {
+      "question": "Which film features both Gleb Romanov and Boris Bityukov in its cast?",
+      "answer": "The Young Guard",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "The Young Guard",
+          "cast member",
+          "Gleb Romanov"
+        ],
+        [
+          "The Young Guard",
+          "cast member",
+          "Boris Bityukov"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P161 wd:Q4397146 . ?entity wdt:P161 wd:Q4087552 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 11,
+        "constraints": [
+          "cast member: Gleb Romanov",
+          "cast member: Boris Bityukov"
+        ]
+      }
+    },
+    {
+      "question": "What confectionery treat is made with butter and was invented by Jan Wedel?",
+      "answer": "ptasie mleczko",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "ptasie mleczko",
+          "made from material",
+          "butter"
+        ],
+        [
+          "ptasie mleczko",
+          "discoverer or inventor",
+          "Jan Wedel"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P186 wd:Q34172 . ?entity wdt:P61 wd:Q100334190 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 7,
+        "constraints": [
+          "made from material: butter",
+          "discoverer or inventor: Jan Wedel"
+        ]
+      }
+    },
+    {
+      "question": "Which individual has the notable work \"Muḏakkarāt Muḥammad ʿIzzaẗ Darūzaẗ\" and had citizenship in Mandatory Palestine?",
+      "answer": "Izzat Darwaza",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Izzat Darwaza",
+          "notable work",
+          "Muḏakkarāt Muḥammad ʿIzzaẗ Darūzaẗ"
+        ],
+        [
+          "Izzat Darwaza",
+          "country of citizenship",
+          "Mandatory Palestine"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P800 wd:Q135219713 . ?entity wdt:P27 wd:Q193714 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 9,
+        "constraints": [
+          "notable work: Muḏakkarāt Muḥammad ʿIzzaẗ Darūzaẗ",
+          "country of citizenship: Mandatory Palestine"
+        ]
+      }
+    },
+    {
+      "question": "Which individual has Ellen Bang and Alec Campbell as relatives?",
+      "answer": "Ruby Rose",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Ruby Rose",
+          "relative",
+          "Ellen Bang"
+        ],
+        [
+          "Ruby Rose",
+          "relative",
+          "Alec Campbell"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1038 wd:Q20810458 . ?entity wdt:P1038 wd:Q4714091 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "relative: Ellen Bang",
+          "relative: Alec Campbell"
+        ]
+      }
+    },
+    {
+      "question": "Which individual was born in Kettering and passed away in Salisbury?",
+      "answer": "Keith Roberts",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Keith Roberts",
+          "http://www.wikidata.org/prop/direct/P20",
+          "Salisbury"
+        ],
+        [
+          "Keith Roberts",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Kettering"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P20 wd:Q160642 . ?entity wdt:P19 wd:Q984613 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 7,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P20: Salisbury",
+          "http://www.wikidata.org/prop/direct/P19: Kettering"
+        ]
+      }
+    },
+    {
+      "question": "Which mathematician has both Michel Laurent and Pietro Corvaja as doctoral students?",
+      "answer": "Michel Waldschmidt",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Michel Waldschmidt",
+          "doctoral student",
+          "Michel Laurent"
+        ],
+        [
+          "Michel Waldschmidt",
+          "doctoral student",
+          "Pietro Corvaja"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P185 wd:Q102122687 . ?entity wdt:P185 wd:Q82831813 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "doctoral student: Michel Laurent",
+          "doctoral student: Pietro Corvaja"
+        ]
+      }
+    },
+    {
+      "question": "Which individual attended the University of Rochester and is known for being a songwriter?",
+      "answer": "Charles Strouse",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Charles Strouse",
+          "http://www.wikidata.org/prop/direct/P69",
+          "University of Rochester"
+        ],
+        [
+          "Charles Strouse",
+          "http://www.wikidata.org/prop/direct/P106",
+          "songwriter"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P69 wd:Q149990 . ?entity wdt:P106 wd:Q753110 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P69: University of Rochester",
+          "http://www.wikidata.org/prop/direct/P106: songwriter"
+        ]
+      }
+    },
+    {
+      "question": "Which entity shares its borders with Munhall, Braddock, Whitaker, and Swissvale?",
+      "answer": "Rankin",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Rankin",
+          "shares border with",
+          "Munhall"
+        ],
+        [
+          "Rankin",
+          "shares border with",
+          "Braddock"
+        ],
+        [
+          "Rankin",
+          "shares border with",
+          "Whitaker"
+        ],
+        [
+          "Rankin",
+          "shares border with",
+          "Swissvale"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P47 wd:Q659120 . ?entity wdt:P47 wd:Q1132991 . ?entity wdt:P47 wd:Q1185782 . ?entity wdt:P47 wd:Q1180427 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 5,
+        "constraints": [
+          "shares border with: Munhall",
+          "shares border with: Braddock",
+          "shares border with: Whitaker",
+          "shares border with: Swissvale"
+        ]
+      }
+    },
+    {
+      "question": "Which author was born in Cincinnati, has been affiliated with the University at Buffalo, and has been nominated for the Arthur C. Clarke Award?",
+      "answer": "Nnedi Okorafor",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Nnedi Okorafor",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Cincinnati"
+        ],
+        [
+          "Nnedi Okorafor",
+          "http://www.wikidata.org/prop/direct/P108",
+          "University at Buffalo"
+        ],
+        [
+          "Nnedi Okorafor",
+          "nominated for",
+          "Arthur C. Clarke Award"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P19 wd:Q43196 . ?entity wdt:P108 wd:Q681025 . ?entity wdt:P1411 wd:Q708830 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 9,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P19: Cincinnati",
+          "http://www.wikidata.org/prop/direct/P108: University at Buffalo",
+          "nominated for: Arthur C. Clarke Award"
+        ]
+      }
+    },
+    {
+      "question": "Which person was born in Davenport, speaks English, and is a member of the Writers Guild of America West?",
+      "answer": "Bryan Woods",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Bryan Woods",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Davenport"
+        ],
+        [
+          "Bryan Woods",
+          "languages spoken written or signed",
+          "English"
+        ],
+        [
+          "Bryan Woods",
+          "http://www.wikidata.org/prop/direct/P463",
+          "Writers Guild of America West"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P19 wd:Q26887 . ?entity wdt:P1412 wd:Q1860 . ?entity wdt:P463 wd:Q8038459 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P19: Davenport",
+          "languages spoken written or signed: English",
+          "http://www.wikidata.org/prop/direct/P463: Writers Guild of America West"
+        ]
+      }
+    },
+    {
+      "question": "Which sports player was a member of the Hunter Mariners, the South Sydney Rabbitohs, and the St. George Dragons?",
+      "answer": "Nick Zisti",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Nick Zisti",
+          "member of sports team",
+          "Hunter Mariners"
+        ],
+        [
+          "Nick Zisti",
+          "member of sports team",
+          "South Sydney Rabbitohs"
+        ],
+        [
+          "Nick Zisti",
+          "member of sports team",
+          "St. George Dragons"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P54 wd:Q3143357 . ?entity wdt:P54 wd:Q3325289 . ?entity wdt:P54 wd:Q3495256 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "member of sports team: Hunter Mariners",
+          "member of sports team: South Sydney Rabbitohs",
+          "member of sports team: St. George Dragons"
+        ]
+      }
+    },
+    {
+      "question": "Which athlete was born in Frutal and is known for being a beach volleyball player?",
+      "answer": "Camila Brait",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Camila Brait",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Frutal"
+        ],
+        [
+          "Camila Brait",
+          "http://www.wikidata.org/prop/direct/P106",
+          "beach volleyball player"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P19 wd:Q22045383 . ?entity wdt:P106 wd:Q17361156 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 11,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P19: Frutal",
+          "http://www.wikidata.org/prop/direct/P106: beach volleyball player"
+        ]
+      }
+    },
+    {
+      "question": "Which football player has been a member of both İstanbul Başakşehir F.K. and Riga FC?",
+      "answer": "Miloš Jojić",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Miloš Jojić",
+          "member of sports team",
+          "İstanbul Başakşehir F.K."
+        ],
+        [
+          "Miloš Jojić",
+          "member of sports team",
+          "Riga FC"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P54 wd:Q857938 . ?entity wdt:P54 wd:Q19963391 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "member of sports team: İstanbul Başakşehir F.K.",
+          "member of sports team: Riga FC"
+        ]
+      }
+    },
+    {
+      "question": "What educational system includes both Los Angeles Trade–Technical College and City College of San Francisco as its subsidiaries?",
+      "answer": "California Community Colleges",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "California Community Colleges",
+          "subsidiary",
+          "Los Angeles Trade–Technical College"
+        ],
+        [
+          "California Community Colleges",
+          "subsidiary",
+          "City College of San Francisco"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P355 wd:Q9091546 . ?entity wdt:P355 wd:Q2974556 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 25,
+        "constraints": [
+          "subsidiary: Los Angeles Trade–Technical College",
+          "subsidiary: City College of San Francisco"
+        ]
+      }
+    },
+    {
+      "question": "Which entity shares its border with Mt. Lebanon, Upper St. Clair, and Castle Shannon?",
+      "answer": "Bethel Park",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Bethel Park",
+          "shares border with",
+          "Mt. Lebanon"
+        ],
+        [
+          "Bethel Park",
+          "shares border with",
+          "Upper St. Clair"
+        ],
+        [
+          "Bethel Park",
+          "shares border with",
+          "Castle Shannon"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P47 wd:Q1186932 . ?entity wdt:P47 wd:Q1182315 . ?entity wdt:P47 wd:Q1133591 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 5,
+        "constraints": [
+          "shares border with: Mt. Lebanon",
+          "shares border with: Upper St. Clair",
+          "shares border with: Castle Shannon"
+        ]
+      }
+    },
+    {
+      "question": "Which individual held the position of vicar, was born in Chambly, practiced Catholicism, and was associated with Canada?",
+      "answer": "Charles La Rocque",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Charles La Rocque",
+          "religion",
+          "Catholicism"
+        ],
+        [
+          "Charles La Rocque",
+          "position held",
+          "vicar"
+        ],
+        [
+          "Charles La Rocque",
+          "http://www.wikidata.org/prop/direct/P27",
+          "Canada"
+        ],
+        [
+          "Charles La Rocque",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Chambly"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P140 wd:Q1841 . ?entity wdt:P39 wd:Q193364 . ?entity wdt:P27 wd:Q16 . ?entity wdt:P19 wd:Q142069 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 5,
+        "constraints": [
+          "religion: Catholicism",
+          "position held: vicar",
+          "http://www.wikidata.org/prop/direct/P27: Canada",
+          "http://www.wikidata.org/prop/direct/P19: Chambly"
+        ]
+      }
+    },
+    {
+      "question": "Which individual has both coached the sports teams FC Vitebsk and FC SKVICH Minsk?",
+      "answer": "Sergei Borovsky",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Sergei Borovsky",
+          "coach of sports team",
+          "FC Vitebsk"
+        ],
+        [
+          "Sergei Borovsky",
+          "coach of sports team",
+          "FC SKVICH Minsk"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P6087 wd:Q846362 . ?entity wdt:P6087 wd:Q995098 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "coach of sports team: FC Vitebsk",
+          "coach of sports team: FC SKVICH Minsk"
+        ]
+      }
+    },
+    {
+      "question": "Which individual, known for both painting and illustrating, has works featured in the collection at Huis van het boek, was educated at Dumbarton Academy, and was a citizen of the United Kingdom of Great Britain and Ireland?",
+      "answer": "William Strang",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "William Strang",
+          "has works in the collection",
+          "Huis van het boek"
+        ],
+        [
+          "William Strang",
+          "http://www.wikidata.org/prop/direct/P106",
+          "illustrator"
+        ],
+        [
+          "William Strang",
+          "http://www.wikidata.org/prop/direct/P106",
+          "painter"
+        ],
+        [
+          "William Strang",
+          "http://www.wikidata.org/prop/direct/P27",
+          "United Kingdom of Great Britain and Ireland"
+        ],
+        [
+          "William Strang",
+          "http://www.wikidata.org/prop/direct/P69",
+          "Dumbarton Academy"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P6379 wd:Q2754878 . ?entity wdt:P106 wd:Q644687 . ?entity wdt:P106 wd:Q1028181 . ?entity wdt:P27 wd:Q174193 . ?entity wdt:P69 wd:Q5313677 .\n}",
+      "constraint_info": {
+        "constraint_count": 5,
+        "total_attributes": 3,
+        "constraints": [
+          "has works in the collection: Huis van het boek",
+          "http://www.wikidata.org/prop/direct/P106: illustrator",
+          "http://www.wikidata.org/prop/direct/P106: painter",
+          "http://www.wikidata.org/prop/direct/P27: United Kingdom of Great Britain and Ireland",
+          "http://www.wikidata.org/prop/direct/P69: Dumbarton Academy"
+        ]
+      }
+    },
+    {
+      "question": "Which county shares its borders with Charlotte County, Aroostook County, and Sunbury County?",
+      "answer": "York County",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "York County",
+          "shares border with",
+          "Charlotte County"
+        ],
+        [
+          "York County",
+          "shares border with",
+          "Aroostook County"
+        ],
+        [
+          "York County",
+          "shares border with",
+          "Sunbury County"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P47 wd:Q1067162 . ?entity wdt:P47 wd:Q491046 . ?entity wdt:P47 wd:Q543098 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 5,
+        "constraints": [
+          "shares border with: Charlotte County",
+          "shares border with: Aroostook County",
+          "shares border with: Sunbury County"
+        ]
+      }
+    },
+    {
+      "question": "Which sports club is based in Kalamata, competes in volleyball, and is located in Greece?",
+      "answer": "Messiniakos G.S.",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Messiniakos G.S.",
+          "http://www.wikidata.org/prop/direct/P17",
+          "Greece"
+        ],
+        [
+          "Messiniakos G.S.",
+          "sport",
+          "volleyball"
+        ],
+        [
+          "Messiniakos G.S.",
+          "http://www.wikidata.org/prop/direct/P159",
+          "Kalamata"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P17 wd:Q41 . ?entity wdt:P641 wd:Q1734 . ?entity wdt:P159 wd:Q167895 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P17: Greece",
+          "sport: volleyball",
+          "http://www.wikidata.org/prop/direct/P159: Kalamata"
+        ]
+      }
+    },
+    {
+      "question": "Which footballer has been a member of Charlton Athletic F.C., Grimsby Town F.C., and Plymouth Argyle F.C.?",
+      "answer": "Billy Clarke",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Billy Clarke",
+          "member of sports team",
+          "Charlton Athletic F.C."
+        ],
+        [
+          "Billy Clarke",
+          "member of sports team",
+          "Grimsby Town F.C."
+        ],
+        [
+          "Billy Clarke",
+          "member of sports team",
+          "Plymouth Argyle F.C."
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P54 wd:Q19462 . ?entity wdt:P54 wd:Q18515 . ?entity wdt:P54 wd:Q48947 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "member of sports team: Charlton Athletic F.C.",
+          "member of sports team: Grimsby Town F.C.",
+          "member of sports team: Plymouth Argyle F.C."
+        ]
+      }
+    },
+    {
+      "question": "Which basketball player was born in Philadelphia, attended both Friends' Central School and William Penn Charter School, and is associated with the United States?",
+      "answer": "Mustafa Shakur",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Mustafa Shakur",
+          "http://www.wikidata.org/prop/direct/P69",
+          "Friends' Central School"
+        ],
+        [
+          "Mustafa Shakur",
+          "http://www.wikidata.org/prop/direct/P27",
+          "United States"
+        ],
+        [
+          "Mustafa Shakur",
+          "http://www.wikidata.org/prop/direct/P106",
+          "basketball player"
+        ],
+        [
+          "Mustafa Shakur",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Philadelphia"
+        ],
+        [
+          "Mustafa Shakur",
+          "http://www.wikidata.org/prop/direct/P69",
+          "William Penn Charter School"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P69 wd:Q5504101 . ?entity wdt:P27 wd:Q30 . ?entity wdt:P106 wd:Q3665646 . ?entity wdt:P19 wd:Q1345 . ?entity wdt:P69 wd:Q8016752 .\n}",
+      "constraint_info": {
+        "constraint_count": 5,
+        "total_attributes": 4,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P69: Friends' Central School",
+          "http://www.wikidata.org/prop/direct/P27: United States",
+          "http://www.wikidata.org/prop/direct/P106: basketball player",
+          "http://www.wikidata.org/prop/direct/P19: Philadelphia",
+          "http://www.wikidata.org/prop/direct/P69: William Penn Charter School"
+        ]
+      }
+    },
+    {
+      "question": "Which entity shares a border with Cañada de Calatrava, Ciudad Real, and Caracuel de Calatrava?",
+      "answer": "Corral de Calatrava",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Corral de Calatrava",
+          "shares border with",
+          "Cañada de Calatrava"
+        ],
+        [
+          "Corral de Calatrava",
+          "shares border with",
+          "Ciudad Real"
+        ],
+        [
+          "Corral de Calatrava",
+          "shares border with",
+          "Caracuel de Calatrava"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P47 wd:Q1658003 . ?entity wdt:P47 wd:Q15093 . ?entity wdt:P47 wd:Q1645918 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 7,
+        "constraints": [
+          "shares border with: Cañada de Calatrava",
+          "shares border with: Ciudad Real",
+          "shares border with: Caracuel de Calatrava"
+        ]
+      }
+    },
+    {
+      "question": "What video game is a space-themed 4X game that uses a computer mouse for input?",
+      "answer": "Master of Orion",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Master of Orion",
+          "genre",
+          "4X"
+        ],
+        [
+          "Master of Orion",
+          "input method",
+          "computer mouse"
+        ],
+        [
+          "Master of Orion",
+          "genre",
+          "space-themed video game"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P136 wd:Q603555 . ?entity wdt:P479 wd:Q7987 . ?entity wdt:P136 wd:Q116236799 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "genre: 4X",
+          "input method: computer mouse",
+          "genre: space-themed video game"
+        ]
+      }
+    },
+    {
+      "question": "Which entity shares a border with both Pittsburgh and Duquesne?",
+      "answer": "West Mifflin",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "West Mifflin",
+          "shares border with",
+          "Pittsburgh"
+        ],
+        [
+          "West Mifflin",
+          "shares border with",
+          "Duquesne"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P47 wd:Q1342 . ?entity wdt:P47 wd:Q1130401 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 5,
+        "constraints": [
+          "shares border with: Pittsburgh",
+          "shares border with: Duquesne"
+        ]
+      }
+    },
+    {
+      "question": "What painting features Hyacinthe-Hughes Timoléon de Cossé-Brissac and the Crown of Napoleon?",
+      "answer": "The Coronation of Napoleon",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "The Coronation of Napoleon",
+          "depicts",
+          "Hyacinthe-Hughes Timoléon de Cossé-Brissac"
+        ],
+        [
+          "The Coronation of Napoleon",
+          "depicts",
+          "Crown of Napoleon"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P180 wd:Q3143560 . ?entity wdt:P180 wd:Q1515173 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 10,
+        "constraints": [
+          "depicts: Hyacinthe-Hughes Timoléon de Cossé-Brissac",
+          "depicts: Crown of Napoleon"
+        ]
+      }
+    },
+    {
+      "question": "Which individual was born in El Reno and educated at Oklahoma State University–Oklahoma City?",
+      "answer": "Harvey Pratt",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Harvey Pratt",
+          "http://www.wikidata.org/prop/direct/P19",
+          "El Reno"
+        ],
+        [
+          "Harvey Pratt",
+          "educated at",
+          "Oklahoma State University–Oklahoma City"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P19 wd:Q1017220 . ?entity wdt:P69 wd:Q7082388 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 6,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P19: El Reno",
+          "educated at: Oklahoma State University–Oklahoma City"
+        ]
+      }
+    },
+    {
+      "question": "What river has both Davy Branch and Loop Branch as its tributaries?",
+      "answer": "Tug Fork",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Tug Fork",
+          "tributary",
+          "Davy Branch"
+        ],
+        [
+          "Tug Fork",
+          "tributary",
+          "Loop Branch"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P974 wd:Q56528945 . ?entity wdt:P974 wd:Q35366475 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 13,
+        "constraints": [
+          "tributary: Davy Branch",
+          "tributary: Loop Branch"
+        ]
+      }
+    },
+    {
+      "question": "Which individual is a science fiction writer, studied at the University of Reading, has been nominated for the BSFA Award for Best Novel, works as a legal executive, and is of British nationality?",
+      "answer": "Adrian Tchaikovsky",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Adrian Tchaikovsky",
+          "http://www.wikidata.org/prop/direct/P106",
+          "science fiction writer"
+        ],
+        [
+          "Adrian Tchaikovsky",
+          "http://www.wikidata.org/prop/direct/P69",
+          "University of Reading"
+        ],
+        [
+          "Adrian Tchaikovsky",
+          "http://www.wikidata.org/prop/direct/P31",
+          "human"
+        ],
+        [
+          "Adrian Tchaikovsky",
+          "nominated for",
+          "BSFA Award for Best Novel"
+        ],
+        [
+          "Adrian Tchaikovsky",
+          "http://www.wikidata.org/prop/direct/P27",
+          "United Kingdom"
+        ],
+        [
+          "Adrian Tchaikovsky",
+          "http://www.wikidata.org/prop/direct/P106",
+          "legal executive"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q18844224 . ?entity wdt:P69 wd:Q1432632 . ?entity wdt:P31 wd:Q5 . ?entity wdt:P1411 wd:Q4836602 . ?entity wdt:P27 wd:Q145 . ?entity wdt:P106 wd:Q6517506 .\n}",
+      "constraint_info": {
+        "constraint_count": 6,
+        "total_attributes": 3,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P106: science fiction writer",
+          "http://www.wikidata.org/prop/direct/P69: University of Reading",
+          "http://www.wikidata.org/prop/direct/P31: human",
+          "nominated for: BSFA Award for Best Novel",
+          "http://www.wikidata.org/prop/direct/P27: United Kingdom",
+          "http://www.wikidata.org/prop/direct/P106: legal executive"
+        ]
+      }
+    },
+    {
+      "question": "Which athlete has been a member of both the St. John's IceCaps and HC Kunlun Red Star?",
+      "answer": "Victor Bartley",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Victor Bartley",
+          "member of sports team",
+          "St. John's IceCaps"
+        ],
+        [
+          "Victor Bartley",
+          "member of sports team",
+          "HC Kunlun Red Star"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P54 wd:Q2297053 . ?entity wdt:P54 wd:Q23275471 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "member of sports team: St. John's IceCaps",
+          "member of sports team: HC Kunlun Red Star"
+        ]
+      }
+    },
+    {
+      "question": "Which character has music composed by Vic Schoen and features the voice of Michael Rye?",
+      "answer": "The Lone Ranger",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "The Lone Ranger",
+          "composer",
+          "Vic Schoen"
+        ],
+        [
+          "The Lone Ranger",
+          "voice actor",
+          "Michael Rye"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P86 wd:Q7924906 . ?entity wdt:P725 wd:Q472443 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 5,
+        "constraints": [
+          "composer: Vic Schoen",
+          "voice actor: Michael Rye"
+        ]
+      }
+    },
+    {
+      "question": "Which individual, born in Brixton, works as a film producer, resides in Los Angeles, and holds citizenship in the United States?",
+      "answer": "Sharon Osbourne",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Sharon Osbourne",
+          "occupation",
+          "film producer"
+        ],
+        [
+          "Sharon Osbourne",
+          "http://www.wikidata.org/prop/direct/P937",
+          "Los Angeles"
+        ],
+        [
+          "Sharon Osbourne",
+          "residence",
+          "Los Angeles"
+        ],
+        [
+          "Sharon Osbourne",
+          "http://www.wikidata.org/prop/direct/P27",
+          "United States"
+        ],
+        [
+          "Sharon Osbourne",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Brixton"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q3282637 . ?entity wdt:P937 wd:Q65 . ?entity wdt:P551 wd:Q65 . ?entity wdt:P27 wd:Q30 . ?entity wdt:P19 wd:Q146690 .\n}",
+      "constraint_info": {
+        "constraint_count": 5,
+        "total_attributes": 3,
+        "constraints": [
+          "occupation: film producer",
+          "http://www.wikidata.org/prop/direct/P937: Los Angeles",
+          "residence: Los Angeles",
+          "http://www.wikidata.org/prop/direct/P27: United States",
+          "http://www.wikidata.org/prop/direct/P19: Brixton"
+        ]
+      }
+    },
+    {
+      "question": "Which company is owned by both Clearbit and Mindstream?",
+      "answer": "HubSpot",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "HubSpot",
+          "owner of",
+          "clearbit"
+        ],
+        [
+          "HubSpot",
+          "owner of",
+          "Mindstream"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1830 wd:Q107386924 . ?entity wdt:P1830 wd:Q135235229 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 20,
+        "constraints": [
+          "owner of: clearbit",
+          "owner of: Mindstream"
+        ]
+      }
+    },
+    {
+      "question": "Which county shares a border with Queens County, Charlotte County, and Westmorland County?",
+      "answer": "Kings County",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Kings County",
+          "shares border with",
+          "Queens County"
+        ],
+        [
+          "Kings County",
+          "shares border with",
+          "Charlotte County"
+        ],
+        [
+          "Kings County",
+          "shares border with",
+          "Westmorland County"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P47 wd:Q2542396 . ?entity wdt:P47 wd:Q1067162 . ?entity wdt:P47 wd:Q1147110 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 4,
+        "constraints": [
+          "shares border with: Queens County",
+          "shares border with: Charlotte County",
+          "shares border with: Westmorland County"
+        ]
+      }
+    },
+    {
+      "question": "What children's television series has English as its original language and features John Megna as a voice actor?",
+      "answer": "The Big World of Little Adam",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "The Big World of Little Adam",
+          "original language of film or TV show",
+          "English"
+        ],
+        [
+          "The Big World of Little Adam",
+          "genre",
+          "children's television series"
+        ],
+        [
+          "The Big World of Little Adam",
+          "voice actor",
+          "John Megna"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P364 wd:Q1860 . ?entity wdt:P136 wd:Q1273568 . ?entity wdt:P725 wd:Q1101802 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "original language of film or TV show: English",
+          "genre: children's television series",
+          "voice actor: John Megna"
+        ]
+      }
+    },
+    {
+      "question": "What award includes both the P.C. Hooft-prijs 2023 and the P.C. Hooft-prijs 2024?",
+      "answer": "P.C. Hooft Award",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "P.C. Hooft Award",
+          "has part",
+          "P.C. Hooft-prijs 2023"
+        ],
+        [
+          "P.C. Hooft Award",
+          "has part",
+          "P.C. Hooft-prijs 2024"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P527 wd:Q134520349 . ?entity wdt:P527 wd:Q134520301 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "has part: P.C. Hooft-prijs 2023",
+          "has part: P.C. Hooft-prijs 2024"
+        ]
+      }
+    },
+    {
+      "question": "Which person is known for their work in scenography and is buried in Sukhumi?",
+      "answer": "Alexander Shervashidze",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Alexander Shervashidze",
+          "http://www.wikidata.org/prop/direct/P136",
+          "scenography"
+        ],
+        [
+          "Alexander Shervashidze",
+          "place of burial",
+          "Sukhumi"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P136 wd:Q737201 . ?entity wdt:P119 wd:Q40811 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P136: scenography",
+          "place of burial: Sukhumi"
+        ]
+      }
+    },
+    {
+      "question": "Which station is located adjacent to both Capital Beltway station and Washington Union Station?",
+      "answer": "New Carrollton station",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "New Carrollton station",
+          "adjacent station",
+          "Capital Beltway station"
+        ],
+        [
+          "New Carrollton station",
+          "adjacent station",
+          "Washington Union Station"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P197 wd:Q18391387 . ?entity wdt:P197 wd:Q3570 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 7,
+        "constraints": [
+          "adjacent station: Capital Beltway station",
+          "adjacent station: Washington Union Station"
+        ]
+      }
+    },
+    {
+      "question": "What individual is a teacher who studied at Jarvis Collegiate Institute, is originally from Canada, and passed away in Lindsay?",
+      "answer": "Sam Hughes",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Sam Hughes",
+          "http://www.wikidata.org/prop/direct/P27",
+          "Canada"
+        ],
+        [
+          "Sam Hughes",
+          "occupation",
+          "teacher"
+        ],
+        [
+          "Sam Hughes",
+          "http://www.wikidata.org/prop/direct/P69",
+          "Jarvis Collegiate Institute"
+        ],
+        [
+          "Sam Hughes",
+          "http://www.wikidata.org/prop/direct/P20",
+          "Lindsay"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P27 wd:Q16 . ?entity wdt:P106 wd:Q37226 . ?entity wdt:P69 wd:Q6161225 . ?entity wdt:P20 wd:Q3241437 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 3,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P27: Canada",
+          "occupation: teacher",
+          "http://www.wikidata.org/prop/direct/P69: Jarvis Collegiate Institute",
+          "http://www.wikidata.org/prop/direct/P20: Lindsay"
+        ]
+      }
+    },
+    {
+      "question": "Which entity shares its borders with Wilkinsburg, Wilkins Township, and Pittsburgh?",
+      "answer": "Penn Hills",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Penn Hills",
+          "shares border with",
+          "Wilkinsburg"
+        ],
+        [
+          "Penn Hills",
+          "shares border with",
+          "Wilkins Township"
+        ],
+        [
+          "Penn Hills",
+          "shares border with",
+          "Pittsburgh"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P47 wd:Q1184857 . ?entity wdt:P47 wd:Q1182124 . ?entity wdt:P47 wd:Q1342 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "shares border with: Wilkinsburg",
+          "shares border with: Wilkins Township",
+          "shares border with: Pittsburgh"
+        ]
+      }
+    },
+    {
+      "question": "Which entity is right-handed, plays with the right hand, and was born in Melito di Porto Salvo?",
+      "answer": "Klaus Raffeiner",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Klaus Raffeiner",
+          "handedness",
+          "right-handedness"
+        ],
+        [
+          "Klaus Raffeiner",
+          "playing hand",
+          "right-handedness"
+        ],
+        [
+          "Klaus Raffeiner",
+          "place of birth",
+          "Melito di Porto Salvo"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P552 wd:Q3039938 . ?entity wdt:P741 wd:Q3039938 . ?entity wdt:P19 wd:Q54626 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "handedness: right-handedness",
+          "playing hand: right-handedness",
+          "place of birth: Melito di Porto Salvo"
+        ]
+      }
+    },
+    {
+      "question": "What album includes the tracklist \"Pretty When You Cry\" and features the track \"The Other Woman\"?",
+      "answer": "Ultraviolence",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Ultraviolence",
+          "tracklist",
+          "Pretty When You Cry"
+        ],
+        [
+          "Ultraviolence",
+          "tracklist",
+          "The Other Woman"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P658 wd:Q135293559 . ?entity wdt:P658 wd:Q135293563 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 9,
+        "constraints": [
+          "tracklist: Pretty When You Cry",
+          "tracklist: The Other Woman"
+        ]
+      }
+    },
+    {
+      "question": "Which entity is a member of the Museum Association of New York and is distinct from the Hudson River Museum?",
+      "answer": "Hudson River Maritime Museum",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Hudson River Maritime Museum",
+          "member of",
+          "Museum Association of New York"
+        ],
+        [
+          "Hudson River Maritime Museum",
+          "different from",
+          "Hudson River Museum"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P463 wd:Q125470235 . ?entity wdt:P1889 wd:Q5928856 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "member of: Museum Association of New York",
+          "different from: Hudson River Museum"
+        ]
+      }
+    },
+    {
+      "question": "Which entity shares a border with both Plum and Turtle Creek?",
+      "answer": "Monroeville",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Monroeville",
+          "shares border with",
+          "Plum"
+        ],
+        [
+          "Monroeville",
+          "shares border with",
+          "Turtle Creek"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P47 wd:Q943998 . ?entity wdt:P47 wd:Q581104 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "shares border with: Plum",
+          "shares border with: Turtle Creek"
+        ]
+      }
+    },
+    {
+      "question": "Which river flows through both Hennepin County and Nicollet County in Minnesota?",
+      "answer": "Minnesota River",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Minnesota River",
+          "located in the administrative territorial entity",
+          "Hennepin County"
+        ],
+        [
+          "Minnesota River",
+          "located in the administrative territorial entity",
+          "Nicollet County"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P131 wd:Q486229 . ?entity wdt:P131 wd:Q490409 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 7,
+        "constraints": [
+          "located in the administrative territorial entity: Hennepin County",
+          "located in the administrative territorial entity: Nicollet County"
+        ]
+      }
+    },
+    {
+      "question": "Which sector shares a border with the Confederation Sector and includes City Park Saskatoon as part of its area?",
+      "answer": "Core Neighbourhoods Sector",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Core Neighbourhoods Sector",
+          "shares border with",
+          "Confederation Sector"
+        ],
+        [
+          "Core Neighbourhoods Sector",
+          "has part",
+          "City Park Saskatoon"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P47 wd:Q5159792 . ?entity wdt:P527 wd:Q5123347 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "shares border with: Confederation Sector",
+          "has part: City Park Saskatoon"
+        ]
+      }
+    },
+    {
+      "question": "Which entity shares a border with Aroostook County, Restigouche County, and York County?",
+      "answer": "Victoria County",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Victoria County",
+          "shares border with",
+          "Aroostook County"
+        ],
+        [
+          "Victoria County",
+          "shares border with",
+          "Restigouche County"
+        ],
+        [
+          "Victoria County",
+          "shares border with",
+          "York County"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P47 wd:Q491046 . ?entity wdt:P47 wd:Q2542491 . ?entity wdt:P47 wd:Q1752038 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 5,
+        "constraints": [
+          "shares border with: Aroostook County",
+          "shares border with: Restigouche County",
+          "shares border with: York County"
+        ]
+      }
+    },
+    {
+      "question": "What route has replaced Route nationale 132 and has been replaced by Route nationale 132?",
+      "answer": "Route nationale 10",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Route nationale 10",
+          "replaces",
+          "Route nationale 132"
+        ],
+        [
+          "Route nationale 10",
+          "replaced by",
+          "Route nationale 132"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1365 wd:Q1546376 . ?entity wdt:P1366 wd:Q1546376 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 9,
+        "constraints": [
+          "replaces: Route nationale 132",
+          "replaced by: Route nationale 132"
+        ]
+      }
+    },
+    {
+      "question": "What railway is connected to both the Milan–Venice railway and the Milan–Asso railway?",
+      "answer": "Milan Passante railway",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Milan Passante railway",
+          "connecting line",
+          "Milan–Venice railway"
+        ],
+        [
+          "Milan Passante railway",
+          "connecting line",
+          "Milan–Asso railway"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P81 wd:Q736807 . ?entity wdt:P81 wd:Q802773 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "connecting line: Milan–Venice railway",
+          "connecting line: Milan–Asso railway"
+        ]
+      }
+    },
+    {
+      "question": "Which individual had both Sanghamitra Das and Myoung-jae Lee as doctoral students?",
+      "answer": "Charles F. Manski",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Charles F. Manski",
+          "doctoral student",
+          "Sanghamitra Das"
+        ],
+        [
+          "Charles F. Manski",
+          "doctoral student",
+          "Myoung-jae Lee"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P185 wd:Q41798778 . ?entity wdt:P185 wd:Q30073725 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "doctoral student: Sanghamitra Das",
+          "doctoral student: Myoung-jae Lee"
+        ]
+      }
+    },
+    {
+      "question": "Which shrine is classified as a Shikinaisha, a Kokuhei Shosha according to Engishiki, a Beppyo Shrine, and is located in Suzuka district?",
+      "answer": "Tsubaki Grand Shrine",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Tsubaki Grand Shrine",
+          "instance of",
+          "Shikinaisha"
+        ],
+        [
+          "Tsubaki Grand Shrine",
+          "instance of",
+          "Kokuhei Shosha (Engishiki)"
+        ],
+        [
+          "Tsubaki Grand Shrine",
+          "instance of",
+          "Beppyo Shrine"
+        ],
+        [
+          "Tsubaki Grand Shrine",
+          "located in the administrative territorial entity",
+          "Suzuka district"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P31 wd:Q134917286 . ?entity wdt:P31 wd:Q135206465 . ?entity wdt:P31 wd:Q10898274 . ?entity wdt:P131 wd:Q278828 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 13,
+        "constraints": [
+          "instance of: Shikinaisha",
+          "instance of: Kokuhei Shosha (Engishiki)",
+          "instance of: Beppyo Shrine",
+          "located in the administrative territorial entity: Suzuka district"
+        ]
+      }
+    },
+    {
+      "question": "Which operating system has derivative works NetHunter and OpenZaurus?",
+      "answer": "Debian",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Debian",
+          "derivative work",
+          "NetHunter"
+        ],
+        [
+          "Debian",
+          "derivative work",
+          "OpenZaurus"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P4969 wd:Q23680076 . ?entity wdt:P4969 wd:Q1761492 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 11,
+        "constraints": [
+          "derivative work: NetHunter",
+          "derivative work: OpenZaurus"
+        ]
+      }
+    },
+    {
+      "question": "Which poet was born in Brights Grove and holds Canadian citizenship?",
+      "answer": "Paul Vermeersch",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Paul Vermeersch",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Brights Grove"
+        ],
+        [
+          "Paul Vermeersch",
+          "http://www.wikidata.org/prop/direct/P27",
+          "Canada"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P19 wd:Q4967779 . ?entity wdt:P27 wd:Q16 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P19: Brights Grove",
+          "http://www.wikidata.org/prop/direct/P27: Canada"
+        ]
+      }
+    },
+    {
+      "question": "Which individual is known as a boxer, is associated with New Zealand, and has been a member of the sports team St. George Illawarra Dragons?",
+      "answer": "Solomon Haumono",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Solomon Haumono",
+          "http://www.wikidata.org/prop/direct/P106",
+          "boxer"
+        ],
+        [
+          "Solomon Haumono",
+          "http://www.wikidata.org/prop/direct/P27",
+          "New Zealand"
+        ],
+        [
+          "Solomon Haumono",
+          "member of sports team",
+          "St. George Illawarra Dragons"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q11338576 . ?entity wdt:P27 wd:Q664 . ?entity wdt:P54 wd:Q3495259 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P106: boxer",
+          "http://www.wikidata.org/prop/direct/P27: New Zealand",
+          "member of sports team: St. George Illawarra Dragons"
+        ]
+      }
+    },
+    {
+      "question": "Which musician specializes in both folk music and traditional pop and studied under Seyyed Mohammd Taherpour?",
+      "answer": "Alireza Eftekhari",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Alireza Eftekhari",
+          "genre",
+          "folk music"
+        ],
+        [
+          "Alireza Eftekhari",
+          "genre",
+          "traditional pop"
+        ],
+        [
+          "Alireza Eftekhari",
+          "student of",
+          "Seyyed Mohammd Taherpour"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P136 wd:Q43343 . ?entity wdt:P136 wd:Q1196752 . ?entity wdt:P1066 wd:Q135410024 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "genre: folk music",
+          "genre: traditional pop",
+          "student of: Seyyed Mohammd Taherpour"
+        ]
+      }
+    },
+    {
+      "question": "What film, directed by Roger Spottiswoode, is primarily in English and is set in Washington?",
+      "answer": "The Pursuit of D. B. Cooper",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "The Pursuit of D. B. Cooper",
+          "http://www.wikidata.org/prop/direct/P364",
+          "English"
+        ],
+        [
+          "The Pursuit of D. B. Cooper",
+          "http://www.wikidata.org/prop/direct/P57",
+          "Q506352"
+        ],
+        [
+          "The Pursuit of D. B. Cooper",
+          "http://www.wikidata.org/prop/direct/P840",
+          "Washington"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P364 wd:Q1860 . ?entity wdt:P57 wd:Q506352 . ?entity wdt:P840 wd:Q1223 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P364: English",
+          "http://www.wikidata.org/prop/direct/P57: Q506352",
+          "http://www.wikidata.org/prop/direct/P840: Washington"
+        ]
+      }
+    },
+    {
+      "question": "Which rugby league player has been a member of the Penrith Panthers, Samoa national rugby league team, Manly-Warringah Sea Eagles, and the South Sydney Rabbitohs?",
+      "answer": "Joe Galuvao",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Joe Galuvao",
+          "member of sports team",
+          "Penrith Panthers"
+        ],
+        [
+          "Joe Galuvao",
+          "member of sports team",
+          "Samoa national rugby league team"
+        ],
+        [
+          "Joe Galuvao",
+          "member of sports team",
+          "Manly-Warringah Sea Eagles"
+        ],
+        [
+          "Joe Galuvao",
+          "member of sports team",
+          "South Sydney Rabbitohs"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P54 wd:Q3374818 . ?entity wdt:P54 wd:Q3590539 . ?entity wdt:P54 wd:Q3286027 . ?entity wdt:P54 wd:Q3325289 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 4,
+        "constraints": [
+          "member of sports team: Penrith Panthers",
+          "member of sports team: Samoa national rugby league team",
+          "member of sports team: Manly-Warringah Sea Eagles",
+          "member of sports team: South Sydney Rabbitohs"
+        ]
+      }
+    },
+    {
+      "question": "Which historical figure was educated at Uppsala University and has a child named Astrid Ebba Christiana Sandels?",
+      "answer": "Johan August Sandels",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Johan August Sandels",
+          "child",
+          "Astrid Ebba Christiana Sandels"
+        ],
+        [
+          "Johan August Sandels",
+          "educated at",
+          "Uppsala University"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P40 wd:Q134546500 . ?entity wdt:P69 wd:Q185246 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "child: Astrid Ebba Christiana Sandels",
+          "educated at: Uppsala University"
+        ]
+      }
+    },
+    {
+      "question": "What film features both Massimo Anzellotti and Sergio Di Pinto in its cast?",
+      "answer": "Liquirizia",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Liquirizia",
+          "cast member",
+          "Massimo Anzellotti"
+        ],
+        [
+          "Liquirizia",
+          "cast member",
+          "Sergio Di Pinto"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P161 wd:Q135523397 . ?entity wdt:P161 wd:Q3956097 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 9,
+        "constraints": [
+          "cast member: Massimo Anzellotti",
+          "cast member: Sergio Di Pinto"
+        ]
+      }
+    },
+    {
+      "question": "Which artist attended the Government College of Fine Arts, Chennai, speaks both English and Tamil, and follows Islam?",
+      "answer": "Syed Thajudeen",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Syed Thajudeen",
+          "languages spoken written or signed",
+          "English"
+        ],
+        [
+          "Syed Thajudeen",
+          "http://www.wikidata.org/prop/direct/P69",
+          "Government College of Fine Arts, Chennai"
+        ],
+        [
+          "Syed Thajudeen",
+          "languages spoken written or signed",
+          "Tamil"
+        ],
+        [
+          "Syed Thajudeen",
+          "religion",
+          "Islam"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1412 wd:Q1860 . ?entity wdt:P69 wd:Q3577799 . ?entity wdt:P1412 wd:Q5885 . ?entity wdt:P140 wd:Q432 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 3,
+        "constraints": [
+          "languages spoken written or signed: English",
+          "http://www.wikidata.org/prop/direct/P69: Government College of Fine Arts, Chennai",
+          "languages spoken written or signed: Tamil",
+          "religion: Islam"
+        ]
+      }
+    },
+    {
+      "question": "Which individual held the position of kyrkoherde i Adolf Fredriks församling and also served as the Archbishop of Uppsala?",
+      "answer": "Johan Olof Wallin",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Johan Olof Wallin",
+          "position held",
+          "Archbishop of Uppsala"
+        ],
+        [
+          "Johan Olof Wallin",
+          "position held",
+          "kyrkoherde i Adolf Fredriks församling"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P39 wd:Q1162994 . ?entity wdt:P39 wd:Q134576809 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 11,
+        "constraints": [
+          "position held: Archbishop of Uppsala",
+          "position held: kyrkoherde i Adolf Fredriks församling"
+        ]
+      }
+    },
+    {
+      "question": "Which satellite has a BCP-300 bus design, was involved in a spacecraft decommissioning, and experienced a contract awarding event?",
+      "answer": "NEXTSat",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "NEXTSat",
+          "satellite bus",
+          "BCP-300"
+        ],
+        [
+          "NEXTSat",
+          "significant event",
+          "spacecraft decommissioning"
+        ],
+        [
+          "NEXTSat",
+          "significant event",
+          "contract awarding"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P707 wd:Q106457215 . ?entity wdt:P793 wd:Q119055914 . ?entity wdt:P793 wd:Q5165664 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 9,
+        "constraints": [
+          "satellite bus: BCP-300",
+          "significant event: spacecraft decommissioning",
+          "significant event: contract awarding"
+        ]
+      }
+    },
+    {
+      "question": "What album includes both the tracklist \"Rent\" and \"Love Pains\"?",
+      "answer": "Results",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Results",
+          "tracklist",
+          "Rent"
+        ],
+        [
+          "Results",
+          "tracklist",
+          "Love Pains"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P658 wd:Q135493631 . ?entity wdt:P658 wd:Q135493634 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 9,
+        "constraints": [
+          "tracklist: Rent",
+          "tracklist: Love Pains"
+        ]
+      }
+    },
+    {
+      "question": "Which basketball player was a member of Ratiopharm Ulm and attended Brigham Young University?",
+      "answer": "Trent Plaisted",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Trent Plaisted",
+          "http://www.wikidata.org/prop/direct/P106",
+          "basketball player"
+        ],
+        [
+          "Trent Plaisted",
+          "member of sports team",
+          "Ratiopharm Ulm"
+        ],
+        [
+          "Trent Plaisted",
+          "http://www.wikidata.org/prop/direct/P69",
+          "Brigham Young University"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q3665646 . ?entity wdt:P54 wd:Q266588 . ?entity wdt:P69 wd:Q332498 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 5,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P106: basketball player",
+          "member of sports team: Ratiopharm Ulm",
+          "http://www.wikidata.org/prop/direct/P69: Brigham Young University"
+        ]
+      }
+    },
+    {
+      "question": "What film is directed by Jon S. Baird and set in Scotland?",
+      "answer": "Filth",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Filth",
+          "http://www.wikidata.org/prop/direct/P840",
+          "Scotland"
+        ],
+        [
+          "Filth",
+          "http://www.wikidata.org/prop/direct/P57",
+          "Jon S. Baird"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P840 wd:Q22 . ?entity wdt:P57 wd:Q17232832 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P840: Scotland",
+          "http://www.wikidata.org/prop/direct/P57: Jon S. Baird"
+        ]
+      }
+    },
+    {
+      "question": "Which individual is both a politician and an alumnus of Urmia University, and was born in Urmia?",
+      "answer": "Nader Ghazipour",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Nader Ghazipour",
+          "http://www.wikidata.org/prop/direct/P106",
+          "politician"
+        ],
+        [
+          "Nader Ghazipour",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Urmia"
+        ],
+        [
+          "Nader Ghazipour",
+          "http://www.wikidata.org/prop/direct/P69",
+          "Urmia University"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q82955 . ?entity wdt:P19 wd:Q179665 . ?entity wdt:P69 wd:Q3874128 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P106: politician",
+          "http://www.wikidata.org/prop/direct/P19: Urmia",
+          "http://www.wikidata.org/prop/direct/P69: Urmia University"
+        ]
+      }
+    },
+    {
+      "question": "Which literary work has editions titled Бочка амонтиллиадо and Бочка амонтильядо?",
+      "answer": "The Cask of Amontillado",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "The Cask of Amontillado",
+          "has edition or translation",
+          "Бочка амонтиллиадо"
+        ],
+        [
+          "The Cask of Amontillado",
+          "has edition or translation",
+          "Бочка амонтильядо"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P747 wd:Q118877933 . ?entity wdt:P747 wd:Q118877930 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "has edition or translation: Бочка амонтиллиадо",
+          "has edition or translation: Бочка амонтильядо"
+        ]
+      }
+    },
+    {
+      "question": "Which metropolitan area overlaps with Chicagoland and includes the significant place Des Plaines?",
+      "answer": "Chicago metropolitan area",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Chicago metropolitan area",
+          "territory overlaps",
+          "Chicagoland"
+        ],
+        [
+          "Chicago metropolitan area",
+          "significant place",
+          "Des Plaines"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P3179 wd:Q134718040 . ?entity wdt:P7153 wd:Q386961 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 8,
+        "constraints": [
+          "territory overlaps: Chicagoland",
+          "significant place: Des Plaines"
+        ]
+      }
+    },
+    {
+      "question": "Which river is associated with lakes on both the Övre Hillen and بحيره نيدر نورين?",
+      "answer": "Kolbäcksån",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Kolbäcksån",
+          "lakes on river",
+          "Övre Hillen"
+        ],
+        [
+          "Kolbäcksån",
+          "lakes on river",
+          "بحيره نيدر نورين"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P469 wd:Q10728731 . ?entity wdt:P469 wd:Q17710092 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 8,
+        "constraints": [
+          "lakes on river: Övre Hillen",
+          "lakes on river: بحيره نيدر نورين"
+        ]
+      }
+    },
+    {
+      "question": "Which royal figure had the given name Davit and was the parent of Мзехатун Давидовна Имеретинская?",
+      "answer": "David II of Imereti",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "David II of Imereti",
+          "occupation",
+          "royalty"
+        ],
+        [
+          "David II of Imereti",
+          "given name",
+          "Davit"
+        ],
+        [
+          "David II of Imereti",
+          "child",
+          "Мзехатун Давидовна Имеретинская"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q11573099 . ?entity wdt:P735 wd:Q83143826 . ?entity wdt:P40 wd:Q135094807 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "occupation: royalty",
+          "given name: Davit",
+          "child: Мзехатун Давидовна Имеретинская"
+        ]
+      }
+    },
+    {
+      "question": "Which historical figure authored the notable work \"De immortalitate animae\" and communicated using Old French?",
+      "answer": "William of Auvergne",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "William of Auvergne",
+          "notable work",
+          "De immortalitate animae"
+        ],
+        [
+          "William of Auvergne",
+          "languages spoken written or signed",
+          "Old French"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P800 wd:Q134694701 . ?entity wdt:P1412 wd:Q35222 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 7,
+        "constraints": [
+          "notable work: De immortalitate animae",
+          "languages spoken written or signed: Old French"
+        ]
+      }
+    },
+    {
+      "question": "Which sports player has been a member of the South Sydney Rabbitohs, St. George Illawarra Dragons, St. George Dragons, Canberra Raiders, and Queensland Maroons teams?",
+      "answer": "Mitch Brennan",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Mitch Brennan",
+          "member of sports team",
+          "South Sydney Rabbitohs"
+        ],
+        [
+          "Mitch Brennan",
+          "member of sports team",
+          "St. George Illawarra Dragons"
+        ],
+        [
+          "Mitch Brennan",
+          "member of sports team",
+          "St. George Dragons"
+        ],
+        [
+          "Mitch Brennan",
+          "member of sports team",
+          "Canberra Raiders"
+        ],
+        [
+          "Mitch Brennan",
+          "member of sports team",
+          "Queensland Maroons"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P54 wd:Q3325289 . ?entity wdt:P54 wd:Q3495259 . ?entity wdt:P54 wd:Q3495256 . ?entity wdt:P54 wd:Q2936194 . ?entity wdt:P54 wd:Q3590767 .\n}",
+      "constraint_info": {
+        "constraint_count": 5,
+        "total_attributes": 5,
+        "constraints": [
+          "member of sports team: South Sydney Rabbitohs",
+          "member of sports team: St. George Illawarra Dragons",
+          "member of sports team: St. George Dragons",
+          "member of sports team: Canberra Raiders",
+          "member of sports team: Queensland Maroons"
+        ]
+      }
+    },
+    {
+      "question": "Which individual has received education from both Goldsmiths University of London and Gloucestershire College?",
+      "answer": "Mary Evans",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Mary Evans",
+          "educated at",
+          "Goldsmiths University of London"
+        ],
+        [
+          "Mary Evans",
+          "educated at",
+          "Gloucestershire College"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P69 wd:Q528231 . ?entity wdt:P69 wd:Q5572096 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 5,
+        "constraints": [
+          "educated at: Goldsmiths University of London",
+          "educated at: Gloucestershire College"
+        ]
+      }
+    },
+    {
+      "question": "Which band features both Jack Green and Twink as members?",
+      "answer": "The Pretty Things",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "The Pretty Things",
+          "has part",
+          "Jack Green"
+        ],
+        [
+          "The Pretty Things",
+          "has part",
+          "Twink"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P527 wd:Q3157190 . ?entity wdt:P527 wd:Q976193 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 7,
+        "constraints": [
+          "has part: Jack Green",
+          "has part: Twink"
+        ]
+      }
+    },
+    {
+      "question": "What atlas has been reviewed by both Cyril Mango and John Buckler?",
+      "answer": "Barrington Atlas of the Greek and Roman World",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Barrington Atlas of the Greek and Roman World",
+          "reviewed by",
+          "Cyril Mango"
+        ],
+        [
+          "Barrington Atlas of the Greek and Roman World",
+          "reviewed by",
+          "John Buckler"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P4032 wd:Q1148656 . ?entity wdt:P4032 wd:Q5589423 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 28,
+        "constraints": [
+          "reviewed by: Cyril Mango",
+          "reviewed by: John Buckler"
+        ]
+      }
+    },
+    {
+      "question": "Which river has Price Run and Stamping Creek as its tributaries?",
+      "answer": "Greenbrier River",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Greenbrier River",
+          "tributary",
+          "Price Run"
+        ],
+        [
+          "Greenbrier River",
+          "tributary",
+          "Stamping Creek"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P974 wd:Q25025334 . ?entity wdt:P974 wd:Q25025397 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 6,
+        "constraints": [
+          "tributary: Price Run",
+          "tributary: Stamping Creek"
+        ]
+      }
+    },
+    {
+      "question": "Which writer and novelist attended Leeds High School and received the Bram Stoker Award for Novel?",
+      "answer": "Caitlín R. Kiernan",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Caitlín R. Kiernan",
+          "http://www.wikidata.org/prop/direct/P106",
+          "writer"
+        ],
+        [
+          "Caitlín R. Kiernan",
+          "http://www.wikidata.org/prop/direct/P106",
+          "novelist"
+        ],
+        [
+          "Caitlín R. Kiernan",
+          "award received",
+          "Bram Stoker Award for Novel"
+        ],
+        [
+          "Caitlín R. Kiernan",
+          "http://www.wikidata.org/prop/direct/P69",
+          "Leeds High School"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q36180 . ?entity wdt:P106 wd:Q6625963 . ?entity wdt:P166 wd:Q221178 . ?entity wdt:P69 wd:Q23302766 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 5,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P106: writer",
+          "http://www.wikidata.org/prop/direct/P106: novelist",
+          "award received: Bram Stoker Award for Novel",
+          "http://www.wikidata.org/prop/direct/P69: Leeds High School"
+        ]
+      }
+    },
+    {
+      "question": "What is the name of the interchange station that is also a historic building located in Basmane?",
+      "answer": "Basmane railway station",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Basmane railway station",
+          "http://www.wikidata.org/prop/direct/P31",
+          "interchange station"
+        ],
+        [
+          "Basmane railway station",
+          "http://www.wikidata.org/prop/direct/P276",
+          "Basmane"
+        ],
+        [
+          "Basmane railway station",
+          "http://www.wikidata.org/prop/direct/P31",
+          "historic building"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P31 wd:Q1147171 . ?entity wdt:P276 wd:Q6028301 . ?entity wdt:P31 wd:Q35112127 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 5,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P31: interchange station",
+          "http://www.wikidata.org/prop/direct/P276: Basmane",
+          "http://www.wikidata.org/prop/direct/P31: historic building"
+        ]
+      }
+    },
+    {
+      "question": "Which military force was succeeded by both the Latvian National Armed Forces and the Lithuanian Armed Forces?",
+      "answer": "Soviet Armed Forces",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Soviet Armed Forces",
+          "followed by",
+          "Latvian National Armed Forces"
+        ],
+        [
+          "Soviet Armed Forces",
+          "followed by",
+          "Lithuanian Armed Forces"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P156 wd:Q662311 . ?entity wdt:P156 wd:Q635598 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "followed by: Latvian National Armed Forces",
+          "followed by: Lithuanian Armed Forces"
+        ]
+      }
+    },
+    {
+      "question": "Which individual was born in Ķieģeļi and studied at the Saint Petersburg Stieglitz State Academy of Art and Design?",
+      "answer": "Rihards Zariņš",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Rihards Zariņš",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Ķieģeļi"
+        ],
+        [
+          "Rihards Zariņš",
+          "http://www.wikidata.org/prop/direct/P69",
+          "Saint Petersburg Stieglitz State Academy of Art and Design"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P19 wd:Q16357539 . ?entity wdt:P69 wd:Q2652597 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P19: Ķieģeļi",
+          "http://www.wikidata.org/prop/direct/P69: Saint Petersburg Stieglitz State Academy of Art and Design"
+        ]
+      }
+    },
+    {
+      "question": "What venue serves as the home for both the Calgary Boomers and Calgary Wild FC?",
+      "answer": "McMahon Stadium",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "McMahon Stadium",
+          "occupant",
+          "Calgary Boomers"
+        ],
+        [
+          "McMahon Stadium",
+          "occupant",
+          "Calgary Wild FC"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P466 wd:Q1568677 . ?entity wdt:P466 wd:Q126616608 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "occupant: Calgary Boomers",
+          "occupant: Calgary Wild FC"
+        ]
+      }
+    },
+    {
+      "question": "Which entity held the position of kyrkoherde i Hedvig Eleonora församling and has the given name Henrik?",
+      "answer": "Erik Bergman",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Erik Bergman",
+          "position held",
+          "kyrkoherde i Hedvig Eleonora församling"
+        ],
+        [
+          "Erik Bergman",
+          "given name",
+          "Henrik"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P39 wd:Q134883151 . ?entity wdt:P735 wd:Q594279 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "position held: kyrkoherde i Hedvig Eleonora församling",
+          "given name: Henrik"
+        ]
+      }
+    },
+    {
+      "question": "What river is located in Riverside County and includes the Santa Ana Wash as part of its system?",
+      "answer": "Santa Ana River",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Santa Ana River",
+          "located in the administrative territorial entity",
+          "Riverside County"
+        ],
+        [
+          "Santa Ana River",
+          "has part",
+          "Santa Ana Wash"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P131 wd:Q108111 . ?entity wdt:P527 wd:Q134928582 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "located in the administrative territorial entity: Riverside County",
+          "has part: Santa Ana Wash"
+        ]
+      }
+    },
+    {
+      "question": "What conflict involved both the Puebloan peoples and the Purepecha as participants?",
+      "answer": "Tiguex War",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Tiguex War",
+          "participant",
+          "Puebloan peoples"
+        ],
+        [
+          "Tiguex War",
+          "participant",
+          "Purepecha"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P710 wd:Q852431 . ?entity wdt:P710 wd:Q45009 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "participant: Puebloan peoples",
+          "participant: Purepecha"
+        ]
+      }
+    },
+    {
+      "question": "Which entity is located in the UTC−06:00 time zone and contains the settlement known as Ciudad Guzmán?",
+      "answer": "Zapotlán el Grande",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Zapotlán el Grande",
+          "located in time zone",
+          "UTC−06:00"
+        ],
+        [
+          "Zapotlán el Grande",
+          "contains settlement",
+          "Ciudad Guzmán"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P421 wd:Q5385 . ?entity wdt:P1383 wd:Q1094355 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "located in time zone: UTC−06:00",
+          "contains settlement: Ciudad Guzmán"
+        ]
+      }
+    },
+    {
+      "question": "Which individual is the parent of both Abu Hudhaifah ibn al-Mughirah and Hisham ibn al-Mughira?",
+      "answer": "Al-Mughira ibn Abd Allah",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Al-Mughira ibn Abd Allah",
+          "child",
+          "Abu Hudhaifah ibn al-Mughirah"
+        ],
+        [
+          "Al-Mughira ibn Abd Allah",
+          "child",
+          "Hisham ibn al-Mughira"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P40 wd:Q1146132 . ?entity wdt:P40 wd:Q5772595 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 6,
+        "constraints": [
+          "child: Abu Hudhaifah ibn al-Mughirah",
+          "child: Hisham ibn al-Mughira"
+        ]
+      }
+    },
+    {
+      "question": "What film features the character Diesel 10 and has Edward Glen as a voice actor?",
+      "answer": "Thomas and the Magic Railroad",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Thomas and the Magic Railroad",
+          "characters",
+          "Diesel 10"
+        ],
+        [
+          "Thomas and the Magic Railroad",
+          "voice actor",
+          "Edward Glen"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P674 wd:Q134692172 . ?entity wdt:P725 wd:Q5343120 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 9,
+        "constraints": [
+          "characters: Diesel 10",
+          "voice actor: Edward Glen"
+        ]
+      }
+    },
+    {
+      "question": "Which designer has works in the collection Mobilier national and was employed by Gebrüder Thonet?",
+      "answer": "Pierre Paulin",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Pierre Paulin",
+          "has works in the collection",
+          "Mobilier national"
+        ],
+        [
+          "Pierre Paulin",
+          "employer",
+          "Gebrüder Thonet"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P6379 wd:Q3317663 . ?entity wdt:P108 wd:Q1497235 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "has works in the collection: Mobilier national",
+          "employer: Gebrüder Thonet"
+        ]
+      }
+    },
+    {
+      "question": "Which children's writer was born in Japan and has been nominated for the Nebula Award for Best Novel?",
+      "answer": "Ursula Vernon",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Ursula Vernon",
+          "http://www.wikidata.org/prop/direct/P106",
+          "children's writer"
+        ],
+        [
+          "Ursula Vernon",
+          "nominated for",
+          "Nebula Award for Best Novel"
+        ],
+        [
+          "Ursula Vernon",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Japan"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q4853732 . ?entity wdt:P1411 wd:Q266012 . ?entity wdt:P19 wd:Q17 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 5,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P106: children's writer",
+          "nominated for: Nebula Award for Best Novel",
+          "http://www.wikidata.org/prop/direct/P19: Japan"
+        ]
+      }
+    },
+    {
+      "question": "Which individual was born in Naunhof and is known for being an exlibrist?",
+      "answer": "Paul Horst-Schulze",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Paul Horst-Schulze",
+          "http://www.wikidata.org/prop/direct/P31",
+          "human"
+        ],
+        [
+          "Paul Horst-Schulze",
+          "http://www.wikidata.org/prop/direct/P106",
+          "exlibrist"
+        ],
+        [
+          "Paul Horst-Schulze",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Naunhof"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P31 wd:Q5 . ?entity wdt:P106 wd:Q107212688 . ?entity wdt:P19 wd:Q10771 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 4,
+        "constraints": [
+          "http://www.wikidata.org/prop/direct/P31: human",
+          "http://www.wikidata.org/prop/direct/P106: exlibrist",
+          "http://www.wikidata.org/prop/direct/P19: Naunhof"
+        ]
+      }
+    },
+    {
+      "question": "Which basketball player is associated with the Basketball Bundesliga, was born in Pawtucket, and attended Manhattan University?",
+      "answer": "Jeff Xavier",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Jeff Xavier",
+          "league",
+          "Basketball Bundesliga"
+        ],
+        [
+          "Jeff Xavier",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Pawtucket"
+        ],
+        [
+          "Jeff Xavier",
+          "http://www.wikidata.org/prop/direct/P69",
+          "Manhattan University"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P118 wd:Q540636 . ?entity wdt:P19 wd:Q49200 . ?entity wdt:P69 wd:Q2749572 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 4,
+        "constraints": [
+          "league: Basketball Bundesliga",
+          "http://www.wikidata.org/prop/direct/P19: Pawtucket",
+          "http://www.wikidata.org/prop/direct/P69: Manhattan University"
+        ]
+      }
+    },
+    {
+      "question": "What album was produced by both Kanye West and Pop Wansel?",
+      "answer": "Cruel Summer",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Cruel Summer",
+          "producer",
+          "Kanye West"
+        ],
+        [
+          "Cruel Summer",
+          "producer",
+          "Pop Wansel"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P162 wd:Q15935 . ?entity wdt:P162 wd:Q33518908 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 9,
+        "constraints": [
+          "producer: Kanye West",
+          "producer: Pop Wansel"
+        ]
+      }
+    },
+    {
+      "question": "What album features performer Claude Léveillée and is available in the compact disc format?",
+      "answer": "1 fois 5",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "1 fois 5",
+          "performer",
+          "Claude Léveillée"
+        ],
+        [
+          "1 fois 5",
+          "distribution format",
+          "compact disc"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P175 wd:Q2977736 . ?entity wdt:P437 wd:Q34467 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 5,
+        "constraints": [
+          "performer: Claude Léveillée",
+          "distribution format: compact disc"
+        ]
+      }
+    },
+    {
+      "question": "What musical work is performed by Vanity Fare?",
+      "answer": "Hitchin' a Ride",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Hitchin' a Ride",
+          "instance of",
+          "musical work/composition"
+        ],
+        [
+          "Hitchin' a Ride",
+          "http://www.wikidata.org/prop/direct/P175",
+          "Vanity Fare"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P31 wd:Q105543609 . ?entity wdt:P175 wd:Q626398 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "instance of: musical work/composition",
+          "http://www.wikidata.org/prop/direct/P175: Vanity Fare"
+        ]
+      }
+    },
+    {
+      "question": "What town shares its borders with Oyster Bay, Islip, and Huntington?",
+      "answer": "Babylon",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Babylon",
+          "shares border with",
+          "Oyster Bay"
+        ],
+        [
+          "Babylon",
+          "shares border with",
+          "Islip"
+        ],
+        [
+          "Babylon",
+          "shares border with",
+          "Huntington"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P47 wd:Q129361 . ?entity wdt:P47 wd:Q1751219 . ?entity wdt:P47 wd:Q999123 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "shares border with: Oyster Bay",
+          "shares border with: Islip",
+          "shares border with: Huntington"
+        ]
+      }
+    },
+    {
+      "question": "Which athletic conference includes both the Northern Illinois Huskies football team and the Grand Canyon Antelopes?",
+      "answer": "Mountain West Conference",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Mountain West Conference",
+          "has part",
+          "Northern Illinois Huskies football"
+        ],
+        [
+          "Mountain West Conference",
+          "has part",
+          "Grand Canyon Antelopes"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P527 wd:Q7058416 . ?entity wdt:P527 wd:Q5594342 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "has part: Northern Illinois Huskies football",
+          "has part: Grand Canyon Antelopes"
+        ]
+      }
+    },
+    {
+      "question": "Which historical agreement, classified as a capitulation and originating under the Crown of Castile, currently holds a public domain copyright status?",
+      "answer": "Capitulations of Santa Fe",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Capitulations of Santa Fe",
+          "copyright status",
+          "public domain"
+        ],
+        [
+          "Capitulations of Santa Fe",
+          "http://www.wikidata.org/prop/direct/P495",
+          "Crown of Castile"
+        ],
+        [
+          "Capitulations of Santa Fe",
+          "http://www.wikidata.org/prop/direct/P31",
+          "capitulation"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P6216 wd:Q19652 . ?entity wdt:P495 wd:Q217196 . ?entity wdt:P31 wd:Q661305 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "copyright status: public domain",
+          "http://www.wikidata.org/prop/direct/P495: Crown of Castile",
+          "http://www.wikidata.org/prop/direct/P31: capitulation"
+        ]
+      }
+    },
+    {
+      "question": "Which sports player was a member of the Northern Eagles, the North Sydney Bears, and the Canterbury-Bankstown Bulldogs?",
+      "answer": "Mark O'Meley",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Mark O'Meley",
+          "member of sports team",
+          "Northern Eagles"
+        ],
+        [
+          "Mark O'Meley",
+          "member of sports team",
+          "North Sydney Bears"
+        ],
+        [
+          "Mark O'Meley",
+          "member of sports team",
+          "Canterbury-Bankstown Bulldogs"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P54 wd:Q3344212 . ?entity wdt:P54 wd:Q3344175 . ?entity wdt:P54 wd:Q2936583 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "member of sports team: Northern Eagles",
+          "member of sports team: North Sydney Bears",
+          "member of sports team: Canterbury-Bankstown Bulldogs"
+        ]
+      }
+    }
+  ]
+}

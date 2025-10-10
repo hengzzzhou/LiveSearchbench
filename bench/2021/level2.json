@@ -1,0 +1,3117 @@
+{
+  "metadata": {
+    "total_questions": 100,
+    "sampled_from": 127,
+    "original_metadata": {
+      "description": "Level 2 multi-hop questions with complex constraints",
+      "total_questions": 182,
+      "verification_method": "SPARQL queries",
+      "sparql_verified_count": 100,
+      "generation_date": "2025-09-12"
+    }
+  },
+  "qa_pairs": [
+    {
+      "question": "What traditional dance has its origins in Bolivia but is also prominently performed in Chile?",
+      "answer": "Diablada",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Diablada",
+          "country of origin",
+          "Bolivia"
+        ],
+        [
+          "Diablada",
+          "country",
+          "Chile"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P495 wd:Q750 . ?entity wdt:P17 wd:Q298 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "country of origin: Bolivia",
+          "country: Chile"
+        ]
+      }
+    },
+    {
+      "question": "Which individual has been employed by St George's University of London, University of London, and University of Glasgow?",
+      "answer": "Michael Farthing",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Michael Farthing",
+          "employer",
+          "St George's University of London"
+        ],
+        [
+          "Michael Farthing",
+          "employer",
+          "University of London"
+        ],
+        [
+          "Michael Farthing",
+          "employer",
+          "University of Glasgow"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P108 wd:Q772421 . ?entity wdt:P108 wd:Q170027 . ?entity wdt:P108 wd:Q192775 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 5,
+        "constraints": [
+          "employer: St George's University of London",
+          "employer: University of London",
+          "employer: University of Glasgow"
+        ]
+      }
+    },
+    {
+      "question": "Which athlete was born in Naperville, educated at Eaglecrest High School, and represents the United States?",
+      "answer": "Jordyn Poulter",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Jordyn Poulter",
+          "country of citizenship",
+          "United States"
+        ],
+        [
+          "Jordyn Poulter",
+          "educated at",
+          "Eaglecrest High School"
+        ],
+        [
+          "Jordyn Poulter",
+          "place of birth",
+          "Naperville"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P27 wd:Q30 . ?entity wdt:P69 wd:Q5325322 . ?entity wdt:P19 wd:Q243007 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "country of citizenship: United States",
+          "educated at: Eaglecrest High School",
+          "place of birth: Naperville"
+        ]
+      }
+    },
+    {
+      "question": "Which individual has written for The American Conservative and ran as a candidate in the 1994 California gubernatorial election?",
+      "answer": "Ron Unz",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Ron Unz",
+          "has written for",
+          "The American Conservative"
+        ],
+        [
+          "Ron Unz",
+          "candidacy in election",
+          "1994 California gubernatorial election"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P6872 wd:Q159664 . ?entity wdt:P3602 wd:Q5021259 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "has written for: The American Conservative",
+          "candidacy in election: 1994 California gubernatorial election"
+        ]
+      }
+    },
+    {
+      "question": "Which individual is known for being a short story writer, poet, and playwright, and also belongs to the family with the last name Asquith?",
+      "answer": "Elizabeth Bibesco",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Elizabeth Bibesco",
+          "occupation",
+          "short story writer"
+        ],
+        [
+          "Elizabeth Bibesco",
+          "occupation",
+          "poet"
+        ],
+        [
+          "Elizabeth Bibesco",
+          "occupation",
+          "playwright"
+        ],
+        [
+          "Elizabeth Bibesco",
+          "family name",
+          "Asquith"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q15949613 . ?entity wdt:P106 wd:Q49757 . ?entity wdt:P106 wd:Q214917 . ?entity wdt:P734 wd:Q37507618 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 3,
+        "constraints": [
+          "occupation: short story writer",
+          "occupation: poet",
+          "occupation: playwright",
+          "family name: Asquith"
+        ]
+      }
+    },
+    {
+      "question": "Which entity speaks Macedonian and has a notable work titled \"Eşkıya Dünyaya Hükümdar Olmaz\"?",
+      "answer": "Sabina Ajrula",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Sabina Ajrula",
+          "languages spoken written or signed",
+          "Macedonian"
+        ],
+        [
+          "Sabina Ajrula",
+          "notable work",
+          "Eşkıya Dünyaya Hükümdar Olmaz"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1412 wd:Q9296 . ?entity wdt:P800 wd:Q20472041 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 5,
+        "constraints": [
+          "languages spoken written or signed: Macedonian",
+          "notable work: Eşkıya Dünyaya Hükümdar Olmaz"
+        ]
+      }
+    },
+    {
+      "question": "What waterway is located in the United States and passes through the administrative territories of Alabama, Florida, and Mississippi?",
+      "answer": "Gulf Intracoastal Waterway",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Gulf Intracoastal Waterway",
+          "located in the administrative territorial entity",
+          "Alabama"
+        ],
+        [
+          "Gulf Intracoastal Waterway",
+          "country",
+          "United States"
+        ],
+        [
+          "Gulf Intracoastal Waterway",
+          "located in the administrative territorial entity",
+          "Florida"
+        ],
+        [
+          "Gulf Intracoastal Waterway",
+          "located in the administrative territorial entity",
+          "Mississippi"
+        ],
+        [
+          "Gulf Intracoastal Waterway",
+          "instance of",
+          "waterway"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P131 wd:Q173 . ?entity wdt:P17 wd:Q30 . ?entity wdt:P131 wd:Q812 . ?entity wdt:P131 wd:Q1494 . ?entity wdt:P31 wd:Q1267889 .\n}",
+      "constraint_info": {
+        "constraint_count": 5,
+        "total_attributes": 3,
+        "constraints": [
+          "located in the administrative territorial entity: Alabama",
+          "country: United States",
+          "located in the administrative territorial entity: Florida",
+          "located in the administrative territorial entity: Mississippi",
+          "instance of: waterway"
+        ]
+      }
+    },
+    {
+      "question": "What educational institution is located in Harrison, operates in the United States, and is classified as a private overseas educational facility?",
+      "answer": "Keio Academy of New York",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Keio Academy of New York",
+          "country",
+          "United States"
+        ],
+        [
+          "Keio Academy of New York",
+          "located in the administrative territorial entity",
+          "Harrison"
+        ],
+        [
+          "Keio Academy of New York",
+          "instance of",
+          "Shiritsu zaigai kyōiku shisetsu"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P17 wd:Q30 . ?entity wdt:P131 wd:Q3476507 . ?entity wdt:P31 wd:Q130278698 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "country: United States",
+          "located in the administrative territorial entity: Harrison",
+          "instance of: Shiritsu zaigai kyōiku shisetsu"
+        ]
+      }
+    },
+    {
+      "question": "Which individual has received the Rutherford Discovery Fellowship and has been educated at Oregon State University?",
+      "answer": "Alana Alexander",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Alana Alexander",
+          "award received",
+          "Rutherford Discovery Fellowship"
+        ],
+        [
+          "Alana Alexander",
+          "educated at",
+          "Oregon State University"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P166 wd:Q56878278 . ?entity wdt:P69 wd:Q861888 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "award received: Rutherford Discovery Fellowship",
+          "educated at: Oregon State University"
+        ]
+      }
+    },
+    {
+      "question": "Which individual has held both the position of Minister in the Presidency and the position of Minister of Public Enterprises?",
+      "answer": "Jeff Radebe",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Jeff Radebe",
+          "position held",
+          "Minister in the Presidency"
+        ],
+        [
+          "Jeff Radebe",
+          "position held",
+          "Minister of Public Enterprises"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P39 wd:Q20981731 . ?entity wdt:P39 wd:Q20981739 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "position held: Minister in the Presidency",
+          "position held: Minister of Public Enterprises"
+        ]
+      }
+    },
+    {
+      "question": "Which country has participated in World War II and lists Yucatec Maya as one of its official languages?",
+      "answer": "Mexico",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Mexico",
+          "P37",
+          "Yucatec Maya"
+        ],
+        [
+          "Mexico",
+          "participant in",
+          "World War II"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P37 wd:Q13354 . ?entity wdt:P1344 wd:Q362 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 17,
+        "constraints": [
+          "P37: Yucatec Maya",
+          "participant in: World War II"
+        ]
+      }
+    },
+    {
+      "question": "Which event involved both the United Russia party and the New People party as candidates?",
+      "answer": "2021 Russian legislative election",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "2021 Russian legislative election",
+          "candidate",
+          "United Russia"
+        ],
+        [
+          "2021 Russian legislative election",
+          "candidate",
+          "New People"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P726 wd:Q151469 . ?entity wdt:P726 wd:Q98842815 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 5,
+        "constraints": [
+          "candidate: United Russia",
+          "candidate: New People"
+        ]
+      }
+    },
+    {
+      "question": "Which culinary figure has restaurants in Ankara, Istanbul, and Dubai?",
+      "answer": "Salt Bae",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Salt Bae",
+          "work location",
+          "Ankara"
+        ],
+        [
+          "Salt Bae",
+          "work location",
+          "Istanbul"
+        ],
+        [
+          "Salt Bae",
+          "work location",
+          "Dubai"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P937 wd:Q3640 . ?entity wdt:P937 wd:Q406 . ?entity wdt:P937 wd:Q612 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "work location: Ankara",
+          "work location: Istanbul",
+          "work location: Dubai"
+        ]
+      }
+    },
+    {
+      "question": "Which television journalist worked for WSB-TV and passed away due to glioblastoma?",
+      "answer": "Jovita Moore",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Jovita Moore",
+          "employer",
+          "WSB-TV"
+        ],
+        [
+          "Jovita Moore",
+          "cause of death",
+          "glioblastoma"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P108 wd:Q7955494 . ?entity wdt:P509 wd:Q282142 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "employer: WSB-TV",
+          "cause of death: glioblastoma"
+        ]
+      }
+    },
+    {
+      "question": "Which athlete participated in both the 1993 and 1999 World Wushu Championships as well as the 2001 Southeast Asian Games?",
+      "answer": "Nguyễn Thúy Hiền",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Nguyễn Thúy Hiền",
+          "participant in",
+          "2001 Southeast Asian Games"
+        ],
+        [
+          "Nguyễn Thúy Hiền",
+          "participant in",
+          "1999 World Wushu Championships"
+        ],
+        [
+          "Nguyễn Thúy Hiền",
+          "participant in",
+          "1993 World Wushu Championships"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1344 wd:Q965250 . ?entity wdt:P1344 wd:Q4595323 . ?entity wdt:P1344 wd:Q30324148 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 13,
+        "constraints": [
+          "participant in: 2001 Southeast Asian Games",
+          "participant in: 1999 World Wushu Championships",
+          "participant in: 1993 World Wushu Championships"
+        ]
+      }
+    },
+    {
+      "question": "What television series is set in the fictional land of Westeros and is primarily in the English language?",
+      "answer": "Game of Thrones",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Game of Thrones",
+          "P364",
+          "English"
+        ],
+        [
+          "Game of Thrones",
+          "P840",
+          "Westeros"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P364 wd:Q1860 . ?entity wdt:P840 wd:Q3623561 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "P364: English",
+          "P840: Westeros"
+        ]
+      }
+    },
+    {
+      "question": "What agreement has the European Union and Australia as signatories and the Government of Japan as its depositary?",
+      "answer": "Anti-Counterfeiting Trade Agreement",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Anti-Counterfeiting Trade Agreement",
+          "signatory",
+          "European Union"
+        ],
+        [
+          "Anti-Counterfeiting Trade Agreement",
+          "signatory",
+          "Australia"
+        ],
+        [
+          "Anti-Counterfeiting Trade Agreement",
+          "depositary",
+          "Government of Japan"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1891 wd:Q458 . ?entity wdt:P1891 wd:Q408 . ?entity wdt:P2058 wd:Q1190574 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 8,
+        "constraints": [
+          "signatory: European Union",
+          "signatory: Australia",
+          "depositary: Government of Japan"
+        ]
+      }
+    },
+    {
+      "question": "What movie features Camila Cabello in the lead role and also includes Idina Menzel in its cast?",
+      "answer": "Cinderella",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Cinderella",
+          "cast member",
+          "Camila Cabello"
+        ],
+        [
+          "Cinderella",
+          "cast member",
+          "Idina Menzel"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P161 wd:Q18810940 . ?entity wdt:P161 wd:Q157400 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 6,
+        "constraints": [
+          "cast member: Camila Cabello",
+          "cast member: Idina Menzel"
+        ]
+      }
+    },
+    {
+      "question": "Which artist is a member of the Fugees, hails from the United States, and is known for their music in the genres of soul and contemporary R&B?",
+      "answer": "Lauryn Hill",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Lauryn Hill",
+          "country of citizenship",
+          "United States"
+        ],
+        [
+          "Lauryn Hill",
+          "genre",
+          "soul"
+        ],
+        [
+          "Lauryn Hill",
+          "genre",
+          "contemporary R&B"
+        ],
+        [
+          "Lauryn Hill",
+          "member of",
+          "Fugees"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P27 wd:Q30 . ?entity wdt:P136 wd:Q131272 . ?entity wdt:P136 wd:Q850412 . ?entity wdt:P463 wd:Q159329 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 3,
+        "constraints": [
+          "country of citizenship: United States",
+          "genre: soul",
+          "genre: contemporary R&B",
+          "member of: Fugees"
+        ]
+      }
+    },
+    {
+      "question": "Which religious tradition includes the Bhakti movement and is characterized by the practice of Bhakti?",
+      "answer": "Hinduism",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Hinduism",
+          "part of",
+          "Bhakti movement"
+        ],
+        [
+          "Hinduism",
+          "has quality",
+          "Bhakti"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P361 wd:Q2914617 . ?entity wdt:P1552 wd:Q507417 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "part of: Bhakti movement",
+          "has quality: Bhakti"
+        ]
+      }
+    },
+    {
+      "question": "Which state of Mexico includes the administrative territorial entity of Chapala?",
+      "answer": "Jalisco",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Jalisco",
+          "instance of",
+          "state of Mexico"
+        ],
+        [
+          "Jalisco",
+          "contains administrative territorial entity",
+          "Chapala"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P31 wd:Q15149663 . ?entity wdt:P150 wd:Q5260647 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "instance of: state of Mexico",
+          "contains administrative territorial entity: Chapala"
+        ]
+      }
+    },
+    {
+      "question": "Which Canadian songwriter is known for his work in progressive metal music and is a member of MullMuzzler?",
+      "answer": "James LaBrie",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "James LaBrie",
+          "country of citizenship",
+          "Canada"
+        ],
+        [
+          "James LaBrie",
+          "occupation",
+          "songwriter"
+        ],
+        [
+          "James LaBrie",
+          "genre",
+          "progressive metal"
+        ],
+        [
+          "James LaBrie",
+          "member of",
+          "MullMuzzler"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P27 wd:Q16 . ?entity wdt:P106 wd:Q753110 . ?entity wdt:P136 wd:Q484344 . ?entity wdt:P463 wd:Q2302186 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 3,
+        "constraints": [
+          "country of citizenship: Canada",
+          "occupation: songwriter",
+          "genre: progressive metal",
+          "member of: MullMuzzler"
+        ]
+      }
+    },
+    {
+      "question": "What event resulted in the Glasgow Climate Pact and was held in response to global warming?",
+      "answer": "2021 United Nations Climate Change Conference",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "2021 United Nations Climate Change Conference",
+          "has effect",
+          "Glasgow Climate Pact"
+        ],
+        [
+          "2021 United Nations Climate Change Conference",
+          "has cause",
+          "global warming"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1542 wd:Q109566978 . ?entity wdt:P828 wd:Q7942 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "has effect: Glasgow Climate Pact",
+          "has cause: global warming"
+        ]
+      }
+    },
+    {
+      "question": "What is the painting and icon made from tempera and gold leaf that is housed in the Cleveland Museum of Art?",
+      "answer": "Icon of the Mother of God and Infant Christ (Virgin Eleousa)",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Icon of the Mother of God and Infant Christ (Virgin Eleousa)",
+          "made from material",
+          "tempera"
+        ],
+        [
+          "Icon of the Mother of God and Infant Christ (Virgin Eleousa)",
+          "made from material",
+          "gold leaf"
+        ],
+        [
+          "Icon of the Mother of God and Infant Christ (Virgin Eleousa)",
+          "instance of",
+          "painting"
+        ],
+        [
+          "Icon of the Mother of God and Infant Christ (Virgin Eleousa)",
+          "instance of",
+          "icon"
+        ],
+        [
+          "Icon of the Mother of God and Infant Christ (Virgin Eleousa)",
+          "P276",
+          "Cleveland Museum of Art"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P186 wd:Q175166 . ?entity wdt:P186 wd:Q929186 . ?entity wdt:P31 wd:Q3305213 . ?entity wdt:P31 wd:Q132137 . ?entity wdt:P276 wd:Q657415 .\n}",
+      "constraint_info": {
+        "constraint_count": 5,
+        "total_attributes": 3,
+        "constraints": [
+          "made from material: tempera",
+          "made from material: gold leaf",
+          "instance of: painting",
+          "instance of: icon",
+          "P276: Cleveland Museum of Art"
+        ]
+      }
+    },
+    {
+      "question": "Which individual is known to be a human, speaks Thai as their native language, is associated with Bangkok, and attended the Royal Military College?",
+      "answer": "Vajiralongkorn",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Vajiralongkorn",
+          "work location",
+          "Bangkok"
+        ],
+        [
+          "Vajiralongkorn",
+          "native language",
+          "Thai"
+        ],
+        [
+          "Vajiralongkorn",
+          "instance of",
+          "human"
+        ],
+        [
+          "Vajiralongkorn",
+          "educated at",
+          "Royal Military College"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P937 wd:Q1861 . ?entity wdt:P103 wd:Q9217 . ?entity wdt:P31 wd:Q5 . ?entity wdt:P69 wd:Q2171074 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 3,
+        "constraints": [
+          "work location: Bangkok",
+          "native language: Thai",
+          "instance of: human",
+          "educated at: Royal Military College"
+        ]
+      }
+    },
+    {
+      "question": "Which individual specialized in the field of metallurgy and is buried at Faisal Mosque?",
+      "answer": "Abdul Qadeer Khan",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Abdul Qadeer Khan",
+          "field of work",
+          "metallurgy"
+        ],
+        [
+          "Abdul Qadeer Khan",
+          "place of burial",
+          "Faisal Mosque"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P101 wd:Q11467 . ?entity wdt:P119 wd:Q500983 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "field of work: metallurgy",
+          "place of burial: Faisal Mosque"
+        ]
+      }
+    },
+    {
+      "question": "What award is conferred by Sajha Publications and is associated with Nepal?",
+      "answer": "Sajha Puraskar",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Sajha Puraskar",
+          "conferred by",
+          "Sajha Publications"
+        ],
+        [
+          "Sajha Puraskar",
+          "country",
+          "Nepal"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1027 wd:Q13186809 . ?entity wdt:P17 wd:Q837 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "conferred by: Sajha Publications",
+          "country: Nepal"
+        ]
+      }
+    },
+    {
+      "question": "What broadcasting organization included both Programme One and Programme Two in its lineup?",
+      "answer": "Soviet Central Television",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Soviet Central Television",
+          "has part",
+          "Programme One"
+        ],
+        [
+          "Soviet Central Television",
+          "has part",
+          "Programme Two"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P527 wd:Q7248457 . ?entity wdt:P527 wd:Q50294933 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "has part: Programme One",
+          "has part: Programme Two"
+        ]
+      }
+    },
+    {
+      "question": "Which county is located on the Niagara Escarpment and is a county in Wisconsin?",
+      "answer": "Door County",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Door County",
+          "located in/on physical feature",
+          "Niagara Escarpment"
+        ],
+        [
+          "Door County",
+          "instance of",
+          "county of Wisconsin"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P706 wd:Q826965 . ?entity wdt:P31 wd:Q12178928 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 7,
+        "constraints": [
+          "located in/on physical feature: Niagara Escarpment",
+          "instance of: county of Wisconsin"
+        ]
+      }
+    },
+    {
+      "question": "Which musician had the given name Wellington and was born in Jeannette?",
+      "answer": "Slide Hampton",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Slide Hampton",
+          "given name",
+          "Wellington"
+        ],
+        [
+          "Slide Hampton",
+          "place of birth",
+          "Jeannette"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P735 wd:Q16291168 . ?entity wdt:P19 wd:Q1187079 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "given name: Wellington",
+          "place of birth: Jeannette"
+        ]
+      }
+    },
+    {
+      "question": "What theory has significant contributions from both Robert M. Price and Thomas L. Brodie?",
+      "answer": "Christ myth theory",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Christ myth theory",
+          "significant person",
+          "Robert M. Price"
+        ],
+        [
+          "Christ myth theory",
+          "significant person",
+          "Thomas L. Brodie"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P3342 wd:Q1370306 . ?entity wdt:P3342 wd:Q16106191 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 7,
+        "constraints": [
+          "significant person: Robert M. Price",
+          "significant person: Thomas L. Brodie"
+        ]
+      }
+    },
+    {
+      "question": "What film features both Milo Ventimiglia and Eddie Kaye Thomas in its cast and is directed by Marni Banack?",
+      "answer": "Winter Break",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Winter Break",
+          "cast member",
+          "Milo Ventimiglia"
+        ],
+        [
+          "Winter Break",
+          "cast member",
+          "Eddie Kaye Thomas"
+        ],
+        [
+          "Winter Break",
+          "director",
+          "Marni Banack"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P161 wd:Q83733 . ?entity wdt:P161 wd:Q350811 . ?entity wdt:P57 wd:Q109780786 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "cast member: Milo Ventimiglia",
+          "cast member: Eddie Kaye Thomas",
+          "director: Marni Banack"
+        ]
+      }
+    },
+    {
+      "question": "Which artist was educated at Hunter College and the School of Visual Arts and has works in the collection of the Nasher Museum of Art?",
+      "answer": "Jeff Sonhouse",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Jeff Sonhouse",
+          "educated at",
+          "Hunter College"
+        ],
+        [
+          "Jeff Sonhouse",
+          "educated at",
+          "School of Visual Arts"
+        ],
+        [
+          "Jeff Sonhouse",
+          "has works in the collection",
+          "Nasher Museum of Art"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P69 wd:Q1446181 . ?entity wdt:P69 wd:Q1279835 . ?entity wdt:P6379 wd:Q6966836 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 5,
+        "constraints": [
+          "educated at: Hunter College",
+          "educated at: School of Visual Arts",
+          "has works in the collection: Nasher Museum of Art"
+        ]
+      }
+    },
+    {
+      "question": "Which athletics competitor, born in El Paso, specializes in the 100 metres discipline?",
+      "answer": "Marcell Jacobs",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Marcell Jacobs",
+          "sports discipline competed in",
+          "100 metres"
+        ],
+        [
+          "Marcell Jacobs",
+          "instance of",
+          "human"
+        ],
+        [
+          "Marcell Jacobs",
+          "occupation",
+          "athletics competitor"
+        ],
+        [
+          "Marcell Jacobs",
+          "place of birth",
+          "El Paso"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P2416 wd:Q164761 . ?entity wdt:P31 wd:Q5 . ?entity wdt:P106 wd:Q11513337 . ?entity wdt:P19 wd:Q16562 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 3,
+        "constraints": [
+          "sports discipline competed in: 100 metres",
+          "instance of: human",
+          "occupation: athletics competitor",
+          "place of birth: El Paso"
+        ]
+      }
+    },
+    {
+      "question": "Which country has Jakarta as its capital and is a member of the World Meteorological Organization?",
+      "answer": "Indonesia",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Indonesia",
+          "member of",
+          "World Meteorological Organization"
+        ],
+        [
+          "Indonesia",
+          "capital",
+          "Jakarta"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P463 wd:Q170424 . ?entity wdt:P36 wd:Q3630 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 6,
+        "constraints": [
+          "member of: World Meteorological Organization",
+          "capital: Jakarta"
+        ]
+      }
+    },
+    {
+      "question": "Which entity, known by the family name Thornton and given name Adolph, tragically passed away in Memphis?",
+      "answer": "Young Dolph",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Young Dolph",
+          "place of death",
+          "Memphis"
+        ],
+        [
+          "Young Dolph",
+          "family name",
+          "Thornton"
+        ],
+        [
+          "Young Dolph",
+          "given name",
+          "Adolph"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P20 wd:Q16563 . ?entity wdt:P734 wd:Q16884655 . ?entity wdt:P735 wd:Q18526132 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 5,
+        "constraints": [
+          "place of death: Memphis",
+          "family name: Thornton",
+          "given name: Adolph"
+        ]
+      }
+    },
+    {
+      "question": "Which individual is a biostatistician, holds citizenship in Estonia, works at the University of Tartu, and is a member of the Estonian Academy of Sciences?",
+      "answer": "Krista Fischer",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Krista Fischer",
+          "country of citizenship",
+          "Estonia"
+        ],
+        [
+          "Krista Fischer",
+          "instance of",
+          "human"
+        ],
+        [
+          "Krista Fischer",
+          "employer",
+          "University of Tartu"
+        ],
+        [
+          "Krista Fischer",
+          "member of",
+          "Estonian Academy of Sciences"
+        ],
+        [
+          "Krista Fischer",
+          "occupation",
+          "biostatistician"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P27 wd:Q191 . ?entity wdt:P31 wd:Q5 . ?entity wdt:P108 wd:Q204181 . ?entity wdt:P463 wd:Q1370215 . ?entity wdt:P106 wd:Q52899051 .\n}",
+      "constraint_info": {
+        "constraint_count": 5,
+        "total_attributes": 4,
+        "constraints": [
+          "country of citizenship: Estonia",
+          "instance of: human",
+          "employer: University of Tartu",
+          "member of: Estonian Academy of Sciences",
+          "occupation: biostatistician"
+        ]
+      }
+    },
+    {
+      "question": "Which university is situated in the administrative territorial entity of Chita and also has its headquarters located in Chita?",
+      "answer": "Transbaikal State University",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Transbaikal State University",
+          "located in the administrative territorial entity",
+          "Chita"
+        ],
+        [
+          "Transbaikal State University",
+          "headquarters location",
+          "Chita"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P131 wd:Q53139 . ?entity wdt:P159 wd:Q53139 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "located in the administrative territorial entity: Chita",
+          "headquarters location: Chita"
+        ]
+      }
+    },
+    {
+      "question": "Which gallery is associated with both David Novros and Leo Valledor as significant persons?",
+      "answer": "Park Place Gallery",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Park Place Gallery",
+          "significant person",
+          "David Novros"
+        ],
+        [
+          "Park Place Gallery",
+          "significant person",
+          "Leo Valledor"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P3342 wd:Q17478646 . ?entity wdt:P3342 wd:Q6524303 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 5,
+        "constraints": [
+          "significant person: David Novros",
+          "significant person: Leo Valledor"
+        ]
+      }
+    },
+    {
+      "question": "Which individual speaks or uses the Korean language and has received education from both Gwangju Catholic University and Inje University?",
+      "answer": "John Lee Tae-seok",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "John Lee Tae-seok",
+          "languages spoken written or signed",
+          "Korean"
+        ],
+        [
+          "John Lee Tae-seok",
+          "educated at",
+          "Gwangju Catholic University"
+        ],
+        [
+          "John Lee Tae-seok",
+          "educated at",
+          "Inje University"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1412 wd:Q9176 . ?entity wdt:P69 wd:Q5623305 . ?entity wdt:P69 wd:Q482659 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 5,
+        "constraints": [
+          "languages spoken written or signed: Korean",
+          "educated at: Gwangju Catholic University",
+          "educated at: Inje University"
+        ]
+      }
+    },
+    {
+      "question": "Which historical figure was born in Copenhagen and has the given names Mette and Frederikke?",
+      "answer": "Louise Hegermann-Lindencrone",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Louise Hegermann-Lindencrone",
+          "given name",
+          "Mette"
+        ],
+        [
+          "Louise Hegermann-Lindencrone",
+          "place of birth",
+          "Copenhagen"
+        ],
+        [
+          "Louise Hegermann-Lindencrone",
+          "given name",
+          "Frederikke"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P735 wd:Q1158302 . ?entity wdt:P19 wd:Q1748 . ?entity wdt:P735 wd:Q21400546 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 7,
+        "constraints": [
+          "given name: Mette",
+          "place of birth: Copenhagen",
+          "given name: Frederikke"
+        ]
+      }
+    },
+    {
+      "question": "What facility includes both the IMPACT Arena and the IMPACT Exhibition Center?",
+      "answer": "IMPACT Muang Thong Thani",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "IMPACT Muang Thong Thani",
+          "has part",
+          "IMPACT Arena"
+        ],
+        [
+          "IMPACT Muang Thong Thani",
+          "has part",
+          "IMPACT Exhibition Center"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P527 wd:Q61367798 . ?entity wdt:P527 wd:Q108511857 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "has part: IMPACT Arena",
+          "has part: IMPACT Exhibition Center"
+        ]
+      }
+    },
+    {
+      "question": "Which individual has both Argentine and Israeli nationality, is associated with sports in Israel, and has a relative named Ram Strauss?",
+      "answer": "Roberto Colautti",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Roberto Colautti",
+          "country of citizenship",
+          "Argentina"
+        ],
+        [
+          "Roberto Colautti",
+          "country of citizenship",
+          "Israel"
+        ],
+        [
+          "Roberto Colautti",
+          "country for sport",
+          "Israel"
+        ],
+        [
+          "Roberto Colautti",
+          "relative",
+          "Ram Strauss"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P27 wd:Q414 . ?entity wdt:P27 wd:Q801 . ?entity wdt:P1532 wd:Q801 . ?entity wdt:P1038 wd:Q17022072 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 4,
+        "constraints": [
+          "country of citizenship: Argentina",
+          "country of citizenship: Israel",
+          "country for sport: Israel",
+          "relative: Ram Strauss"
+        ]
+      }
+    },
+    {
+      "question": "Which individual was born in Kansas City, is categorized as a human, and passed away in Tarzana?",
+      "answer": "Ed Asner",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Ed Asner",
+          "place of death",
+          "Tarzana"
+        ],
+        [
+          "Ed Asner",
+          "instance of",
+          "human"
+        ],
+        [
+          "Ed Asner",
+          "place of birth",
+          "Kansas City"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P20 wd:Q2708222 . ?entity wdt:P31 wd:Q5 . ?entity wdt:P19 wd:Q41819 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "place of death: Tarzana",
+          "instance of: human",
+          "place of birth: Kansas City"
+        ]
+      }
+    },
+    {
+      "question": "Which artist has works in the collection of the Whitney Museum of American Art and was educated at George Mason University?",
+      "answer": "David Chung",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "David Chung",
+          "has works in the collection",
+          "Whitney Museum of American Art"
+        ],
+        [
+          "David Chung",
+          "educated at",
+          "George Mason University"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P6379 wd:Q639791 . ?entity wdt:P69 wd:Q1411222 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "has works in the collection: Whitney Museum of American Art",
+          "educated at: George Mason University"
+        ]
+      }
+    },
+    {
+      "question": "Which leadership election featured both Charles Kennedy and David Rendel as candidates?",
+      "answer": "1999 Liberal Democrats leadership election",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "1999 Liberal Democrats leadership election",
+          "candidate",
+          "Charles Kennedy"
+        ],
+        [
+          "1999 Liberal Democrats leadership election",
+          "candidate",
+          "David Rendel"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P726 wd:Q332950 . ?entity wdt:P726 wd:Q5238989 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "candidate: Charles Kennedy",
+          "candidate: David Rendel"
+        ]
+      }
+    },
+    {
+      "question": "What type of bee relies primarily on carrion as its main food source and is named after this scavenging habit?",
+      "answer": "vulture bee",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "vulture bee",
+          "main food source",
+          "carrion"
+        ],
+        [
+          "vulture bee",
+          "named after",
+          "carrion"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1034 wd:Q202994 . ?entity wdt:P138 wd:Q202994 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "main food source: carrion",
+          "named after: carrion"
+        ]
+      }
+    },
+    {
+      "question": "What railway line is operated by Kumagawa Railway and has Yunomae Station as its terminus?",
+      "answer": "Yunomae Line",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Yunomae Line",
+          "operator",
+          "Kumagawa Railway"
+        ],
+        [
+          "Yunomae Line",
+          "terminus",
+          "Yunomae Station"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P137 wd:Q8194074 . ?entity wdt:P559 wd:Q8061364 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "operator: Kumagawa Railway",
+          "terminus: Yunomae Station"
+        ]
+      }
+    },
+    {
+      "question": "Which designer served as the artistic director for Louis Vuitton and founded the fashion brand Off-White?",
+      "answer": "Virgil Abloh",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Virgil Abloh",
+          "employer",
+          "Louis Vuitton"
+        ],
+        [
+          "Virgil Abloh",
+          "employer",
+          "Off-White"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P108 wd:Q191485 . ?entity wdt:P108 wd:Q53472173 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "employer: Louis Vuitton",
+          "employer: Off-White"
+        ]
+      }
+    },
+    {
+      "question": "Which playwright educated at Ohio University and employed at New York University Tisch School of the Arts is a human entity?",
+      "answer": "Jacquelyn Reingold",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Jacquelyn Reingold",
+          "educated at",
+          "Ohio University"
+        ],
+        [
+          "Jacquelyn Reingold",
+          "occupation",
+          "playwright"
+        ],
+        [
+          "Jacquelyn Reingold",
+          "instance of",
+          "human"
+        ],
+        [
+          "Jacquelyn Reingold",
+          "employer",
+          "New York University Tisch School of the Arts"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P69 wd:Q1075339 . ?entity wdt:P106 wd:Q214917 . ?entity wdt:P31 wd:Q5 . ?entity wdt:P108 wd:Q797078 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 3,
+        "constraints": [
+          "educated at: Ohio University",
+          "occupation: playwright",
+          "instance of: human",
+          "employer: New York University Tisch School of the Arts"
+        ]
+      }
+    },
+    {
+      "question": "Which musician has had an unmarried relationship with both Katy Perry and Jennifer Love Hewitt?",
+      "answer": "John Mayer",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "John Mayer",
+          "unmarried partner",
+          "Katy Perry"
+        ],
+        [
+          "John Mayer",
+          "unmarried partner",
+          "Jennifer Love Hewitt"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P451 wd:Q42493 . ?entity wdt:P451 wd:Q175104 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 6,
+        "constraints": [
+          "unmarried partner: Katy Perry",
+          "unmarried partner: Jennifer Love Hewitt"
+        ]
+      }
+    },
+    {
+      "question": "Which individual is both a stage actor and a musician, was born in Derbent, speaks Russian, and is employed by the Judeo-Tat theatre?",
+      "answer": "Abram Avdalimov",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Abram Avdalimov",
+          "occupation",
+          "stage actor"
+        ],
+        [
+          "Abram Avdalimov",
+          "place of birth",
+          "Derbent"
+        ],
+        [
+          "Abram Avdalimov",
+          "languages spoken written or signed",
+          "Russian"
+        ],
+        [
+          "Abram Avdalimov",
+          "employer",
+          "Judeo-Tat theatre"
+        ],
+        [
+          "Abram Avdalimov",
+          "occupation",
+          "musician"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q2259451 . ?entity wdt:P19 wd:Q131416 . ?entity wdt:P1412 wd:Q7737 . ?entity wdt:P108 wd:Q109050472 . ?entity wdt:P106 wd:Q639669 .\n}",
+      "constraint_info": {
+        "constraint_count": 5,
+        "total_attributes": 3,
+        "constraints": [
+          "occupation: stage actor",
+          "place of birth: Derbent",
+          "languages spoken written or signed: Russian",
+          "employer: Judeo-Tat theatre",
+          "occupation: musician"
+        ]
+      }
+    },
+    {
+      "question": "What organization focuses on net neutrality and has Andy Müller-Maguhn as a board member?",
+      "answer": "European Digital Rights",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "European Digital Rights",
+          "field of work",
+          "net neutrality"
+        ],
+        [
+          "European Digital Rights",
+          "board member",
+          "Andy Müller-Maguhn"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P101 wd:Q853467 . ?entity wdt:P3320 wd:Q95564 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 7,
+        "constraints": [
+          "field of work: net neutrality",
+          "board member: Andy Müller-Maguhn"
+        ]
+      }
+    },
+    {
+      "question": "Which individual passed away in Soultzeren and communicated in German?",
+      "answer": "Martin Graff",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Martin Graff",
+          "place of death",
+          "Soultzeren"
+        ],
+        [
+          "Martin Graff",
+          "languages spoken written or signed",
+          "German"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P20 wd:Q635509 . ?entity wdt:P1412 wd:Q188 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "place of death: Soultzeren",
+          "languages spoken written or signed: German"
+        ]
+      }
+    },
+    {
+      "question": "Which individual speaks French, works at HEC Paris, and was educated at Toulouse School of Economics?",
+      "answer": "Éloïc Peyrache",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Éloïc Peyrache",
+          "languages spoken written or signed",
+          "French"
+        ],
+        [
+          "Éloïc Peyrache",
+          "employer",
+          "HEC Paris"
+        ],
+        [
+          "Éloïc Peyrache",
+          "educated at",
+          "Toulouse School of Economics"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1412 wd:Q150 . ?entity wdt:P108 wd:Q273535 . ?entity wdt:P69 wd:Q3532921 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "languages spoken written or signed: French",
+          "employer: HEC Paris",
+          "educated at: Toulouse School of Economics"
+        ]
+      }
+    },
+    {
+      "question": "Which literary work was authored by Madan Mani Dixit and is written in the Nepali language?",
+      "answer": "Madhabi",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Madhabi",
+          "author",
+          "Madan Mani Dixit"
+        ],
+        [
+          "Madhabi",
+          "language of work or name",
+          "Nepali"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P50 wd:Q19682202 . ?entity wdt:P407 wd:Q33823 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "author: Madan Mani Dixit",
+          "language of work or name: Nepali"
+        ]
+      }
+    },
+    {
+      "question": "What video game, directed by Masahiro Sakurai, includes Korean and Russian among its languages?",
+      "answer": "Super Smash Bros. Ultimate",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Super Smash Bros. Ultimate",
+          "instance of",
+          "video game"
+        ],
+        [
+          "Super Smash Bros. Ultimate",
+          "P407",
+          "Korean"
+        ],
+        [
+          "Super Smash Bros. Ultimate",
+          "P407",
+          "Russian"
+        ],
+        [
+          "Super Smash Bros. Ultimate",
+          "P57",
+          "Masahiro Sakurai"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P31 wd:Q7889 . ?entity wdt:P407 wd:Q9176 . ?entity wdt:P407 wd:Q7737 . ?entity wdt:P57 wd:Q1906721 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 3,
+        "constraints": [
+          "instance of: video game",
+          "P407: Korean",
+          "P407: Russian",
+          "P57: Masahiro Sakurai"
+        ]
+      }
+    },
+    {
+      "question": "What ethnic group is recognized in the Czech Republic, Russia, Ukraine, and Slavonia?",
+      "answer": "Rusyns",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Rusyns",
+          "country",
+          "Czech Republic"
+        ],
+        [
+          "Rusyns",
+          "country",
+          "Russia"
+        ],
+        [
+          "Rusyns",
+          "country",
+          "Ukraine"
+        ],
+        [
+          "Rusyns",
+          "country",
+          "Slavonia"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P17 wd:Q213 . ?entity wdt:P17 wd:Q159 . ?entity wdt:P17 wd:Q212 . ?entity wdt:P17 wd:Q681964 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 3,
+        "constraints": [
+          "country: Czech Republic",
+          "country: Russia",
+          "country: Ukraine",
+          "country: Slavonia"
+        ]
+      }
+    },
+    {
+      "question": "What song features lyrics by Peter Criss and was composed by Stan Penridge?",
+      "answer": "Beth",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Beth",
+          "lyrics by",
+          "Peter Criss"
+        ],
+        [
+          "Beth",
+          "composer",
+          "Stan Penridge"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P676 wd:Q137881 . ?entity wdt:P86 wd:Q6040881 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "lyrics by: Peter Criss",
+          "composer: Stan Penridge"
+        ]
+      }
+    },
+    {
+      "question": "Which individual has siblings named Teckla Juel and Alfhilda Mechlenburg and is buried in Holmen Cemetery?",
+      "answer": "Fanny Suenssen",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Fanny Suenssen",
+          "sibling",
+          "Teckla Juel"
+        ],
+        [
+          "Fanny Suenssen",
+          "place of burial",
+          "Holmen Cemetery"
+        ],
+        [
+          "Fanny Suenssen",
+          "sibling",
+          "Alfhilda Mechlenburg"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P3373 wd:Q4957490 . ?entity wdt:P119 wd:Q3380319 . ?entity wdt:P3373 wd:Q4966788 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "sibling: Teckla Juel",
+          "place of burial: Holmen Cemetery",
+          "sibling: Alfhilda Mechlenburg"
+        ]
+      }
+    },
+    {
+      "question": "Which individual was born in Borcea, attended Babeș-Bolyai University, is a citizen of Romania, and is classified as a human?",
+      "answer": "Vasile Adamescu",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Vasile Adamescu",
+          "instance of",
+          "human"
+        ],
+        [
+          "Vasile Adamescu",
+          "country of citizenship",
+          "Romania"
+        ],
+        [
+          "Vasile Adamescu",
+          "educated at",
+          "Babeș-Bolyai University"
+        ],
+        [
+          "Vasile Adamescu",
+          "place of birth",
+          "Borcea"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P31 wd:Q5 . ?entity wdt:P27 wd:Q218 . ?entity wdt:P69 wd:Q538452 . ?entity wdt:P19 wd:Q1866812 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 4,
+        "constraints": [
+          "instance of: human",
+          "country of citizenship: Romania",
+          "educated at: Babeș-Bolyai University",
+          "place of birth: Borcea"
+        ]
+      }
+    },
+    {
+      "question": "Which football player was born in Cantaura and has played professional association football?",
+      "answer": "Fernando Amorebieta",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Fernando Amorebieta",
+          "sport",
+          "association football"
+        ],
+        [
+          "Fernando Amorebieta",
+          "place of birth",
+          "Cantaura"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P641 wd:Q2736 . ?entity wdt:P19 wd:Q2919593 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "sport: association football",
+          "place of birth: Cantaura"
+        ]
+      }
+    },
+    {
+      "question": "Which politician attended GRG 12 Erlgasse and is significantly associated with Alexander Schallenberg?",
+      "answer": "Sebastian Kurz",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Sebastian Kurz",
+          "occupation",
+          "politician"
+        ],
+        [
+          "Sebastian Kurz",
+          "educated at",
+          "GRG 12 Erlgasse"
+        ],
+        [
+          "Sebastian Kurz",
+          "significant person",
+          "Alexander Schallenberg"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q82955 . ?entity wdt:P69 wd:Q37922675 . ?entity wdt:P3342 wd:Q64168538 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 4,
+        "constraints": [
+          "occupation: politician",
+          "educated at: GRG 12 Erlgasse",
+          "significant person: Alexander Schallenberg"
+        ]
+      }
+    },
+    {
+      "question": "Which physicist contributed to the development of the Kardar–Parisi–Zhang equation and also made significant contributions to the study of spin glass?",
+      "answer": "Giorgio Parisi",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Giorgio Parisi",
+          "field of work",
+          "Kardar–Parisi–Zhang equation"
+        ],
+        [
+          "Giorgio Parisi",
+          "field of work",
+          "Spin glass"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P101 wd:Q6369122 . ?entity wdt:P101 wd:Q1490646 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "field of work: Kardar–Parisi–Zhang equation",
+          "field of work: Spin glass"
+        ]
+      }
+    },
+    {
+      "question": "Which individual is both associated with Josef Mengele and known for being a mountaineer?",
+      "answer": "Hans-Ulrich Rudel",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Hans-Ulrich Rudel",
+          "significant person",
+          "Josef Mengele"
+        ],
+        [
+          "Hans-Ulrich Rudel",
+          "occupation",
+          "mountaineer"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P3342 wd:Q57109 . ?entity wdt:P106 wd:Q9149093 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "significant person: Josef Mengele",
+          "occupation: mountaineer"
+        ]
+      }
+    },
+    {
+      "question": "Which individual is a film director, educated at the University of Barcelona, and resides in Sant Cugat del Vallès?",
+      "answer": "Judith Colell",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Judith Colell",
+          "occupation",
+          "film director"
+        ],
+        [
+          "Judith Colell",
+          "educated at",
+          "University of Barcelona"
+        ],
+        [
+          "Judith Colell",
+          "residence",
+          "Sant Cugat del Vallès"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q2526255 . ?entity wdt:P69 wd:Q219615 . ?entity wdt:P551 wd:Q13936 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 4,
+        "constraints": [
+          "occupation: film director",
+          "educated at: University of Barcelona",
+          "residence: Sant Cugat del Vallès"
+        ]
+      }
+    },
+    {
+      "question": "Which individual was born in New Market and works for Moderna?",
+      "answer": "Melissa J. Moore",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Melissa J. Moore",
+          "place of birth",
+          "New Market"
+        ],
+        [
+          "Melissa J. Moore",
+          "employer",
+          "Moderna"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P19 wd:Q1374174 . ?entity wdt:P108 wd:Q17081612 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 7,
+        "constraints": [
+          "place of birth: New Market",
+          "employer: Moderna"
+        ]
+      }
+    },
+    {
+      "question": "Which person is known as a human, plays sports representing Israel, and has Avner Golasa as their father?",
+      "answer": "Eyal Golasa",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Eyal Golasa",
+          "instance of",
+          "human"
+        ],
+        [
+          "Eyal Golasa",
+          "country for sport",
+          "Israel"
+        ],
+        [
+          "Eyal Golasa",
+          "father",
+          "Avner Golasa"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P31 wd:Q5 . ?entity wdt:P1532 wd:Q801 . ?entity wdt:P22 wd:Q23762582 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "instance of: human",
+          "country for sport: Israel",
+          "father: Avner Golasa"
+        ]
+      }
+    },
+    {
+      "question": "Which fictional character is both a mass murderer and voiced by Vincent Martella?",
+      "answer": "Jason Todd",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Jason Todd",
+          "occupation",
+          "mass murderer"
+        ],
+        [
+          "Jason Todd",
+          "P175",
+          "Vincent Martella"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q15883433 . ?entity wdt:P175 wd:Q948952 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "occupation: mass murderer",
+          "P175: Vincent Martella"
+        ]
+      }
+    },
+    {
+      "question": "What tournament took place in Australia and was part of the 1990 WTA Tour?",
+      "answer": "1990 Danone Hardcourt Championships",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "1990 Danone Hardcourt Championships",
+          "country",
+          "Australia"
+        ],
+        [
+          "1990 Danone Hardcourt Championships",
+          "part of",
+          "1990 WTA Tour"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P17 wd:Q408 . ?entity wdt:P361 wd:Q1134303 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "country: Australia",
+          "part of: 1990 WTA Tour"
+        ]
+      }
+    },
+    {
+      "question": "What manga series is created by Tomochika Miyano?",
+      "answer": "Yubisaki Milk Tea",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Yubisaki Milk Tea",
+          "instance of",
+          "manga series"
+        ],
+        [
+          "Yubisaki Milk Tea",
+          "P50",
+          "Tomochika Miyano"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P31 wd:Q21198342 . ?entity wdt:P50 wd:Q7820093 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "instance of: manga series",
+          "P50: Tomochika Miyano"
+        ]
+      }
+    },
+    {
+      "question": "Which film features Diana Rigg and is set in the 1960s?",
+      "answer": "Last Night in Soho",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Last Night in Soho",
+          "cast member",
+          "Diana Rigg"
+        ],
+        [
+          "Last Night in Soho",
+          "set in period",
+          "1960s"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P161 wd:Q232876 . ?entity wdt:P2408 wd:Q35724 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 10,
+        "constraints": [
+          "cast member: Diana Rigg",
+          "set in period: 1960s"
+        ]
+      }
+    },
+    {
+      "question": "What film features both Soad Hosny and Rushdy Abaza, is set in Egypt, is in Arabic, and is directed by Kamal El Sheikh?",
+      "answer": "Sunset and Sunrise",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Sunset and Sunrise",
+          "cast member",
+          "Soad Hosny"
+        ],
+        [
+          "Sunset and Sunrise",
+          "cast member",
+          "Rushdy Abaza"
+        ],
+        [
+          "Sunset and Sunrise",
+          "P495",
+          "Egypt"
+        ],
+        [
+          "Sunset and Sunrise",
+          "P364",
+          "Arabic"
+        ],
+        [
+          "Sunset and Sunrise",
+          "P57",
+          "Kamal El Sheikh"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P161 wd:Q3092023 . ?entity wdt:P161 wd:Q559176 . ?entity wdt:P495 wd:Q79 . ?entity wdt:P364 wd:Q13955 . ?entity wdt:P57 wd:Q3743671 .\n}",
+      "constraint_info": {
+        "constraint_count": 5,
+        "total_attributes": 3,
+        "constraints": [
+          "cast member: Soad Hosny",
+          "cast member: Rushdy Abaza",
+          "P495: Egypt",
+          "P364: Arabic",
+          "P57: Kamal El Sheikh"
+        ]
+      }
+    },
+    {
+      "question": "Which entity is located in Vatican City and is part of the Swiss Guard?",
+      "answer": "Pontifical Swiss Guard",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Pontifical Swiss Guard",
+          "P276",
+          "Vatican City"
+        ],
+        [
+          "Pontifical Swiss Guard",
+          "instance of",
+          "Swiss Guard"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P276 wd:Q237 . ?entity wdt:P31 wd:Q1055735 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "P276: Vatican City",
+          "instance of: Swiss Guard"
+        ]
+      }
+    },
+    {
+      "question": "Which individual was born in Voghera and attended Claremont Graduate University?",
+      "answer": "Angelo Codevilla",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Angelo Codevilla",
+          "educated at",
+          "Claremont Graduate University"
+        ],
+        [
+          "Angelo Codevilla",
+          "place of birth",
+          "Voghera"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P69 wd:Q50015 . ?entity wdt:P19 wd:Q39981 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "educated at: Claremont Graduate University",
+          "place of birth: Voghera"
+        ]
+      }
+    },
+    {
+      "question": "What band is known for its rock music, is based in the United States, and includes John Avila as a member?",
+      "answer": "Oingo Boingo",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Oingo Boingo",
+          "genre",
+          "rock music"
+        ],
+        [
+          "Oingo Boingo",
+          "P495",
+          "United States"
+        ],
+        [
+          "Oingo Boingo",
+          "has part",
+          "John Avila"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P136 wd:Q11399 . ?entity wdt:P495 wd:Q30 . ?entity wdt:P527 wd:Q6219800 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "genre: rock music",
+          "P495: United States",
+          "has part: John Avila"
+        ]
+      }
+    },
+    {
+      "question": "Which individual was born in Copenhagen and is the owner of Engelholm?",
+      "answer": "Benjamin Wolff",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Benjamin Wolff",
+          "owner of",
+          "Engelholm"
+        ],
+        [
+          "Benjamin Wolff",
+          "place of birth",
+          "Copenhagen"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1830 wd:Q12310119 . ?entity wdt:P19 wd:Q1748 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "owner of: Engelholm",
+          "place of birth: Copenhagen"
+        ]
+      }
+    },
+    {
+      "question": "Which film features the music composed by Johnny Klimek, is directed by Lana Wachowski, and includes Priyanka Chopra in its cast?",
+      "answer": "The Matrix Resurrections",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "The Matrix Resurrections",
+          "composer",
+          "Johnny Klimek"
+        ],
+        [
+          "The Matrix Resurrections",
+          "director",
+          "Lana Wachowski"
+        ],
+        [
+          "The Matrix Resurrections",
+          "cast member",
+          "Priyanka Chopra"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P86 wd:Q1702351 . ?entity wdt:P57 wd:Q9545711 . ?entity wdt:P161 wd:Q158957 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 5,
+        "constraints": [
+          "composer: Johnny Klimek",
+          "director: Lana Wachowski",
+          "cast member: Priyanka Chopra"
+        ]
+      }
+    },
+    {
+      "question": "Which individual received the Hero of the Russian Federation award and passed away in Norilsk?",
+      "answer": "Yevgeny Zinichev",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Yevgeny Zinichev",
+          "award received",
+          "Hero of the Russian Federation"
+        ],
+        [
+          "Yevgeny Zinichev",
+          "place of death",
+          "Norilsk"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P166 wd:Q654471 . ?entity wdt:P20 wd:Q175517 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "award received: Hero of the Russian Federation",
+          "place of death: Norilsk"
+        ]
+      }
+    },
+    {
+      "question": "What film features Ruth Negga as a cast member and has Rebecca Hall as the screenwriter?",
+      "answer": "Passing",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Passing",
+          "cast member",
+          "Ruth Negga"
+        ],
+        [
+          "Passing",
+          "screenwriter",
+          "Rebecca Hall"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P161 wd:Q3453629 . ?entity wdt:P58 wd:Q230534 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "cast member: Ruth Negga",
+          "screenwriter: Rebecca Hall"
+        ]
+      }
+    },
+    {
+      "question": "Which inventor has the family name Marles and is associated with the founding of Sinclair Radionics?",
+      "answer": "Clive Sinclair",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Clive Sinclair",
+          "family name",
+          "Marles"
+        ],
+        [
+          "Clive Sinclair",
+          "significant event",
+          "Sinclair Radionics"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P734 wd:Q37519834 . ?entity wdt:P793 wd:Q7522044 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "family name: Marles",
+          "significant event: Sinclair Radionics"
+        ]
+      }
+    },
+    {
+      "question": "Which individual was born in Makhosini and received their education at the University of Durban-Westville?",
+      "answer": "Zanele kaMagwaza-Msibi",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Zanele kaMagwaza-Msibi",
+          "place of birth",
+          "Makhosini"
+        ],
+        [
+          "Zanele kaMagwaza-Msibi",
+          "educated at",
+          "University of Durban-Westville"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P19 wd:Q35459735 . ?entity wdt:P69 wd:Q4355025 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "place of birth: Makhosini",
+          "educated at: University of Durban-Westville"
+        ]
+      }
+    },
+    {
+      "question": "Which entity includes both Landmark Office Towers and Chase Financial Plaza as its components?",
+      "answer": "Tower City Center",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Tower City Center",
+          "has part",
+          "Landmark Office Towers"
+        ],
+        [
+          "Tower City Center",
+          "has part",
+          "Chase Financial Plaza"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P527 wd:Q21016024 . ?entity wdt:P527 wd:Q21015937 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "has part: Landmark Office Towers",
+          "has part: Chase Financial Plaza"
+        ]
+      }
+    },
+    {
+      "question": "Which individual was educated at both the University of Virginia and Yale University, and has pursued careers as a psychologist and a professor?",
+      "answer": "Joseph P. Allen",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Joseph P. Allen",
+          "educated at",
+          "University of Virginia"
+        ],
+        [
+          "Joseph P. Allen",
+          "occupation",
+          "psychologist"
+        ],
+        [
+          "Joseph P. Allen",
+          "occupation",
+          "professor"
+        ],
+        [
+          "Joseph P. Allen",
+          "educated at",
+          "Yale University"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P69 wd:Q213439 . ?entity wdt:P106 wd:Q212980 . ?entity wdt:P106 wd:Q121594 . ?entity wdt:P69 wd:Q49112 .\n}",
+      "constraint_info": {
+        "constraint_count": 4,
+        "total_attributes": 5,
+        "constraints": [
+          "educated at: University of Virginia",
+          "occupation: psychologist",
+          "occupation: professor",
+          "educated at: Yale University"
+        ]
+      }
+    },
+    {
+      "question": "Which entity was born in Copenhagen and has a sibling named Fanny Suenssen?",
+      "answer": "Alfhilda Mechlenburg",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Alfhilda Mechlenburg",
+          "sibling",
+          "Fanny Suenssen"
+        ],
+        [
+          "Alfhilda Mechlenburg",
+          "place of birth",
+          "Copenhagen"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P3373 wd:Q4981128 . ?entity wdt:P19 wd:Q1748 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "sibling: Fanny Suenssen",
+          "place of birth: Copenhagen"
+        ]
+      }
+    },
+    {
+      "question": "Which movie features both Ben Kingsley and Yuen Wah in its cast?",
+      "answer": "Shang-Chi and the Legend of the Ten Rings",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Shang-Chi and the Legend of the Ten Rings",
+          "cast member",
+          "Ben Kingsley"
+        ],
+        [
+          "Shang-Chi and the Legend of the Ten Rings",
+          "cast member",
+          "Yuen Wah"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P161 wd:Q173158 . ?entity wdt:P161 wd:Q533745 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 11,
+        "constraints": [
+          "cast member: Ben Kingsley",
+          "cast member: Yuen Wah"
+        ]
+      }
+    },
+    {
+      "question": "What movie features Bill Murray and has scenes set in the year 1973?",
+      "answer": "Space Jam",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Space Jam",
+          "characters",
+          "Bill Murray"
+        ],
+        [
+          "Space Jam",
+          "set in period",
+          "1973"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P674 wd:Q29250 . ?entity wdt:P2408 wd:Q2477 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 10,
+        "constraints": [
+          "characters: Bill Murray",
+          "set in period: 1973"
+        ]
+      }
+    },
+    {
+      "question": "Which country recognizes Russian as its official language, is a member of the World Health Organization, and is considered a successor state?",
+      "answer": "Russia",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Russia",
+          "P37",
+          "Russian"
+        ],
+        [
+          "Russia",
+          "member of",
+          "World Health Organization"
+        ],
+        [
+          "Russia",
+          "instance of",
+          "successor state"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P37 wd:Q7737 . ?entity wdt:P463 wd:Q7817 . ?entity wdt:P31 wd:Q127693126 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "P37: Russian",
+          "member of: World Health Organization",
+          "instance of: successor state"
+        ]
+      }
+    },
+    {
+      "question": "What long-distance cycling route is located in the administrative territorial entities of Illinois, Minnesota, Tennessee, and Kentucky?",
+      "answer": "Mississippi River Trail",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Mississippi River Trail",
+          "located in the administrative territorial entity",
+          "Illinois"
+        ],
+        [
+          "Mississippi River Trail",
+          "located in the administrative territorial entity",
+          "Minnesota"
+        ],
+        [
+          "Mississippi River Trail",
+          "located in the administrative territorial entity",
+          "Tennessee"
+        ],
+        [
+          "Mississippi River Trail",
+          "located in the administrative territorial entity",
+          "Kentucky"
+        ],
+        [
+          "Mississippi River Trail",
+          "instance of",
+          "long-distance cycling route"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P131 wd:Q1204 . ?entity wdt:P131 wd:Q1527 . ?entity wdt:P131 wd:Q1509 . ?entity wdt:P131 wd:Q1603 . ?entity wdt:P31 wd:Q353027 .\n}",
+      "constraint_info": {
+        "constraint_count": 5,
+        "total_attributes": 4,
+        "constraints": [
+          "located in the administrative territorial entity: Illinois",
+          "located in the administrative territorial entity: Minnesota",
+          "located in the administrative territorial entity: Tennessee",
+          "located in the administrative territorial entity: Kentucky",
+          "instance of: long-distance cycling route"
+        ]
+      }
+    },
+    {
+      "question": "Which entity has its headquarters located in both Afghanistan and Pakistan?",
+      "answer": "Taliban",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Taliban",
+          "headquarters location",
+          "Afghanistan"
+        ],
+        [
+          "Taliban",
+          "headquarters location",
+          "Pakistan"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P159 wd:Q889 . ?entity wdt:P159 wd:Q843 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "headquarters location: Afghanistan",
+          "headquarters location: Pakistan"
+        ]
+      }
+    },
+    {
+      "question": "What application serves as a terminal emulator and is specifically designed for the Android platform?",
+      "answer": "Termux",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Termux",
+          "use",
+          "terminal emulator"
+        ],
+        [
+          "Termux",
+          "platform",
+          "Android"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P366 wd:Q1071233 . ?entity wdt:P400 wd:Q94 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "use: terminal emulator",
+          "platform: Android"
+        ]
+      }
+    },
+    {
+      "question": "Which chemical compound contains rhodium and includes cyclopentadienide as part of its structure?",
+      "answer": "rhodocene",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "rhodocene",
+          "has part",
+          "rhodium"
+        ],
+        [
+          "rhodocene",
+          "has part",
+          "cyclopentadienide"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P527 wd:Q1087 . ?entity wdt:P527 wd:Q25109538 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "has part: rhodium",
+          "has part: cyclopentadienide"
+        ]
+      }
+    },
+    {
+      "question": "Which individual has received the Klung Wilhelmy Science Award, is employed by Ludwig Maximilian University of Munich, and works as a professor?",
+      "answer": "Monika Aidelsburger",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Monika Aidelsburger",
+          "award received",
+          "Klung Wilhelmy Science Award"
+        ],
+        [
+          "Monika Aidelsburger",
+          "employer",
+          "Ludwig Maximilian University of Munich"
+        ],
+        [
+          "Monika Aidelsburger",
+          "occupation",
+          "professor"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P166 wd:Q876919 . ?entity wdt:P108 wd:Q55044 . ?entity wdt:P106 wd:Q121594 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "award received: Klung Wilhelmy Science Award",
+          "employer: Ludwig Maximilian University of Munich",
+          "occupation: professor"
+        ]
+      }
+    },
+    {
+      "question": "Which musician participated in The Concert for Bangladesh, has the last name Starkey, and is a citizen of the United Kingdom?",
+      "answer": "Ringo Starr",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Ringo Starr",
+          "participant in",
+          "The Concert for Bangladesh"
+        ],
+        [
+          "Ringo Starr",
+          "country of citizenship",
+          "United Kingdom"
+        ],
+        [
+          "Ringo Starr",
+          "family name",
+          "Starkey"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1344 wd:Q1164558 . ?entity wdt:P27 wd:Q145 . ?entity wdt:P734 wd:Q12673714 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "participant in: The Concert for Bangladesh",
+          "country of citizenship: United Kingdom",
+          "family name: Starkey"
+        ]
+      }
+    },
+    {
+      "question": "Which individual was associated with the Astronomical Observatory of Capodimonte, a member of the Reale Istituto d'Incoraggiamento alle Scienze Naturali di Napoli, educated at the Nunziatella military academy, worked as an astronomer, and was a student of Felice Sabatelli?",
+      "answer": "Giuseppe Cassella",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Giuseppe Cassella",
+          "employer",
+          "Astronomical Observatory of Capodimonte"
+        ],
+        [
+          "Giuseppe Cassella",
+          "member of",
+          "Reale Istituto d'Incoraggiamento alle Scienze Naturali di Napoli"
+        ],
+        [
+          "Giuseppe Cassella",
+          "employer",
+          "Nunziatella military academy"
+        ],
+        [
+          "Giuseppe Cassella",
+          "occupation",
+          "astronomer"
+        ],
+        [
+          "Giuseppe Cassella",
+          "student of",
+          "Felice Sabatelli"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P108 wd:Q2034636 . ?entity wdt:P463 wd:Q3931093 . ?entity wdt:P108 wd:Q718869 . ?entity wdt:P106 wd:Q11063 . ?entity wdt:P1066 wd:Q55739748 .\n}",
+      "constraint_info": {
+        "constraint_count": 5,
+        "total_attributes": 4,
+        "constraints": [
+          "employer: Astronomical Observatory of Capodimonte",
+          "member of: Reale Istituto d'Incoraggiamento alle Scienze Naturali di Napoli",
+          "employer: Nunziatella military academy",
+          "occupation: astronomer",
+          "student of: Felice Sabatelli"
+        ]
+      }
+    },
+    {
+      "question": "What movie features both Alex Ferns and Max Carver in its cast?",
+      "answer": "The Batman",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "The Batman",
+          "cast member",
+          "Alex Ferns"
+        ],
+        [
+          "The Batman",
+          "cast member",
+          "Max Carver"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P161 wd:Q4716984 . ?entity wdt:P161 wd:Q953017 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "cast member: Alex Ferns",
+          "cast member: Max Carver"
+        ]
+      }
+    },
+    {
+      "question": "What individual speaks Barbareño and is the daughter of Mary Yee?",
+      "answer": "Ernestine Ygnacio-De Soto",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Ernestine Ygnacio-De Soto",
+          "languages spoken written or signed",
+          "Barbareño"
+        ],
+        [
+          "Ernestine Ygnacio-De Soto",
+          "mother",
+          "Mary Yee"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1412 wd:Q56391 . ?entity wdt:P25 wd:Q6780998 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 4,
+        "constraints": [
+          "languages spoken written or signed: Barbareño",
+          "mother: Mary Yee"
+        ]
+      }
+    },
+    {
+      "question": "Which artist is a member of Studio Z and has the family name Irons?",
+      "answer": "Senga Nengudi",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Senga Nengudi",
+          "member of",
+          "Studio Z"
+        ],
+        [
+          "Senga Nengudi",
+          "family name",
+          "Irons"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P463 wd:Q109246204 . ?entity wdt:P734 wd:Q27601633 .\n}",
+      "constraint_info": {
+        "constraint_count": 2,
+        "total_attributes": 3,
+        "constraints": [
+          "member of: Studio Z",
+          "family name: Irons"
+        ]
+      }
+    },
+    {
+      "question": "Which individual was a member of the Democratic Party and passed away in Medan?",
+      "answer": "Abdul Wahab Dalimunthe",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Abdul Wahab Dalimunthe",
+          "instance of",
+          "human"
+        ],
+        [
+          "Abdul Wahab Dalimunthe",
+          "member of political party",
+          "Democratic Party"
+        ],
+        [
+          "Abdul Wahab Dalimunthe",
+          "place of death",
+          "Medan"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P31 wd:Q5 . ?entity wdt:P102 wd:Q1186227 . ?entity wdt:P20 wd:Q5972 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 4,
+        "constraints": [
+          "instance of: human",
+          "member of political party: Democratic Party",
+          "place of death: Medan"
+        ]
+      }
+    },
+    {
+      "question": "Which individual is related as a sibling to Þórður Guðjónsson, Joey Guðjónsson, and Bjarni Guðjónsson?",
+      "answer": "Björn Bergmann Sigurðarson",
+      "level": 2,
+      "type": "multi_attribute",
+      "reasoning_chain": [
+        [
+          "Björn Bergmann Sigurðarson",
+          "sibling",
+          "Þórður Guðjónsson"
+        ],
+        [
+          "Björn Bergmann Sigurðarson",
+          "sibling",
+          "Joey Guðjónsson"
+        ],
+        [
+          "Björn Bergmann Sigurðarson",
+          "sibling",
+          "Bjarni Guðjónsson"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P3373 wd:Q1369162 . ?entity wdt:P3373 wd:Q1102763 . ?entity wdt:P3373 wd:Q447128 .\n}",
+      "constraint_info": {
+        "constraint_count": 3,
+        "total_attributes": 3,
+        "constraints": [
+          "sibling: Þórður Guðjónsson",
+          "sibling: Joey Guðjónsson",
+          "sibling: Bjarni Guðjónsson"
+        ]
+      }
+    }
+  ]
+}
