@@ -137,7 +137,7 @@ def save_results(*, model_name: str, accuracy: float, total: int, correct: int, 
     level = level_match.group(1) if level_match else "unknown"
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     model_safe_name = model_name.replace("-", "_").replace(".", "_").replace("/", "_")
-    output_dir = os.path.join("output", year)
+    output_dir = os.path.join("outputs", "evaluations", year)
     os.makedirs(output_dir, exist_ok=True)
     output_file = os.path.join(output_dir, f"{level}_results_DA_{model_safe_name}_{timestamp}.json")
     summary_file = os.path.join(output_dir, f"{level}_summary_DA_{model_safe_name}_{timestamp}.json")

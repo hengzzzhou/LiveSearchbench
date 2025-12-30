@@ -1,0 +1,1736 @@
+{
+  "metadata": {
+    "description": "Level 3 correct questions extracted from test results",
+    "total_questions": 50,
+    "abstraction_level": "maximum",
+    "cultural_depth": "very_high",
+    "source_file": "level3_results_close_o3_deep_research_2025_06_26_20250913_003740.json",
+    "extraction_date": "2025-09-14"
+  },
+  "qa_pairs": [
+    {
+      "question": "What defender, sharing his birthplace with the city known for Venezuelan oil fields and linked to the sport celebrated in the 1997 Scottish Cup Final, has represented national teams from two different continents?",
+      "answer": "Fernando Amorebieta",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Fernando Amorebieta",
+          "sport",
+          "association football"
+        ],
+        [
+          "Fernando Amorebieta",
+          "place of birth",
+          "Cantaura"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P641 wd:Q2736 . ?entity wdt:P19 wd:Q2919593 .\n}",
+      "original_level2_question": "Which football player was born in Cantaura and has played professional association football?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "sport linked to is the sport of 1997 Scottish Cup Final",
+          "place of birth: Cantaura"
+        ],
+        "original_constraints": [
+          "sport: association football",
+          "place of birth: Cantaura"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which Mexican state, renowned for its iconic mariachi music and tequila, encompasses a picturesque lake that shares its name with a bustling town known for attracting expatriates?",
+      "answer": "Jalisco",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Jalisco",
+          "instance of",
+          "state of Mexico"
+        ],
+        [
+          "Jalisco",
+          "contains administrative territorial entity",
+          "Chapala"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P31 wd:Q15149663 . ?entity wdt:P150 wd:Q5260647 .\n}",
+      "original_level2_question": "Which state of Mexico includes the administrative territorial entity of Chapala?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "instance of: state of Mexico",
+          "contains administrative territorial entity linked to is the contains administrative territorial entity of Jalisco"
+        ],
+        "original_constraints": [
+          "instance of: state of Mexico",
+          "contains administrative territorial entity: Chapala"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which competitor from the land of Tolstoy, after the fall of the Iron Curtain, pursued academia within the institution sharing an alma mater with an ice hockey virtuoso known for her connection to the maple leaf emblem?",
+      "answer": "Iya Gavrilova",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Iya Gavrilova",
+          "country for sport",
+          "Russia"
+        ],
+        [
+          "Iya Gavrilova",
+          "educated at",
+          "University of Calgary"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1532 wd:Q159 . ?entity wdt:P69 wd:Q1067471 .\n}",
+      "original_level2_question": "Which athlete represents Russia in sports and has studied at the University of Calgary?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "country for sport linked to has subject has role dissolution of the Soviet Union",
+          "educated at linked to is the educated at of Iya Gavrilova"
+        ],
+        "original_constraints": [
+          "country for sport: Russia",
+          "educated at: University of Calgary"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which investigative journalist, who pursued a fellowship named after a pioneering media mogul, also delved into the complexities of Eurasian studies at an esteemed institution in a nation known for its matryoshka dolls?",
+      "answer": "Roman Anin",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Roman Anin",
+          "educated at",
+          "John S. Knight Fellowships for Professional Journalists"
+        ],
+        [
+          "Roman Anin",
+          "educated at",
+          "Institute of Oriental Studies of the Russian Academy of Sciences"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P69 wd:Q6256309 . ?entity wdt:P69 wd:Q154528 .\n}",
+      "original_level2_question": "Which journalist was a John S. Knight Fellow and also studied at the Institute of Oriental Studies of the Russian Academy of Sciences?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "educated at: John S. Knight Fellowships for Professional Journalists",
+          "educated at: Institute of Oriental Studies of the Russian Academy of Sciences"
+        ],
+        "original_constraints": [
+          "educated at: John S. Knight Fellowships for Professional Journalists",
+          "educated at: Institute of Oriental Studies of the Russian Academy of Sciences"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which drummer, known for participating in an event supporting a South Asian nation, shares a surname with a fictional detective's assistant, and whose homeland hosts an annual music event featuring contemporary artists?",
+      "answer": "Ringo Starr",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Ringo Starr",
+          "participant in",
+          "The Concert for Bangladesh"
+        ],
+        [
+          "Ringo Starr",
+          "country of citizenship",
+          "United Kingdom"
+        ],
+        [
+          "Ringo Starr",
+          "family name",
+          "Starkey"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1344 wd:Q1164558 . ?entity wdt:P27 wd:Q145 . ?entity wdt:P734 wd:Q12673714 .\n}",
+      "original_level2_question": "Which musician participated in The Concert for Bangladesh, has the last name Starkey, and is a citizen of the United Kingdom?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "participant in linked to is the participant in of Ringo Starr",
+          "country of citizenship linked to is the location of Radio 1's Big Weekend",
+          "family name linked to is the family name of Ringo Starr"
+        ],
+        "original_constraints": [
+          "participant in: The Concert for Bangladesh",
+          "country of citizenship: United Kingdom",
+          "family name: Starkey"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which coalition, known for its emblematic gatherings of nations influenced by Angkor's ancient whispers, counts the land of the revered \"Supreme Patriarch of Cambodian Buddhism\" among its members?",
+      "answer": "ASEAN",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "ASEAN",
+          "instance of",
+          "regional organization"
+        ],
+        [
+          "ASEAN",
+          "has part",
+          "Cambodia"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P31 wd:Q4120211 . ?entity wdt:P527 wd:Q424 .\n}",
+      "original_level2_question": "Which regional organization includes Cambodia as one of its members?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "instance of: regional organization",
+          "has part linked to is the country of citizenship of Preah Maha Ghosananda"
+        ],
+        "original_constraints": [
+          "instance of: regional organization",
+          "has part: Cambodia"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "What film's protagonist, known for her vocal talents in a Latin girl group, shares screen time with the voice behind a snow queen's empowering anthem?",
+      "answer": "Cinderella",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Cinderella",
+          "cast member",
+          "Camila Cabello"
+        ],
+        [
+          "Cinderella",
+          "cast member",
+          "Idina Menzel"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P161 wd:Q18810940 . ?entity wdt:P161 wd:Q157400 .\n}",
+      "original_level2_question": "What movie features Camila Cabello in the lead role and also includes Idina Menzel in its cast?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "cast member linked to is the cast member of Cinderella",
+          "cast member linked to is the cast member of Cinderella"
+        ],
+        "original_constraints": [
+          "cast member: Camila Cabello",
+          "cast member: Idina Menzel"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which cinematic work brings together an actress known for her role in a film about racial identity and a director who transitioned to screenwriting, both contributing to a story set in 1920s Harlem?",
+      "answer": "Passing",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Passing",
+          "cast member",
+          "Ruth Negga"
+        ],
+        [
+          "Passing",
+          "screenwriter",
+          "Rebecca Hall"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P161 wd:Q3453629 . ?entity wdt:P58 wd:Q230534 .\n}",
+      "original_level2_question": "What film features Ruth Negga as a cast member and has Rebecca Hall as the screenwriter?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "cast member linked to is the cast member of Passing",
+          "screenwriter linked to is the screenwriter of Passing"
+        ],
+        "original_constraints": [
+          "cast member: Ruth Negga",
+          "screenwriter: Rebecca Hall"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "What cultural community is acknowledged in the land of Kafka, shares historical ties with a nation once led by an actor-turned-politician, and finds a place in the region synonymous with hearty Eastern European stews?",
+      "answer": "Rusyns",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Rusyns",
+          "country",
+          "Czech Republic"
+        ],
+        [
+          "Rusyns",
+          "country",
+          "Russia"
+        ],
+        [
+          "Rusyns",
+          "country",
+          "Ukraine"
+        ],
+        [
+          "Rusyns",
+          "country",
+          "Slavonia"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P17 wd:Q213 . ?entity wdt:P17 wd:Q159 . ?entity wdt:P17 wd:Q212 . ?entity wdt:P17 wd:Q681964 .\n}",
+      "original_level2_question": "What ethnic group is recognized in the Czech Republic, Russia, Ukraine, and Slavonia?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "country: Czech Republic",
+          "country linked to has subject has role dissolution of the Soviet Union",
+          "country linked to has object has role acting"
+        ],
+        "original_constraints": [
+          "country: Czech Republic",
+          "country: Russia",
+          "country: Ukraine",
+          "country: Slavonia"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "What televised competition, akin to a cinematic tale of endurance, brought together a group named after an atomic number that's just above oxygen to achieve emergent stardom?",
+      "answer": "Idol Producer",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Idol Producer",
+          "genre",
+          "survival film"
+        ],
+        [
+          "Idol Producer",
+          "winner",
+          "Nine Percent"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P136 wd:Q15898171 . ?entity wdt:P1346 wd:Q51625866 .\n}",
+      "original_level2_question": "Which television show is categorized as a survival film and resulted in the formation of the winning group Nine Percent?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "genre: survival film",
+          "winner linked to is the winner of Idol Producer"
+        ],
+        "original_constraints": [
+          "genre: survival film",
+          "winner: Nine Percent"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which organization, rooted in the mountainous heartlands famed for their tribal hospitality, finds its leadership operating from territories where the Indus and Hindu Kush play their ancient roles in South Asian tales?",
+      "answer": "Taliban",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Taliban",
+          "headquarters location",
+          "Afghanistan"
+        ],
+        [
+          "Taliban",
+          "headquarters location",
+          "Pakistan"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P159 wd:Q889 . ?entity wdt:P159 wd:Q843 .\n}",
+      "original_level2_question": "Which entity has its headquarters located in both Afghanistan and Pakistan?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "headquarters location linked to has statement supported by Taliban",
+          "headquarters location linked to is the has part of South Asia"
+        ],
+        "original_constraints": [
+          "headquarters location: Afghanistan",
+          "headquarters location: Pakistan"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which film blends the quizmaster of a city known for double jeopardy with the YouTuber who crafted a pixelated universe?",
+      "answer": "Free Guy",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Free Guy",
+          "cast member",
+          "Alex Trebek"
+        ],
+        [
+          "Free Guy",
+          "cast member",
+          "DanTDM"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P161 wd:Q929985 . ?entity wdt:P161 wd:Q20707531 .\n}",
+      "original_level2_question": "Which movie features both Alex Trebek and DanTDM as cast members?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "cast member linked to is the cast member of Free Guy",
+          "cast member linked to is the cast member of Free Guy"
+        ],
+        "original_constraints": [
+          "cast member: Alex Trebek",
+          "cast member: DanTDM"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which Nobel laureate, whose scientific journey mirrors the complexity of a chaotic dance, has left an indelible mark on both the orchestration of disorder in disordered systems and the dynamic tapestry of growth processes?",
+      "answer": "Giorgio Parisi",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Giorgio Parisi",
+          "field of work",
+          "Kardar–Parisi–Zhang equation"
+        ],
+        [
+          "Giorgio Parisi",
+          "field of work",
+          "Spin glass"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P101 wd:Q6369122 . ?entity wdt:P101 wd:Q1490646 .\n}",
+      "original_level2_question": "Which physicist contributed to the development of the Kardar–Parisi–Zhang equation and also made significant contributions to the study of spin glass?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "field of work linked to is the field of work of Giorgio Parisi",
+          "field of work linked to is the field of work of Giorgio Parisi"
+        ],
+        "original_constraints": [
+          "field of work: Kardar–Parisi–Zhang equation",
+          "field of work: Spin glass"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which Kremlin critic, once tied to the legacy of Russia's flagship airline, sharpened his economic insights at the institution known for grooming the financial minds under the watchful eye of the Russian Federation's governance?",
+      "answer": "Alexei Navalny",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Alexei Navalny",
+          "employer",
+          "Aeroflot"
+        ],
+        [
+          "Alexei Navalny",
+          "educated at",
+          "Finance University under the Government of the Russian Federation"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P108 wd:Q58707 . ?entity wdt:P69 wd:Q1416632 .\n}",
+      "original_level2_question": "Which individual was associated with Aeroflot and also studied at the Finance University under the Government of the Russian Federation?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "employer: Aeroflot",
+          "educated at: Finance University under the Government of the Russian Federation"
+        ],
+        "original_constraints": [
+          "employer: Aeroflot",
+          "educated at: Finance University under the Government of the Russian Federation"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which artist, known for her pivotal role in a Grammy-winning trio that once covered a notable Roberta Flack song, channels the spirit of Harlem Renaissance poetry through her soul and contemporary R&B creations, while representing the birthplace of jazz?",
+      "answer": "Lauryn Hill",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Lauryn Hill",
+          "country of citizenship",
+          "United States"
+        ],
+        [
+          "Lauryn Hill",
+          "genre",
+          "soul"
+        ],
+        [
+          "Lauryn Hill",
+          "genre",
+          "contemporary R&B"
+        ],
+        [
+          "Lauryn Hill",
+          "member of",
+          "Fugees"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P27 wd:Q30 . ?entity wdt:P136 wd:Q131272 . ?entity wdt:P136 wd:Q850412 . ?entity wdt:P463 wd:Q159329 .\n}",
+      "original_level2_question": "Which artist is a member of the Fugees, hails from the United States, and is known for their music in the genres of soul and contemporary R&B?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "country of citizenship: United States",
+          "genre: soul",
+          "genre: contemporary R&B"
+        ],
+        "original_constraints": [
+          "country of citizenship: United States",
+          "genre: soul",
+          "genre: contemporary R&B",
+          "member of: Fugees"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which musical ensemble, linked to the film genre of Captain Jack Sparrow, hails from the nation known for jazz, and shares a member with the crew of an iconic '80s film score composer?",
+      "answer": "Oingo Boingo",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Oingo Boingo",
+          "genre",
+          "rock music"
+        ],
+        [
+          "Oingo Boingo",
+          "P495",
+          "United States"
+        ],
+        [
+          "Oingo Boingo",
+          "has part",
+          "John Avila"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P136 wd:Q11399 . ?entity wdt:P495 wd:Q30 . ?entity wdt:P527 wd:Q6219800 .\n}",
+      "original_level2_question": "What band is known for its rock music, is based in the United States, and includes John Avila as a member?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "genre linked to is the genre of Johnny Depp",
+          "P495: United States",
+          "has part linked to is the has part of Oingo Boingo"
+        ],
+        "original_constraints": [
+          "genre: rock music",
+          "P495: United States",
+          "has part: John Avila"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which hospitality titan unites the chain inspired by avant-garde luxury with the brand that echoes the rebirth of classical artistry?",
+      "answer": "Marriott International",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Marriott International",
+          "subsidiary",
+          "W Hotels"
+        ],
+        [
+          "Marriott International",
+          "subsidiary",
+          "Renaissance Hotels"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P355 wd:Q7958488 . ?entity wdt:P355 wd:Q2143252 .\n}",
+      "original_level2_question": "What company has subsidiary W Hotels and also has subsidiary Renaissance Hotels?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "subsidiary linked to is the subsidiary of Marriott International",
+          "subsidiary linked to is the subsidiary of Marriott International"
+        ],
+        "original_constraints": [
+          "subsidiary: W Hotels",
+          "subsidiary: Renaissance Hotels"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which international pact involves the continent known for the kangaroo and the collective of nations using the currency symbolized by a mythical harpy, with the custodian being the island nation famous for its tea ceremonies and cherry blossoms?",
+      "answer": "Anti-Counterfeiting Trade Agreement",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Anti-Counterfeiting Trade Agreement",
+          "signatory",
+          "European Union"
+        ],
+        [
+          "Anti-Counterfeiting Trade Agreement",
+          "signatory",
+          "Australia"
+        ],
+        [
+          "Anti-Counterfeiting Trade Agreement",
+          "depositary",
+          "Government of Japan"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1891 wd:Q458 . ?entity wdt:P1891 wd:Q408 . ?entity wdt:P2058 wd:Q1190574 .\n}",
+      "original_level2_question": "What agreement has the European Union and Australia as signatories and the Government of Japan as its depositary?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "signatory linked to is the signatory of Anti-Counterfeiting Trade Agreement",
+          "signatory linked to has mother Ouija Board",
+          "depositary linked to is the depositary of Anti-Counterfeiting Trade Agreement"
+        ],
+        "original_constraints": [
+          "signatory: European Union",
+          "signatory: Australia",
+          "depositary: Government of Japan"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "What land down under is a participant in two accords, one echoing a trio of Western allies and the other a nod to a Cold War-era alliance within the Pacific?",
+      "answer": "Australia",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Australia",
+          "member of",
+          "AUKUS"
+        ],
+        [
+          "Australia",
+          "member of",
+          "Anzus"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P463 wd:Q108556886 . ?entity wdt:P463 wd:Q295875 .\n}",
+      "original_level2_question": "Which country is a member of both AUKUS and ANZUS?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "member of linked to is the member of of Australia",
+          "member of linked to is the member of of Australia"
+        ],
+        "original_constraints": [
+          "member of: AUKUS",
+          "member of: Anzus"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which individual, known for crafting tales as evocative as those of a famed Indian writer of narratives, shared poetic sensibilities with an early American female penwoman, and also dabbled in the theatrical arts like a British poet famed for his 'Hassan', all while belonging to the lineage of the Asquith family?",
+      "answer": "Elizabeth Bibesco",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Elizabeth Bibesco",
+          "occupation",
+          "short story writer"
+        ],
+        [
+          "Elizabeth Bibesco",
+          "occupation",
+          "poet"
+        ],
+        [
+          "Elizabeth Bibesco",
+          "occupation",
+          "playwright"
+        ],
+        [
+          "Elizabeth Bibesco",
+          "family name",
+          "Asquith"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q15949613 . ?entity wdt:P106 wd:Q49757 . ?entity wdt:P106 wd:Q214917 . ?entity wdt:P734 wd:Q37507618 .\n}",
+      "original_level2_question": "Which individual is known for being a short story writer, poet, and playwright, and also belongs to the family with the last name Asquith?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "occupation linked to is the occupation of Yogesh Joshi",
+          "occupation linked to is the occupation of Mary Ann Hanmer Dodd",
+          "occupation linked to is the occupation of James Elroy Flecker"
+        ],
+        "original_constraints": [
+          "occupation: short story writer",
+          "occupation: poet",
+          "occupation: playwright",
+          "family name: Asquith"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "What graphic narrative, blending the creativity of a mastermind behind mutants in a mansion with the artistic flair reminiscent of a nation famous for its island archipelago, features a tale of superhuman heists?",
+      "answer": "Supercrooks",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Supercrooks",
+          "author",
+          "Leinil Francis Yu"
+        ],
+        [
+          "Supercrooks",
+          "author",
+          "Mark Millar"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P50 wd:Q3229194 . ?entity wdt:P50 wd:Q2543 .\n}",
+      "original_level2_question": "Which comic series was co-created by Leinil Francis Yu and Mark Millar?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "author linked to is the author of Supercrooks",
+          "author linked to is the author of Supercrooks"
+        ],
+        "original_constraints": [
+          "author: Leinil Francis Yu",
+          "author: Mark Millar"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which vast expanse, often associated with the fierce cold of the Tunguska event and the echoes of Dostoevsky's exile, shares borders with the domain of the Steppe Riders?",
+      "answer": "Siberia",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Siberia",
+          "part of",
+          "Asia"
+        ],
+        [
+          "Siberia",
+          "partially coincident with",
+          "Kazakhstan"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P361 wd:Q48 . ?entity wdt:P1382 wd:Q232 .\n}",
+      "original_level2_question": "What region is located in part of Asia and has overlapping areas with Kazakhstan?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "part of linked to is the part of of Siberia",
+          "partially coincident with linked to is the partially coincident with of Siberia"
+        ],
+        "original_constraints": [
+          "part of: Asia",
+          "partially coincident with: Kazakhstan"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Who is the visionary behind a streetwear label known for its diagonal stripes and zip-tie motifs, who also elevated a Parisian luxury house known for its monogram canvas to new creative heights?",
+      "answer": "Virgil Abloh",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Virgil Abloh",
+          "employer",
+          "Louis Vuitton"
+        ],
+        [
+          "Virgil Abloh",
+          "employer",
+          "Off-White"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P108 wd:Q191485 . ?entity wdt:P108 wd:Q53472173 .\n}",
+      "original_level2_question": "Which designer served as the artistic director for Louis Vuitton and founded the fashion brand Off-White?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "employer linked to is the employer of Virgil Abloh",
+          "employer linked to is the employer of Virgil Abloh"
+        ],
+        "original_constraints": [
+          "employer: Louis Vuitton",
+          "employer: Off-White"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which statesman, often associated with leadership roles during the era of post-apartheid transformation and known for steering state-owned enterprises, has also played a pivotal role in overseeing governmental strategic planning from a central executive position?",
+      "answer": "Jeff Radebe",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Jeff Radebe",
+          "position held",
+          "Minister in the Presidency"
+        ],
+        [
+          "Jeff Radebe",
+          "position held",
+          "Minister of Public Enterprises"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P39 wd:Q20981731 . ?entity wdt:P39 wd:Q20981739 .\n}",
+      "original_level2_question": "Which individual has held both the position of Minister in the Presidency and the position of Minister of Public Enterprises?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "position held linked to is the position held of Jeff Radebe",
+          "position held linked to is the position held of Jeff Radebe"
+        ],
+        "original_constraints": [
+          "position held: Minister in the Presidency",
+          "position held: Minister of Public Enterprises"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Who is the scientist hailing from the battlefield of a historic Southern skirmish, contributing her expertise to the biotech innovator known for its mRNA breakthroughs?",
+      "answer": "Melissa J. Moore",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Melissa J. Moore",
+          "place of birth",
+          "New Market"
+        ],
+        [
+          "Melissa J. Moore",
+          "employer",
+          "Moderna"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P19 wd:Q1374174 . ?entity wdt:P108 wd:Q17081612 .\n}",
+      "original_level2_question": "Which individual was born in New Market and works for Moderna?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "place of birth linked to is the place of birth of Melissa J. Moore",
+          "employer linked to is the employer of Melissa J. Moore"
+        ],
+        "original_constraints": [
+          "place of birth: New Market",
+          "employer: Moderna"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "What cinematic creation blends the essence of mythic champions with the storytelling grace of an Oscar-winning director known for crafting tales of nomadic resilience?",
+      "answer": "Eternals",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Eternals",
+          "genre",
+          "superhero film"
+        ],
+        [
+          "Eternals",
+          "P57",
+          "Chloe Zhao"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P136 wd:Q1535153 . ?entity wdt:P57 wd:Q21078321 .\n}",
+      "original_level2_question": "Which film is a superhero movie directed by Chloe Zhao?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "genre: superhero film",
+          "P57: Chloe Zhao"
+        ],
+        "original_constraints": [
+          "genre: superhero film",
+          "P57: Chloe Zhao"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which thinker, whose origins trace back to the Lombard town known for its medieval castle, pursued advanced studies at a consortium of elite institutions associated with a group also featuring the sage of the \"Great Books\" philosophy?",
+      "answer": "Angelo Codevilla",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Angelo Codevilla",
+          "educated at",
+          "Claremont Graduate University"
+        ],
+        [
+          "Angelo Codevilla",
+          "place of birth",
+          "Voghera"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P69 wd:Q50015 . ?entity wdt:P19 wd:Q39981 .\n}",
+      "original_level2_question": "Which individual was born in Voghera and attended Claremont Graduate University?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "educated at linked to has affiliation Claremont Colleges",
+          "place of birth: Voghera"
+        ],
+        "original_constraints": [
+          "educated at: Claremont Graduate University",
+          "place of birth: Voghera"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which creator, who harmonized the ethos of Hellenic drama with melodies, honed their craft at an institution founded in the city known for its ancient philosophers and is celebrated for vocal compositions?",
+      "answer": "Mikis Theodorakis",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Mikis Theodorakis",
+          "educated at",
+          "Athens Conservatoire"
+        ],
+        [
+          "Mikis Theodorakis",
+          "genre",
+          "vocal music"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P69 wd:Q755342 . ?entity wdt:P136 wd:Q685884 .\n}",
+      "original_level2_question": "Which composer studied at the Athens Conservatoire and is known for creating vocal music?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "educated at: Athens Conservatoire",
+          "genre: vocal music"
+        ],
+        "original_constraints": [
+          "educated at: Athens Conservatoire",
+          "genre: vocal music"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which esteemed journalist, who reported for the station known for its peach state storytelling, succumbed to the same illness that has claimed public figures like Senator John McCain?",
+      "answer": "Jovita Moore",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Jovita Moore",
+          "employer",
+          "WSB-TV"
+        ],
+        [
+          "Jovita Moore",
+          "cause of death",
+          "glioblastoma"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P108 wd:Q7955494 . ?entity wdt:P509 wd:Q282142 .\n}",
+      "original_level2_question": "Which television journalist worked for WSB-TV and passed away due to glioblastoma?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "employer linked to is the employer of Jovita Moore",
+          "cause of death linked to is the cause of death of Jovita Moore"
+        ],
+        "original_constraints": [
+          "employer: WSB-TV",
+          "cause of death: glioblastoma"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which nation intertwines the historical revolution that echoed with Zapata with the tongue once spoken by those who built Chichen Itza?",
+      "answer": "Mexico",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Mexico",
+          "P37",
+          "Yucatec Maya"
+        ],
+        [
+          "Mexico",
+          "participant in",
+          "World War II"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P37 wd:Q13354 . ?entity wdt:P1344 wd:Q362 .\n}",
+      "original_level2_question": "Which country has participated in World War II and lists Yucatec Maya as one of its official languages?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "P37: Yucatec Maya",
+          "participant in linked to is the conflict of Don Quartermain"
+        ],
+        "original_constraints": [
+          "P37: Yucatec Maya",
+          "participant in: World War II"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which region encompasses the birthplace of a prominent Kyrgyz politician, famous for its nomadic traditions and known for horse games, sharing cultural ties with the lands of the Silk Road?",
+      "answer": "Central Asia",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Central Asia",
+          "country",
+          "Turkmenistan"
+        ],
+        [
+          "Central Asia",
+          "country",
+          "Kyrgyzstan"
+        ],
+        [
+          "Central Asia",
+          "instance of",
+          "region"
+        ],
+        [
+          "Central Asia",
+          "country",
+          "Kazakhstan"
+        ],
+        [
+          "Central Asia",
+          "has part",
+          "Kyrgyzstan"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P17 wd:Q874 . ?entity wdt:P17 wd:Q813 . ?entity wdt:P31 wd:Q82794 . ?entity wdt:P17 wd:Q232 . ?entity wdt:P527 wd:Q813 .\n}",
+      "original_level2_question": "What region includes Turkmenistan, Kazakhstan, and has Kyrgyzstan as a part of it?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "country linked to is the has part of Central Asia",
+          "country linked to is the country of citizenship of Igor Chudinov",
+          "instance of: region"
+        ],
+        "original_constraints": [
+          "country: Turkmenistan",
+          "country: Kyrgyzstan",
+          "instance of: region",
+          "country: Kazakhstan",
+          "has part: Kyrgyzstan"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which cinematic work involves a performer once known as Mrs. Emma Peel and unfolds during a decade characterized by British musical invasions and counterculture movements?",
+      "answer": "Last Night in Soho",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Last Night in Soho",
+          "cast member",
+          "Diana Rigg"
+        ],
+        [
+          "Last Night in Soho",
+          "set in period",
+          "1960s"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P161 wd:Q232876 . ?entity wdt:P2408 wd:Q35724 .\n}",
+      "original_level2_question": "Which film features Diana Rigg and is set in the 1960s?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "cast member linked to is the cast member of Last Night in Soho",
+          "set in period linked to is the set in period of Last Night in Soho"
+        ],
+        "original_constraints": [
+          "cast member: Diana Rigg",
+          "set in period: 1960s"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "In a universe where dark legacies are born from sidekicks gone rogue, which character, known for leaving a trail of bodies, speaks with the voice of the actor whose younger self was best friends with a genius in an animated TV series about a boy's science adventures?",
+      "answer": "Jason Todd",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Jason Todd",
+          "occupation",
+          "mass murderer"
+        ],
+        [
+          "Jason Todd",
+          "P175",
+          "Vincent Martella"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q15883433 . ?entity wdt:P175 wd:Q948952 .\n}",
+      "original_level2_question": "Which fictional character is both a mass murderer and voiced by Vincent Martella?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "occupation: mass murderer",
+          "P175: Vincent Martella"
+        ],
+        "original_constraints": [
+          "occupation: mass murderer",
+          "P175: Vincent Martella"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "In which political contest did the man known for his ginger locks face off against a candidate sharing his first name with the biblical king who danced before the Ark, within a party symbolized by a bird known for its yellow plumage?",
+      "answer": "1999 Liberal Democrats leadership election",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "1999 Liberal Democrats leadership election",
+          "candidate",
+          "Charles Kennedy"
+        ],
+        [
+          "1999 Liberal Democrats leadership election",
+          "candidate",
+          "David Rendel"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P726 wd:Q332950 . ?entity wdt:P726 wd:Q5238989 .\n}",
+      "original_level2_question": "Which leadership election featured both Charles Kennedy and David Rendel as candidates?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "candidate linked to is the candidate of 1999 Liberal Democrats leadership election",
+          "candidate linked to is the candidate of 1999 Liberal Democrats leadership election"
+        ],
+        "original_constraints": [
+          "candidate: Charles Kennedy",
+          "candidate: David Rendel"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which martial arts legend, known for his roles in films that brought Eastern combat forms to Western screens, took his final bow in a city known for its hot springs and proximity to Tokyo?",
+      "answer": "Sonny Chiba",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Sonny Chiba",
+          "occupation",
+          "stunt coordinator"
+        ],
+        [
+          "Sonny Chiba",
+          "place of death",
+          "Kimitsu"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q2833480 . ?entity wdt:P20 wd:Q637928 .\n}",
+      "original_level2_question": "Which actor had the role of stunt coordinator and passed away in Kimitsu?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "occupation linked to is the occupation of Sonny Chiba",
+          "place of death linked to is the place of death of Sonny Chiba"
+        ],
+        "original_constraints": [
+          "occupation: stunt coordinator",
+          "place of death: Kimitsu"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "What historic unit, whose members traditionally protect the heart of Catholicism and share origins with the land famed for its neutrality and its serene lakes, traces its lineage to the region of Trasimène?",
+      "answer": "Pontifical Swiss Guard",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Pontifical Swiss Guard",
+          "P276",
+          "Vatican City"
+        ],
+        [
+          "Pontifical Swiss Guard",
+          "instance of",
+          "Swiss Guard"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P276 wd:Q237 . ?entity wdt:P31 wd:Q1055735 .\n}",
+      "original_level2_question": "Which entity is located in Vatican City and is part of the Swiss Guard?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "P276 linked to has follows Trasimène",
+          "instance of: Swiss Guard"
+        ],
+        "original_constraints": [
+          "P276: Vatican City",
+          "instance of: Swiss Guard"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which county shares its name with a type of entrance and is situated on the geological formation that inspired a great lake's name, within the state known for its cheese production?",
+      "answer": "Door County",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Door County",
+          "located in/on physical feature",
+          "Niagara Escarpment"
+        ],
+        [
+          "Door County",
+          "instance of",
+          "county of Wisconsin"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P706 wd:Q826965 . ?entity wdt:P31 wd:Q12178928 .\n}",
+      "original_level2_question": "Which county is located on the Niagara Escarpment and is a county in Wisconsin?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "located in/on physical feature linked to is the located in/on physical feature of Door County",
+          "instance of: county of Wisconsin"
+        ],
+        "original_constraints": [
+          "located in/on physical feature: Niagara Escarpment",
+          "instance of: county of Wisconsin"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which televised narrative unfolds in a realm of political intrigue and dragons, where its dialogue echoes the tongue of the author who translated Indian spiritual texts into English?",
+      "answer": "Game of Thrones",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Game of Thrones",
+          "P364",
+          "English"
+        ],
+        [
+          "Game of Thrones",
+          "P840",
+          "Westeros"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P364 wd:Q1860 . ?entity wdt:P840 wd:Q3623561 .\n}",
+      "original_level2_question": "What television series is set in the fictional land of Westeros and is primarily in the English language?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "P364 linked to is the language of work or name of A. C. Bhaktivedanta Swami Prabhupada",
+          "P840: Westeros"
+        ],
+        "original_constraints": [
+          "P364: English",
+          "P840: Westeros"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which underwater tale, known for its transformation theme and composed by a figure sharing his name with a famous Danish storyteller, features the talents of both a Russian artist known for his radiant surname and another whose last name echoes a Ukrainian city known for its pottery?",
+      "answer": "The Little Mermaid",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "The Little Mermaid",
+          "P175",
+          "Aleksandr Solnyshkin"
+        ],
+        [
+          "The Little Mermaid",
+          "P175",
+          "Vitaliy Trofimenko"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P175 wd:Q105943935 . ?entity wdt:P175 wd:Q105943505 .\n}",
+      "original_level2_question": "What production features both Aleksandr Solnyshkin and Vitaliy Trofimenko?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "P175: Aleksandr Solnyshkin",
+          "P175: Vitaliy Trofimenko"
+        ],
+        "original_constraints": [
+          "P175: Aleksandr Solnyshkin",
+          "P175: Vitaliy Trofimenko"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which individual carries forward the linguistic legacy of the coastal California tribes while being the descendant of a woman who witnessed the sunset of the Chumash language?",
+      "answer": "Ernestine Ygnacio-De Soto",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Ernestine Ygnacio-De Soto",
+          "languages spoken written or signed",
+          "Barbareño"
+        ],
+        [
+          "Ernestine Ygnacio-De Soto",
+          "mother",
+          "Mary Yee"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1412 wd:Q56391 . ?entity wdt:P25 wd:Q6780998 .\n}",
+      "original_level2_question": "What individual speaks Barbareño and is the daughter of Mary Yee?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "languages spoken written or signed linked to is the languages spoken written or signed of Ernestine Ygnacio-De Soto",
+          "mother linked to is the mother of Ernestine Ygnacio-De Soto"
+        ],
+        "original_constraints": [
+          "languages spoken written or signed: Barbareño",
+          "mother: Mary Yee"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which iconic rock ballad, often linked with its feline-named drummer, was brought to life by the same pen that crafted a tribute to a waiting longing, and harmonized by tones conceived by the name echoing a famous 'black gold' guitarist?",
+      "answer": "Beth",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Beth",
+          "lyrics by",
+          "Peter Criss"
+        ],
+        [
+          "Beth",
+          "composer",
+          "Stan Penridge"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P676 wd:Q137881 . ?entity wdt:P86 wd:Q6040881 .\n}",
+      "original_level2_question": "What song features lyrics by Peter Criss and was composed by Stan Penridge?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "lyrics by linked to is the lyrics by of Beth",
+          "composer linked to is the composer of Beth"
+        ],
+        "original_constraints": [
+          "lyrics by: Peter Criss",
+          "composer: Stan Penridge"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which athlete competes in the North American league where Ronaldinho once made a guest appearance and shares a family connection with a celebrated Mexican forward who famously scored against France in the 1954 FIFA World Cup?",
+      "answer": "Javier Hernández",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Javier Hernández",
+          "relative",
+          "Tomás Balcázar"
+        ],
+        [
+          "Javier Hernández",
+          "league",
+          "Major League Soccer"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1038 wd:Q1375634 . ?entity wdt:P118 wd:Q18543 .\n}",
+      "original_level2_question": "What entity is a professional soccer player in Major League Soccer and has Tomás Balcázar as a relative?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "relative linked to is the relative of Javier Hernández",
+          "league linked to is the league of Javier Hernández"
+        ],
+        "original_constraints": [
+          "relative: Tomás Balcázar",
+          "league: Major League Soccer"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which long-distance pathway, sharing its meandering companion with a celebrated American author known for tales of a young boy and a raft, traverses lands where neither the Windy City nor the Land of Lincoln's capital resides, yet echoes the journey of the trail with the same name?",
+      "answer": "Mississippi River Trail",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Mississippi River Trail",
+          "located in the administrative territorial entity",
+          "Illinois"
+        ],
+        [
+          "Mississippi River Trail",
+          "located in the administrative territorial entity",
+          "Minnesota"
+        ],
+        [
+          "Mississippi River Trail",
+          "located in the administrative territorial entity",
+          "Tennessee"
+        ],
+        [
+          "Mississippi River Trail",
+          "located in the administrative territorial entity",
+          "Kentucky"
+        ],
+        [
+          "Mississippi River Trail",
+          "instance of",
+          "long-distance cycling route"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P131 wd:Q1204 . ?entity wdt:P131 wd:Q1527 . ?entity wdt:P131 wd:Q1509 . ?entity wdt:P131 wd:Q1603 . ?entity wdt:P31 wd:Q353027 .\n}",
+      "original_level2_question": "What long-distance cycling route is located in the administrative territorial entities of Illinois, Minnesota, Tennessee, and Kentucky?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "located in the administrative territorial entity linked to has different from Springfield",
+          "located in the administrative territorial entity linked to is the located in the administrative territorial entity of Mississippi River Trail",
+          "located in the administrative territorial entity linked to is the located in the administrative territorial entity of Mississippi River Trail"
+        ],
+        "original_constraints": [
+          "located in the administrative territorial entity: Illinois",
+          "located in the administrative territorial entity: Minnesota",
+          "located in the administrative territorial entity: Tennessee",
+          "located in the administrative territorial entity: Kentucky",
+          "instance of: long-distance cycling route"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which thinker, known for critiquing mainstream media through a platform named after a judicial role, once sought leadership in a state known for its cinematic industry during a mid-90s electoral contest?",
+      "answer": "Ron Unz",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Ron Unz",
+          "has written for",
+          "The American Conservative"
+        ],
+        [
+          "Ron Unz",
+          "candidacy in election",
+          "1994 California gubernatorial election"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P6872 wd:Q159664 . ?entity wdt:P3602 wd:Q5021259 .\n}",
+      "original_level2_question": "Which individual has written for The American Conservative and ran as a candidate in the 1994 California gubernatorial election?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "has written for linked to is the has written for of Ron Unz",
+          "candidacy in election linked to is the candidacy in election of Ron Unz"
+        ],
+        "original_constraints": [
+          "has written for: The American Conservative",
+          "candidacy in election: 1994 California gubernatorial election"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which cinematic work unites a master of deception once hailed as Gandhi and a martial artist whose skills echo the legendary heroics of Bruce Lee's cinematic universe?",
+      "answer": "Shang-Chi and the Legend of the Ten Rings",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Shang-Chi and the Legend of the Ten Rings",
+          "cast member",
+          "Ben Kingsley"
+        ],
+        [
+          "Shang-Chi and the Legend of the Ten Rings",
+          "cast member",
+          "Yuen Wah"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P161 wd:Q173158 . ?entity wdt:P161 wd:Q533745 .\n}",
+      "original_level2_question": "Which movie features both Ben Kingsley and Yuen Wah in its cast?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "cast member linked to is the cast member of Shang-Chi and the Legend of the Ten Rings",
+          "cast member linked to is the cast member of Shang-Chi and the Legend of the Ten Rings"
+        ],
+        "original_constraints": [
+          "cast member: Ben Kingsley",
+          "cast member: Yuen Wah"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which artist, known for composing melodies under the same zodiac sign as the 'Roar' singer, has shared affection with a 'Ghost Whisperer' star without exchanging vows?",
+      "answer": "John Mayer",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "John Mayer",
+          "unmarried partner",
+          "Katy Perry"
+        ],
+        [
+          "John Mayer",
+          "unmarried partner",
+          "Jennifer Love Hewitt"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P451 wd:Q42493 . ?entity wdt:P451 wd:Q175104 .\n}",
+      "original_level2_question": "Which musician has had an unmarried relationship with both Katy Perry and Jennifer Love Hewitt?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "unmarried partner linked to is the unmarried partner of John Mayer",
+          "unmarried partner linked to is the unmarried partner of John Mayer"
+        ],
+        "original_constraints": [
+          "unmarried partner: Katy Perry",
+          "unmarried partner: Jennifer Love Hewitt"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Identify the country where the bustling archipelago's heart lies, a place known for its sprawling streets and skyscrapers, and is a guardian of meteorological wisdom.",
+      "answer": "Indonesia",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Indonesia",
+          "member of",
+          "World Meteorological Organization"
+        ],
+        [
+          "Indonesia",
+          "capital",
+          "Jakarta"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P463 wd:Q170424 . ?entity wdt:P36 wd:Q3630 .\n}",
+      "original_level2_question": "Which country has Jakarta as its capital and is a member of the World Meteorological Organization?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "member of: World Meteorological Organization",
+          "capital linked to has of Indonesia"
+        ],
+        "original_constraints": [
+          "member of: World Meteorological Organization",
+          "capital: Jakarta"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Identify the person who communicates in the same dialect as the author of \"Les Misérables,\" holds a position at the institution known for being a launchpad for global business leaders in the City of Light, and received their academic foundation at the alma mater associated with a famous pink city in the realm of Occitanie.",
+      "answer": "Éloïc Peyrache",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Éloïc Peyrache",
+          "languages spoken written or signed",
+          "French"
+        ],
+        [
+          "Éloïc Peyrache",
+          "employer",
+          "HEC Paris"
+        ],
+        [
+          "Éloïc Peyrache",
+          "educated at",
+          "Toulouse School of Economics"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1412 wd:Q150 . ?entity wdt:P108 wd:Q273535 . ?entity wdt:P69 wd:Q3532921 .\n}",
+      "original_level2_question": "Which individual speaks French, works at HEC Paris, and was educated at Toulouse School of Economics?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "languages spoken written or signed linked to is the language of work or name of National Rally",
+          "employer linked to is the employer of Éloïc Peyrache",
+          "educated at linked to is the educated at of Éloïc Peyrache"
+        ],
+        "original_constraints": [
+          "languages spoken written or signed: French",
+          "employer: HEC Paris",
+          "educated at: Toulouse School of Economics"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which artistic entity, rooted in the land of Tolstoy and Dostoevsky, includes members who meld the avant-garde with the socio-political ethos, such as the voice behind \"The Factory of Found Clothes,\" the critic of labor time, and a modern successor of Mayakovsky's revolutionary verse?",
+      "answer": "Chto Delat?",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Chto Delat?",
+          "has part",
+          "Alexei Penzin"
+        ],
+        [
+          "Chto Delat?",
+          "instance of",
+          "artist collective"
+        ],
+        [
+          "Chto Delat?",
+          "has part",
+          "Gluklya"
+        ],
+        [
+          "Chto Delat?",
+          "country",
+          "Russia"
+        ],
+        [
+          "Chto Delat?",
+          "has part",
+          "Aleksandr Skidan"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P527 wd:Q108304926 . ?entity wdt:P31 wd:Q1400264 . ?entity wdt:P527 wd:Q106314106 . ?entity wdt:P17 wd:Q159 . ?entity wdt:P527 wd:Q4421850 .\n}",
+      "original_level2_question": "What artist collective based in Russia includes members such as Alexei Penzin, Gluklya, and Aleksandr Skidan?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "has part linked to is the has part of Chto Delat?",
+          "instance of: artist collective",
+          "has part linked to is the has part of Chto Delat?"
+        ],
+        "original_constraints": [
+          "has part: Alexei Penzin",
+          "instance of: artist collective",
+          "has part: Gluklya",
+          "country: Russia",
+          "has part: Aleksandr Skidan"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which artistic creation, evoking the natural cycles of erosion and renewal, finds its home in a Dutch region once marked by defensive fortifications, and represents the pioneering environmental work of an artist known for reimagining the interplay between earth and structure?",
+      "answer": "Broken Circle / Spiral Hill",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Broken Circle / Spiral Hill",
+          "P276",
+          "Emmerschans"
+        ],
+        [
+          "Broken Circle / Spiral Hill",
+          "genre",
+          "land art"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P276 wd:Q5468013 . ?entity wdt:P136 wd:Q326478 .\n}",
+      "original_level2_question": "What land art installation is located in Emmerschans and is known as \"Broken Circle / Spiral Hill\"?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "P276: Emmerschans",
+          "genre: land art"
+        ],
+        "original_constraints": [
+          "P276: Emmerschans",
+          "genre: land art"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    }
+  ]
+}

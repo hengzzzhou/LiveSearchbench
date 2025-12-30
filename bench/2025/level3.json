@@ -1,0 +1,1813 @@
+{
+  "dataset_info": {
+    "name": "Level 3 Correct Answers",
+    "description": "Level 3 questions that were answered correctly by the model (combined from multiple result files)",
+    "total_questions": 50,
+    "source": "Extracted from level3_advanced_questions.json and level3.json based on correct answers from multiple result files",
+    "extraction_date": "2025-09-14"
+  },
+  "qa_pairs": [
+    {
+      "question": "Which municipality in Spain is bordered by a town that shares its name with a type of geographical depression, a city known for its historical significance in the region, and another town with a name reminiscent of a medieval military order?",
+      "answer": "Corral de Calatrava",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Corral de Calatrava",
+          "shares border with",
+          "Cañada de Calatrava"
+        ],
+        [
+          "Corral de Calatrava",
+          "shares border with",
+          "Ciudad Real"
+        ],
+        [
+          "Corral de Calatrava",
+          "shares border with",
+          "Caracuel de Calatrava"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P47 wd:Q1658003 . ?entity wdt:P47 wd:Q15093 . ?entity wdt:P47 wd:Q1645918 .\n}",
+      "original_level2_question": "Which entity shares a border with Cañada de Calatrava, Ciudad Real, and Caracuel de Calatrava?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [shares border with: Cañada de Calatrava] As [shares border with: (Cañada de Calatrava,country,Spain)]",
+          "abstract [shares border with: Ciudad Real] As [shares border with: (Ciudad Real,country,Spain)]",
+          "abstract [shares border with: Caracuel de Calatrava] As [shares border with: (Caracuel de Calatrava,country,Spain)]"
+        ],
+        "original_constraints": [
+          "shares border with: Cañada de Calatrava",
+          "shares border with: Ciudad Real",
+          "shares border with: Caracuel de Calatrava"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "What is the name of the location that serves both as a transit hub and a site of historical significance within the area known for its cultural heritage in Basmane?",
+      "answer": "Basmane railway station",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Basmane railway station",
+          "http://www.wikidata.org/prop/direct/P31",
+          "interchange station"
+        ],
+        [
+          "Basmane railway station",
+          "http://www.wikidata.org/prop/direct/P276",
+          "Basmane"
+        ],
+        [
+          "Basmane railway station",
+          "http://www.wikidata.org/prop/direct/P31",
+          "historic building"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P31 wd:Q1147171 . ?entity wdt:P276 wd:Q6028301 . ?entity wdt:P31 wd:Q35112127 .\n}",
+      "original_level2_question": "What is the name of the interchange station that is also a historic building located in Basmane?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "http://www.wikidata.org/prop/direct/P31: interchange station",
+          "http://www.wikidata.org/prop/direct/P276: Basmane",
+          "http://www.wikidata.org/prop/direct/P31: historic building"
+        ],
+        "original_constraints": [
+          "http://www.wikidata.org/prop/direct/P31: interchange station",
+          "http://www.wikidata.org/prop/direct/P276: Basmane",
+          "http://www.wikidata.org/prop/direct/P31: historic building"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "What movie set in a mythical kingdom shares voice talents with an actor known for narrating tales in a land famous for its legendary sword and another actor recognized for bringing to life a world where animals speak like humans?",
+      "answer": "Quest for Camelot",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Quest for Camelot",
+          "voice actor",
+          "Krzysztof Kołbasiuk"
+        ],
+        [
+          "Quest for Camelot",
+          "voice actor",
+          "Robert Czebotar"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P725 wd:Q5917668 . ?entity wdt:P725 wd:Q11834947 .\n}",
+      "original_level2_question": "What animated film features both Krzysztof Kołbasiuk and Robert Czebotar as voice actors?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "voice actor linked to is the voice actor of Quest for Camelot",
+          "voice actor linked to is the voice actor of Quest for Camelot"
+        ],
+        "original_constraints": [
+          "voice actor: Krzysztof Kołbasiuk",
+          "voice actor: Robert Czebotar"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which county in Canada shares a border with a county that borders a county known for its proximity to Dorchester, another county that borders a county in Canada, and a third county that borders a county in Canada?",
+      "answer": "Kings County",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Kings County",
+          "shares border with",
+          "Queens County"
+        ],
+        [
+          "Kings County",
+          "shares border with",
+          "Charlotte County"
+        ],
+        [
+          "Kings County",
+          "shares border with",
+          "Westmorland County"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P47 wd:Q2542396 . ?entity wdt:P47 wd:Q1067162 . ?entity wdt:P47 wd:Q1147110 .\n}",
+      "original_level2_question": "Which county shares a border with Queens County, Charlotte County, and Westmorland County?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [shares border with: Queens County] As [shares border with: (Queens County,country,Canada)]",
+          "abstract [shares border with: Charlotte County] As [shares border with: (Charlotte County,country,Canada)]",
+          "abstract [shares border with: Westmorland County] As [shares border with: (Westmorland County,capital,Dorchester)]"
+        ],
+        "original_constraints": [
+          "shares border with: Queens County",
+          "shares border with: Charlotte County",
+          "shares border with: Westmorland County"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which municipality, located in Allegheny County, Pennsylvania, is bordered by a town that shares its name with a type of ceremonial headwear, another town known for its historical steel industry, a borough named after a type of bird, and a community that shares its name with a European country?",
+      "answer": "Rankin",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Rankin",
+          "shares border with",
+          "Munhall"
+        ],
+        [
+          "Rankin",
+          "shares border with",
+          "Braddock"
+        ],
+        [
+          "Rankin",
+          "shares border with",
+          "Whitaker"
+        ],
+        [
+          "Rankin",
+          "shares border with",
+          "Swissvale"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P47 wd:Q659120 . ?entity wdt:P47 wd:Q1132991 . ?entity wdt:P47 wd:Q1185782 . ?entity wdt:P47 wd:Q1180427 .\n}",
+      "original_level2_question": "Which entity shares its borders with Munhall, Braddock, Whitaker, and Swissvale?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [shares border with: Munhall] As [shares border with: (Munhall,located in,Allegheny County)]",
+          "abstract [shares border with: Braddock] As [shares border with: (Braddock,located in,Allegheny County)]",
+          "abstract [shares border with: Whitaker] As [shares border with: (Whitaker,located in,Allegheny County)]"
+        ],
+        "original_constraints": [
+          "shares border with: Munhall",
+          "shares border with: Braddock",
+          "shares border with: Whitaker",
+          "shares border with: Swissvale"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Identify the writer who hails from a city known for its chili and has been connected with a prominent New York state university, while also being recognized by a prestigious science fiction award established in the late 1980s.",
+      "answer": "Nnedi Okorafor",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Nnedi Okorafor",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Cincinnati"
+        ],
+        [
+          "Nnedi Okorafor",
+          "http://www.wikidata.org/prop/direct/P108",
+          "University at Buffalo"
+        ],
+        [
+          "Nnedi Okorafor",
+          "nominated for",
+          "Arthur C. Clarke Award"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P19 wd:Q43196 . ?entity wdt:P108 wd:Q681025 . ?entity wdt:P1411 wd:Q708830 .\n}",
+      "original_level2_question": "Which author was born in Cincinnati, has been affiliated with the University at Buffalo, and has been nominated for the Arthur C. Clarke Award?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "http://www.wikidata.org/prop/direct/P19: Cincinnati",
+          "http://www.wikidata.org/prop/direct/P108: University at Buffalo",
+          "abstract [nominated for: Arthur C. Clarke Award] As [nominated for: (Arthur C. Clarke Award,inception,1987-01-01T00:00:00Z)]"
+        ],
+        "original_constraints": [
+          "http://www.wikidata.org/prop/direct/P19: Cincinnati",
+          "http://www.wikidata.org/prop/direct/P108: University at Buffalo",
+          "nominated for: Arthur C. Clarke Award"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which individual, known for their career in professional basketball, was born in a city famous for its historical significance in the United States, attended two prestigious educational institutions known for their Quaker heritage, and represents a country known for its influence in global sports?",
+      "answer": "Mustafa Shakur",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Mustafa Shakur",
+          "http://www.wikidata.org/prop/direct/P69",
+          "Friends' Central School"
+        ],
+        [
+          "Mustafa Shakur",
+          "http://www.wikidata.org/prop/direct/P27",
+          "United States"
+        ],
+        [
+          "Mustafa Shakur",
+          "http://www.wikidata.org/prop/direct/P106",
+          "basketball player"
+        ],
+        [
+          "Mustafa Shakur",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Philadelphia"
+        ],
+        [
+          "Mustafa Shakur",
+          "http://www.wikidata.org/prop/direct/P69",
+          "William Penn Charter School"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P69 wd:Q5504101 . ?entity wdt:P27 wd:Q30 . ?entity wdt:P106 wd:Q3665646 . ?entity wdt:P19 wd:Q1345 . ?entity wdt:P69 wd:Q8016752 .\n}",
+      "original_level2_question": "Which basketball player was born in Philadelphia, attended both Friends' Central School and William Penn Charter School, and is associated with the United States?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "http://www.wikidata.org/prop/direct/P69: Friends' Central School",
+          "abstract [http://www.wikidata.org/prop/direct/P27: United States] As [http://www.wikidata.org/prop/direct/P27: (United States,country,United States)]",
+          "http://www.wikidata.org/prop/direct/P106: basketball player"
+        ],
+        "original_constraints": [
+          "http://www.wikidata.org/prop/direct/P69: Friends' Central School",
+          "http://www.wikidata.org/prop/direct/P27: United States",
+          "http://www.wikidata.org/prop/direct/P106: basketball player",
+          "http://www.wikidata.org/prop/direct/P19: Philadelphia",
+          "http://www.wikidata.org/prop/direct/P69: William Penn Charter School"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which region, located in Canada, shares a border with an area in the United States known for its proximity to Aroostook County, as well as with two Canadian counties, one situated in New Brunswick and the other also within Canada?",
+      "answer": "Victoria County",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Victoria County",
+          "shares border with",
+          "Aroostook County"
+        ],
+        [
+          "Victoria County",
+          "shares border with",
+          "Restigouche County"
+        ],
+        [
+          "Victoria County",
+          "shares border with",
+          "York County"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P47 wd:Q491046 . ?entity wdt:P47 wd:Q2542491 . ?entity wdt:P47 wd:Q1752038 .\n}",
+      "original_level2_question": "Which entity shares a border with Aroostook County, Restigouche County, and York County?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [shares border with: Aroostook County] As [shares border with: (Aroostook County,country,United States)]",
+          "abstract [shares border with: Restigouche County] As [shares border with: (Restigouche County,located in,New Brunswick)]",
+          "abstract [shares border with: York County] As [shares border with: (York County,country,Canada)]"
+        ],
+        "original_constraints": [
+          "shares border with: Aroostook County",
+          "shares border with: Restigouche County",
+          "shares border with: York County"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Who is the individual known for their political career, who pursued higher education at an institution located in the city where they were born, specifically in a city that shares its name with both the university and the birthplace?",
+      "answer": "Nader Ghazipour",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Nader Ghazipour",
+          "http://www.wikidata.org/prop/direct/P106",
+          "politician"
+        ],
+        [
+          "Nader Ghazipour",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Urmia"
+        ],
+        [
+          "Nader Ghazipour",
+          "http://www.wikidata.org/prop/direct/P69",
+          "Urmia University"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q82955 . ?entity wdt:P19 wd:Q179665 . ?entity wdt:P69 wd:Q3874128 .\n}",
+      "original_level2_question": "Which individual is both a politician and an alumnus of Urmia University, and was born in Urmia?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "http://www.wikidata.org/prop/direct/P106: politician",
+          "http://www.wikidata.org/prop/direct/P19: Urmia",
+          "http://www.wikidata.org/prop/direct/P69: Urmia University"
+        ],
+        "original_constraints": [
+          "http://www.wikidata.org/prop/direct/P106: politician",
+          "http://www.wikidata.org/prop/direct/P19: Urmia",
+          "http://www.wikidata.org/prop/direct/P69: Urmia University"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which railway, situated in Lombardy, serves as a connection between a railway line that extends from Milan to Venice and another line that runs from Milan to Asso?",
+      "answer": "Milan Passante railway",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Milan Passante railway",
+          "connecting line",
+          "Milan–Venice railway"
+        ],
+        [
+          "Milan Passante railway",
+          "connecting line",
+          "Milan–Asso railway"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P81 wd:Q736807 . ?entity wdt:P81 wd:Q802773 .\n}",
+      "original_level2_question": "What railway is connected to both the Milan–Venice railway and the Milan–Asso railway?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [connecting line: Milan–Venice railway] As [connecting line: (Milan–Venice railway,located in,Lombardy)]",
+          "abstract [connecting line: Milan–Asso railway] As [connecting line: (Milan–Asso railway,located in,Lombardy)]"
+        ],
+        "original_constraints": [
+          "connecting line: Milan–Venice railway",
+          "connecting line: Milan–Asso railway"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Can you identify the athlete who is linked with a professional basketball league in Germany, hails from a city in Rhode Island known for its historical textile industry, and pursued higher education at an institution located in New York City known for its business school?",
+      "answer": "Jeff Xavier",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Jeff Xavier",
+          "league",
+          "Basketball Bundesliga"
+        ],
+        [
+          "Jeff Xavier",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Pawtucket"
+        ],
+        [
+          "Jeff Xavier",
+          "http://www.wikidata.org/prop/direct/P69",
+          "Manhattan University"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P118 wd:Q540636 . ?entity wdt:P19 wd:Q49200 . ?entity wdt:P69 wd:Q2749572 .\n}",
+      "original_level2_question": "Which basketball player is associated with the Basketball Bundesliga, was born in Pawtucket, and attended Manhattan University?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "league: Basketball Bundesliga",
+          "http://www.wikidata.org/prop/direct/P19: Pawtucket",
+          "http://www.wikidata.org/prop/direct/P69: Manhattan University"
+        ],
+        "original_constraints": [
+          "league: Basketball Bundesliga",
+          "http://www.wikidata.org/prop/direct/P19: Pawtucket",
+          "http://www.wikidata.org/prop/direct/P69: Manhattan University"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which author, known for writing children's literature, was born in a country known for its rich cultural heritage in East Asia and has received recognition by being nominated for a prestigious American science fiction and fantasy award?",
+      "answer": "Ursula Vernon",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Ursula Vernon",
+          "http://www.wikidata.org/prop/direct/P106",
+          "children's writer"
+        ],
+        [
+          "Ursula Vernon",
+          "nominated for",
+          "Nebula Award for Best Novel"
+        ],
+        [
+          "Ursula Vernon",
+          "http://www.wikidata.org/prop/direct/P19",
+          "Japan"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q4853732 . ?entity wdt:P1411 wd:Q266012 . ?entity wdt:P19 wd:Q17 .\n}",
+      "original_level2_question": "Which children's writer was born in Japan and has been nominated for the Nebula Award for Best Novel?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "http://www.wikidata.org/prop/direct/P106: children's writer",
+          "abstract [nominated for: Nebula Award for Best Novel] As [nominated for: (Nebula Award for Best Novel,country,United States)]",
+          "abstract [http://www.wikidata.org/prop/direct/P19: Japan] As [http://www.wikidata.org/prop/direct/P19: (Japan,country,Japan)]"
+        ],
+        "original_constraints": [
+          "http://www.wikidata.org/prop/direct/P106: children's writer",
+          "nominated for: Nebula Award for Best Novel",
+          "http://www.wikidata.org/prop/direct/P19: Japan"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which atlas, reviewed by a scholar who passed away in Oxford and another scholar who was a citizen of the United States, is known for its comprehensive coverage of ancient civilizations?",
+      "answer": "Barrington Atlas of the Greek and Roman World",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Barrington Atlas of the Greek and Roman World",
+          "reviewed by",
+          "Cyril Mango"
+        ],
+        [
+          "Barrington Atlas of the Greek and Roman World",
+          "reviewed by",
+          "John Buckler"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P4032 wd:Q1148656 . ?entity wdt:P4032 wd:Q5589423 .\n}",
+      "original_level2_question": "What atlas has been reviewed by both Cyril Mango and John Buckler?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [reviewed by: Cyril Mango] As [reviewed by: (Cyril Mango,place of death,Oxford)]",
+          "abstract [reviewed by: John Buckler] As [reviewed by: (John Buckler,country of citizenship,United States)]"
+        ],
+        "original_constraints": [
+          "reviewed by: Cyril Mango",
+          "reviewed by: John Buckler"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Identify the administrative region that operates within the UTC−06:00 time zone and is home to a settlement known for its historical significance as Ciudad Guzmán.",
+      "answer": "Zapotlán el Grande",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Zapotlán el Grande",
+          "located in time zone",
+          "UTC−06:00"
+        ],
+        [
+          "Zapotlán el Grande",
+          "contains settlement",
+          "Ciudad Guzmán"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P421 wd:Q5385 . ?entity wdt:P1383 wd:Q1094355 .\n}",
+      "original_level2_question": "Which entity is located in the UTC−06:00 time zone and contains the settlement known as Ciudad Guzmán?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "located in time zone: UTC−06:00",
+          "contains settlement: Ciudad Guzmán"
+        ],
+        "original_constraints": [
+          "located in time zone: UTC−06:00",
+          "contains settlement: Ciudad Guzmán"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which 19th-century portrait artist, often associated with the Canadian religious community's artistic heritage, has his works enhancing both the academic atmosphere of a university gallery in Ottawa and the historical ambience of a museum dedicated to Quebec's Ursuline heritage?",
+      "answer": "Antoine Plamondon",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Antoine Plamondon",
+          "has works in the collection",
+          "Carleton University Art Gallery"
+        ],
+        [
+          "Antoine Plamondon",
+          "has works in the collection",
+          "Musée des Ursulines de Trois-Rivières"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P6379 wd:Q104820197 . ?entity wdt:P6379 wd:Q3330154 .\n}",
+      "original_level2_question": "Which artist has works in both the Carleton University Art Gallery and the Musée des Ursulines de Trois-Rivières collections?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "has works in the collection linked to is the has works in the collection of Antoine Plamondon",
+          "has works in the collection linked to is the has works in the collection of Antoine Plamondon"
+        ],
+        "original_constraints": [
+          "has works in the collection: Carleton University Art Gallery",
+          "has works in the collection: Musée des Ursulines de Trois-Rivières"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which artist, renowned for their unique folk style and often linked to the ethos of indie film soundtracks, can be connected to the Bavarian music label known for celebrating global cultural diversity as well as the Massachusetts-based label famous for its roots revival projects?",
+      "answer": "Michael Hurley",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Michael Hurley",
+          "record label",
+          "Trikont"
+        ],
+        [
+          "Michael Hurley",
+          "record label",
+          "Rounder Records"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P264 wd:Q1480097 . ?entity wdt:P264 wd:Q2164531 .\n}",
+      "original_level2_question": "Which musician is associated with both Trikont and Rounder Records?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "record label linked to is the record label of Michael Hurley",
+          "record label linked to is the record label of Michael Hurley"
+        ],
+        "original_constraints": [
+          "record label: Trikont",
+          "record label: Rounder Records"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which poet, who contributed to the intellectual circle akin to Enlightenment salons, served in a role overseeing the institution founded by Mikhail Lomonosov, and had ties to the governmental body managing geological affairs?",
+      "answer": "Mikhail Kheraskov",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Mikhail Kheraskov",
+          "member of",
+          "Вольное российское собрание"
+        ],
+        [
+          "Mikhail Kheraskov",
+          "position held",
+          "куратор Московского университета"
+        ],
+        [
+          "Mikhail Kheraskov",
+          "employer",
+          "Berg Collegium"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P463 wd:Q21660412 . ?entity wdt:P39 wd:Q135475019 . ?entity wdt:P108 wd:Q4083975 .\n}",
+      "original_level2_question": "Which individual was a member of Вольное российское собрание, held the position of куратор Московского университета, and was employed by Berg Collegium?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "member of linked to is the member of of Mikhail Kheraskov",
+          "position held linked to is the position held of Mikhail Kheraskov",
+          "employer linked to is the employer of Mikhail Kheraskov"
+        ],
+        "original_constraints": [
+          "member of: Вольное российское собрание",
+          "position held: куратор Московского университета",
+          "employer: Berg Collegium"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which recognition, associated with the nocturnal and the macabre, has honored both an architect of illustrated satire and a master of speculative fiction shortlists?",
+      "answer": "Bram Stoker Award for Lifetime Achievement",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Bram Stoker Award for Lifetime Achievement",
+          "winner",
+          "Al Feldstein"
+        ],
+        [
+          "Bram Stoker Award for Lifetime Achievement",
+          "winner",
+          "Steve Rasnic Tem"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1346 wd:Q462714 . ?entity wdt:P1346 wd:Q7613696 .\n}",
+      "original_level2_question": "What award has been given to both Al Feldstein and Steve Rasnic Tem in recognition of their lifetime contributions?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "winner linked to is the winner of Bram Stoker Award for Lifetime Achievement",
+          "winner linked to has nominated for Theodore Sturgeon Award"
+        ],
+        "original_constraints": [
+          "winner: Al Feldstein",
+          "winner: Steve Rasnic Tem"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which artwork, known for its portrayal of a historical figure who transformed his realm into an empire, features a religious symbol often seen as a sanctuary for the soul?",
+      "answer": "The Coronation of Napoleon",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "The Coronation of Napoleon",
+          "depicts",
+          "Louise Berg"
+        ],
+        [
+          "The Coronation of Napoleon",
+          "depicts",
+          "crucifix"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P180 wd:Q107044185 . ?entity wdt:P180 wd:Q20460 .\n}",
+      "original_level2_question": "What painting depicts Louise Berg and also includes a crucifix?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "depicts linked to is the depicts of The Coronation of Napoleon",
+          "depicts linked to is the depicts of The Coronation of Napoleon"
+        ],
+        "original_constraints": [
+          "depicts: Louise Berg",
+          "depicts: crucifix"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "What essential tool, akin to a lifeline in a vertiginous ballet, often partners with a device named for securing trust?",
+      "answer": "climbing rope",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "climbing rope",
+          "connects with",
+          "belay device"
+        ],
+        [
+          "climbing rope",
+          "use",
+          "mountain rescue"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P2789 wd:Q637982 . ?entity wdt:P366 wd:Q349967 .\n}",
+      "original_level2_question": "What piece of equipment is used in mountain rescue and connects with a belay device?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "connects with linked to is the connects with of climbing rope",
+          "use linked to is the use of climbing rope"
+        ],
+        "original_constraints": [
+          "connects with: belay device",
+          "use: mountain rescue"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which athlete, who has journeyed through the Mariners of Lincolnshire, the Addicks of the English capital, and the Pilgrims of the South West, shares a career path with a certain Corkonian known for his strategic play on the field?",
+      "answer": "Billy Clarke",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Billy Clarke",
+          "member of sports team",
+          "Grimsby Town F.C."
+        ],
+        [
+          "Billy Clarke",
+          "member of sports team",
+          "Charlton Athletic F.C."
+        ],
+        [
+          "Billy Clarke",
+          "member of sports team",
+          "Plymouth Argyle F.C."
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P54 wd:Q18515 . ?entity wdt:P54 wd:Q19462 . ?entity wdt:P54 wd:Q48947 .\n}",
+      "original_level2_question": "Which footballer has been a member of Grimsby Town F.C., Charlton Athletic F.C., and Plymouth Argyle F.C.?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "member of sports team linked to is the member of sports team of Billy Clarke",
+          "member of sports team linked to is the member of sports team of Billy Clarke",
+          "member of sports team linked to is the member of sports team of Billy Clarke"
+        ],
+        "original_constraints": [
+          "member of sports team: Grimsby Town F.C.",
+          "member of sports team: Charlton Athletic F.C.",
+          "member of sports team: Plymouth Argyle F.C."
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Identify the person who shares a birthplace with the last ruler of the Kingdom of Romania's first industrial city, walked the halls where Sartre once taught, and now navigates the corridors of civic responsibility akin to those in the network of the city's subways.",
+      "answer": "Nicușor Dan",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Nicușor Dan",
+          "occupation",
+          "politician"
+        ],
+        [
+          "Nicușor Dan",
+          "educated at",
+          "École Normale Supérieure"
+        ],
+        [
+          "Nicușor Dan",
+          "place of birth",
+          "Făgăraș"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q82955 . ?entity wdt:P69 wd:Q83259 . ?entity wdt:P19 wd:Q685869 .\n}",
+      "original_level2_question": "Which politician was born in Făgăraș and studied at École Normale Supérieure?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "occupation linked to is the occupation of Louis Gouin",
+          "educated at: École Normale Supérieure",
+          "place of birth: Făgăraș"
+        ],
+        "original_constraints": [
+          "occupation: politician",
+          "educated at: École Normale Supérieure",
+          "place of birth: Făgăraș"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which individual, symbolically linked to the crimson and cream of a notable brotherhood, shares a political path with a former Floridian representative, and emerged from the city where the stars and stripes are legislated?",
+      "answer": "Walter E. Fauntroy",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Walter E. Fauntroy",
+          "member of",
+          "Kappa Alpha Psi"
+        ],
+        [
+          "Walter E. Fauntroy",
+          "member of political party",
+          "Democratic Party"
+        ],
+        [
+          "Walter E. Fauntroy",
+          "place of birth",
+          "Washington, D.C."
+        ],
+        [
+          "Walter E. Fauntroy",
+          "work location",
+          "Washington, D.C."
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P463 wd:Q16151590 . ?entity wdt:P102 wd:Q29552 . ?entity wdt:P19 wd:Q61 . ?entity wdt:P937 wd:Q61 .\n}",
+      "original_level2_question": "Which individual is a member of Kappa Alpha Psi, affiliated with the Democratic Party, and was both born and primarily worked in Washington, D.C.?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "member of: Kappa Alpha Psi",
+          "member of political party linked to is the member of political party of David Jolly",
+          "place of birth: Washington, D.C."
+        ],
+        "original_constraints": [
+          "member of: Kappa Alpha Psi",
+          "member of political party: Democratic Party",
+          "place of birth: Washington, D.C.",
+          "work location: Washington, D.C."
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which athletic conference is known for including a football team from a university located in DeKalb, Illinois, and a university whose mascot is an antelope?",
+      "answer": "Mountain West Conference",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Mountain West Conference",
+          "has part",
+          "Northern Illinois Huskies football"
+        ],
+        [
+          "Mountain West Conference",
+          "has part",
+          "Grand Canyon Antelopes"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P527 wd:Q7058416 . ?entity wdt:P527 wd:Q5594342 .\n}",
+      "original_level2_question": "Which athletic conference includes both the Northern Illinois Huskies football team and the Grand Canyon Antelopes?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "has part: Northern Illinois Huskies football",
+          "has part: Grand Canyon Antelopes"
+        ],
+        "original_constraints": [
+          "has part: Northern Illinois Huskies football",
+          "has part: Grand Canyon Antelopes"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which river in the United States has a tributary located in Pocahontas County and another tributary known by the name Price Run?",
+      "answer": "Greenbrier River",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Greenbrier River",
+          "tributary",
+          "Price Run"
+        ],
+        [
+          "Greenbrier River",
+          "tributary",
+          "Stamping Creek"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P974 wd:Q25025334 . ?entity wdt:P974 wd:Q25025397 .\n}",
+      "original_level2_question": "Which river has Price Run and Stamping Creek as its tributaries?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [tributary: Price Run] As [tributary: (Price Run,country,United States)]",
+          "abstract [tributary: Stamping Creek] As [tributary: (Stamping Creek,located in,Pocahontas County)]"
+        ],
+        "original_constraints": [
+          "tributary: Price Run",
+          "tributary: Stamping Creek"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Who is the individual recognized for their contributions to the art of scenography and whose final resting place is in a city that serves as the capital of the Autonomous Republic of Abkhazia, a region within the country of Georgia?",
+      "answer": "Alexander Shervashidze",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Alexander Shervashidze",
+          "http://www.wikidata.org/prop/direct/P136",
+          "scenography"
+        ],
+        [
+          "Alexander Shervashidze",
+          "place of burial",
+          "Sukhumi"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P136 wd:Q737201 . ?entity wdt:P119 wd:Q40811 .\n}",
+      "original_level2_question": "Which person is known for their work in scenography and is buried in Sukhumi?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "http://www.wikidata.org/prop/direct/P136: scenography",
+          "abstract [place of burial: Sukhumi] As [place of burial: (Sukhumi,country,Georgia)]"
+        ],
+        "original_constraints": [
+          "http://www.wikidata.org/prop/direct/P136: scenography",
+          "place of burial: Sukhumi"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which historical monarch, known by the given name Davit, was the progenitor of an aristocrat named Мзехатун Давидовна Имеретинская?",
+      "answer": "David II of Imereti",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "David II of Imereti",
+          "occupation",
+          "royalty"
+        ],
+        [
+          "David II of Imereti",
+          "given name",
+          "Davit"
+        ],
+        [
+          "David II of Imereti",
+          "child",
+          "Мзехатун Давидовна Имеретинская"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q11573099 . ?entity wdt:P735 wd:Q83143826 . ?entity wdt:P40 wd:Q135094807 .\n}",
+      "original_level2_question": "Which royal figure had the given name Davit and was the parent of Мзехатун Давидовна Имеретинская?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "occupation: royalty",
+          "given name: Davit",
+          "abstract [child: Мзехатун Давидовна Имеретинская] As [child: (Мзехатун Давидовна Имеретинская,occupation,aristocrat)]"
+        ],
+        "original_constraints": [
+          "occupation: royalty",
+          "given name: Davit",
+          "child: Мзехатун Давидовна Имеретинская"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which military force was replaced by the armed forces that are headquartered in Riga and Vilnius?",
+      "answer": "Soviet Armed Forces",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Soviet Armed Forces",
+          "followed by",
+          "Latvian National Armed Forces"
+        ],
+        [
+          "Soviet Armed Forces",
+          "followed by",
+          "Lithuanian Armed Forces"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P156 wd:Q662311 . ?entity wdt:P156 wd:Q635598 .\n}",
+      "original_level2_question": "Which military force was succeeded by both the Latvian National Armed Forces and the Lithuanian Armed Forces?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "followed by: Latvian National Armed Forces",
+          "abstract [followed by: Lithuanian Armed Forces] As [followed by: (Lithuanian Armed Forces,headquarters location,Vilnius)]"
+        ],
+        "original_constraints": [
+          "followed by: Latvian National Armed Forces",
+          "followed by: Lithuanian Armed Forces"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Identify the individual who, despite having a given name that suggests otherwise, held the ecclesiastical leadership role in a notable Swedish parish known for its association with a queen consort.",
+      "answer": "Erik Bergman",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Erik Bergman",
+          "position held",
+          "kyrkoherde i Hedvig Eleonora församling"
+        ],
+        [
+          "Erik Bergman",
+          "given name",
+          "Henrik"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P39 wd:Q134883151 . ?entity wdt:P735 wd:Q594279 .\n}",
+      "original_level2_question": "Which entity held the position of kyrkoherde i Hedvig Eleonora församling and has the given name Henrik?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "position held: kyrkoherde i Hedvig Eleonora församling",
+          "given name: Henrik"
+        ],
+        "original_constraints": [
+          "position held: kyrkoherde i Hedvig Eleonora församling",
+          "given name: Henrik"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which historical document, recognized as a form of agreement and originating from a medieval Iberian kingdom, is known for its unrestricted reproduction rights due to its age and classification as a capitulation?",
+      "answer": "Capitulations of Santa Fe",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Capitulations of Santa Fe",
+          "copyright status",
+          "public domain"
+        ],
+        [
+          "Capitulations of Santa Fe",
+          "http://www.wikidata.org/prop/direct/P495",
+          "Crown of Castile"
+        ],
+        [
+          "Capitulations of Santa Fe",
+          "http://www.wikidata.org/prop/direct/P31",
+          "capitulation"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P6216 wd:Q19652 . ?entity wdt:P495 wd:Q217196 . ?entity wdt:P31 wd:Q661305 .\n}",
+      "original_level2_question": "Which historical agreement, classified as a capitulation and originating under the Crown of Castile, currently holds a public domain copyright status?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "copyright status: public domain",
+          "abstract [http://www.wikidata.org/prop/direct/P495: Crown of Castile] As [http://www.wikidata.org/prop/direct/P495: (Crown of Castile,country,Crown of Castile)]",
+          "http://www.wikidata.org/prop/direct/P31: capitulation"
+        ],
+        "original_constraints": [
+          "copyright status: public domain",
+          "http://www.wikidata.org/prop/direct/P495: Crown of Castile",
+          "http://www.wikidata.org/prop/direct/P31: capitulation"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which river is associated with a lake located in Sweden and another lake situated in Ludvika Municipality?",
+      "answer": "Kolbäcksån",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Kolbäcksån",
+          "lakes on river",
+          "Övre Hillen"
+        ],
+        [
+          "Kolbäcksån",
+          "lakes on river",
+          "بحيره نيدر نورين"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P469 wd:Q10728731 . ?entity wdt:P469 wd:Q17710092 .\n}",
+      "original_level2_question": "Which river is associated with lakes on both the Övre Hillen and بحيره نيدر نورين?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [lakes on river: Övre Hillen] As [lakes on river: (Övre Hillen,country,Sweden)]",
+          "abstract [lakes on river: بحيره نيدر نورين] As [lakes on river: (بحيره نيدر نورين,located in,Ludvika Municipality)]"
+        ],
+        "original_constraints": [
+          "lakes on river: Övre Hillen",
+          "lakes on river: بحيره نيدر نورين"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which operating system is the foundation for a project known for its penetration testing capabilities in the United States and also serves as the base for a system designed for handheld devices?",
+      "answer": "Debian",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Debian",
+          "derivative work",
+          "NetHunter"
+        ],
+        [
+          "Debian",
+          "derivative work",
+          "OpenZaurus"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P4969 wd:Q23680076 . ?entity wdt:P4969 wd:Q1761492 .\n}",
+      "original_level2_question": "Which operating system has derivative works NetHunter and OpenZaurus?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [derivative work: NetHunter] As [derivative work: (NetHunter,country,United States)]",
+          "derivative work: OpenZaurus"
+        ],
+        "original_constraints": [
+          "derivative work: NetHunter",
+          "derivative work: OpenZaurus"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which river traverses both a county that is part of the administrative region encompassing the city of Minneapolis and a county that is part of the administrative region encompassing the city of St. Peter, both located in the United States?",
+      "answer": "Minnesota River",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Minnesota River",
+          "located in the administrative territorial entity",
+          "Hennepin County"
+        ],
+        [
+          "Minnesota River",
+          "located in the administrative territorial entity",
+          "Nicollet County"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P131 wd:Q486229 . ?entity wdt:P131 wd:Q490409 .\n}",
+      "original_level2_question": "Which river flows through both Hennepin County and Nicollet County in Minnesota?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [located in the administrative territorial entity: Hennepin County] As [located in the administrative territorial entity: (Hennepin County,country,United States)]",
+          "abstract [located in the administrative territorial entity: Nicollet County] As [located in the administrative territorial entity: (Nicollet County,country,United States)]"
+        ],
+        "original_constraints": [
+          "located in the administrative territorial entity: Hennepin County",
+          "located in the administrative territorial entity: Nicollet County"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Identify the literary work that has been translated into Russian with titles that include variations of the phrase referring to a type of wine container, specifically \"Бочка амонтиллиадо\" and \"Бочка амонтильядо.\"",
+      "answer": "The Cask of Amontillado",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "The Cask of Amontillado",
+          "has edition or translation",
+          "Бочка амонтиллиадо"
+        ],
+        [
+          "The Cask of Amontillado",
+          "has edition or translation",
+          "Бочка амонтильядо"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P747 wd:Q118877933 . ?entity wdt:P747 wd:Q118877930 .\n}",
+      "original_level2_question": "Which literary work has editions titled Бочка амонтиллиадо and Бочка амонтильядо?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "has edition or translation: Бочка амонтиллиадо",
+          "has edition or translation: Бочка амонтильядо"
+        ],
+        "original_constraints": [
+          "has edition or translation: Бочка амонтиллиадо",
+          "has edition or translation: Бочка амонтильядо"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which metropolitan area, known for overlapping with a region located in the United States, includes a significant place situated in Cook County?",
+      "answer": "Chicago metropolitan area",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Chicago metropolitan area",
+          "territory overlaps",
+          "Chicagoland"
+        ],
+        [
+          "Chicago metropolitan area",
+          "significant place",
+          "Des Plaines"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P3179 wd:Q134718040 . ?entity wdt:P7153 wd:Q386961 .\n}",
+      "original_level2_question": "Which metropolitan area overlaps with Chicagoland and includes the significant place Des Plaines?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [territory overlaps: Chicagoland] As [territory overlaps: (Chicagoland,located in,United States)]",
+          "abstract [significant place: Des Plaines] As [significant place: (Des Plaines,located in,Cook County)]"
+        ],
+        "original_constraints": [
+          "territory overlaps: Chicagoland",
+          "significant place: Des Plaines"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which interactive entertainment experience, known for its strategic exploration, expansion, exploitation, and extermination gameplay, is set in the cosmos and primarily navigated using a pointing device?",
+      "answer": "Master of Orion",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Master of Orion",
+          "genre",
+          "4X"
+        ],
+        [
+          "Master of Orion",
+          "input method",
+          "computer mouse"
+        ],
+        [
+          "Master of Orion",
+          "genre",
+          "space-themed video game"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P136 wd:Q603555 . ?entity wdt:P479 wd:Q7987 . ?entity wdt:P136 wd:Q116236799 .\n}",
+      "original_level2_question": "What video game is a space-themed 4X game that uses a computer mouse for input?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "genre: 4X",
+          "input method: computer mouse",
+          "genre: space-themed video game"
+        ],
+        "original_constraints": [
+          "genre: 4X",
+          "input method: computer mouse",
+          "genre: space-themed video game"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which artist, who pursued their education at an institution known for its contributions to the arts in Chennai, is proficient in a language commonly spoken in Canada and another language spoken in parts of Indonesia, and practices a religion that is one of the major world faiths?",
+      "answer": "Syed Thajudeen",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Syed Thajudeen",
+          "languages spoken written or signed",
+          "English"
+        ],
+        [
+          "Syed Thajudeen",
+          "http://www.wikidata.org/prop/direct/P69",
+          "Government College of Fine Arts, Chennai"
+        ],
+        [
+          "Syed Thajudeen",
+          "languages spoken written or signed",
+          "Tamil"
+        ],
+        [
+          "Syed Thajudeen",
+          "religion",
+          "Islam"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P1412 wd:Q1860 . ?entity wdt:P69 wd:Q3577799 . ?entity wdt:P1412 wd:Q5885 . ?entity wdt:P140 wd:Q432 .\n}",
+      "original_level2_question": "Which artist attended the Government College of Fine Arts, Chennai, speaks both English and Tamil, and follows Islam?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [languages spoken written or signed: English] As [languages spoken written or signed: (English,country,Canada)]",
+          "http://www.wikidata.org/prop/direct/P69: Government College of Fine Arts, Chennai",
+          "abstract [languages spoken written or signed: Tamil] As [languages spoken written or signed: (Tamil,country,Indonesia)]"
+        ],
+        "original_constraints": [
+          "languages spoken written or signed: English",
+          "http://www.wikidata.org/prop/direct/P69: Government College of Fine Arts, Chennai",
+          "languages spoken written or signed: Tamil",
+          "religion: Islam"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which individual, known for authoring a work titled \"Muḏakkarāt Muḥammad ʿIzzaẗ Darūzaẗ,\" was a citizen of a territory under the administration of the British Empire during the early 20th century?",
+      "answer": "Izzat Darwaza",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Izzat Darwaza",
+          "notable work",
+          "Muḏakkarāt Muḥammad ʿIzzaẗ Darūzaẗ"
+        ],
+        [
+          "Izzat Darwaza",
+          "country of citizenship",
+          "Mandatory Palestine"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P800 wd:Q135219713 . ?entity wdt:P27 wd:Q193714 .\n}",
+      "original_level2_question": "Which individual has the notable work \"Muḏakkarāt Muḥammad ʿIzzaẗ Darūzaẗ\" and had citizenship in Mandatory Palestine?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [notable work: Muḏakkarāt Muḥammad ʿIzzaẗ Darūzaẗ] As [notable work: (Muḏakkarāt Muḥammad ʿIzzaẗ Darūzaẗ,author,Izzat Darwaza)]",
+          "abstract [country of citizenship: Mandatory Palestine] As [country of citizenship: (Mandatory Palestine,country,British Empire)]"
+        ],
+        "original_constraints": [
+          "notable work: Muḏakkarāt Muḥammad ʿIzzaẗ Darūzaẗ",
+          "country of citizenship: Mandatory Palestine"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which satellite, characterized by a BCP-300 bus design, was notably involved in both a spacecraft decommissioning process and an event where a contract was awarded?",
+      "answer": "NEXTSat",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "NEXTSat",
+          "satellite bus",
+          "BCP-300"
+        ],
+        [
+          "NEXTSat",
+          "significant event",
+          "spacecraft decommissioning"
+        ],
+        [
+          "NEXTSat",
+          "significant event",
+          "contract awarding"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P707 wd:Q106457215 . ?entity wdt:P793 wd:Q119055914 . ?entity wdt:P793 wd:Q5165664 .\n}",
+      "original_level2_question": "Which satellite has a BCP-300 bus design, was involved in a spacecraft decommissioning, and experienced a contract awarding event?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "satellite bus: BCP-300",
+          "significant event: spacecraft decommissioning",
+          "significant event: contract awarding"
+        ],
+        "original_constraints": [
+          "satellite bus: BCP-300",
+          "significant event: spacecraft decommissioning",
+          "significant event: contract awarding"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which album, performed by an artist known for a tracklist that includes \"Pretty When You Cry,\" also features a rendition of \"The Other Woman\" by the same performer?",
+      "answer": "Ultraviolence",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Ultraviolence",
+          "tracklist",
+          "Pretty When You Cry"
+        ],
+        [
+          "Ultraviolence",
+          "tracklist",
+          "The Other Woman"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P658 wd:Q135293559 . ?entity wdt:P658 wd:Q135293563 .\n}",
+      "original_level2_question": "What album includes the tracklist \"Pretty When You Cry\" and features the track \"The Other Woman\"?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [tracklist: Pretty When You Cry] As [tracklist: (Pretty When You Cry,performer,Lana Del Rey)]",
+          "abstract [tracklist: The Other Woman] As [tracklist: (The Other Woman,performer,Lana Del Rey)]"
+        ],
+        "original_constraints": [
+          "tracklist: Pretty When You Cry",
+          "tracklist: The Other Woman"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which album by the performer known for both the song \"Rent\" and the song \"Love Pains\" features these tracks?",
+      "answer": "Results",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Results",
+          "tracklist",
+          "Rent"
+        ],
+        [
+          "Results",
+          "tracklist",
+          "Love Pains"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P658 wd:Q135493631 . ?entity wdt:P658 wd:Q135493634 .\n}",
+      "original_level2_question": "What album includes both the tracklist \"Rent\" and \"Love Pains\"?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [tracklist: Rent] As [tracklist: (Rent,performer,Liza Minnelli)]",
+          "abstract [tracklist: Love Pains] As [tracklist: (Love Pains,performer,Liza Minnelli)]"
+        ],
+        "original_constraints": [
+          "tracklist: Rent",
+          "tracklist: Love Pains"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which individual, known for their education in an institution located in Uppsala Municipality, is also recognized as the parent of a person with Swedish citizenship named Astrid Ebba Christiana Sandels?",
+      "answer": "Johan August Sandels",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Johan August Sandels",
+          "child",
+          "Astrid Ebba Christiana Sandels"
+        ],
+        [
+          "Johan August Sandels",
+          "educated at",
+          "Uppsala University"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P40 wd:Q134546500 . ?entity wdt:P69 wd:Q185246 .\n}",
+      "original_level2_question": "Which historical figure was educated at Uppsala University and has a child named Astrid Ebba Christiana Sandels?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [child: Astrid Ebba Christiana Sandels] As [child: (Astrid Ebba Christiana Sandels,country of citizenship,Sweden)]",
+          "abstract [educated at: Uppsala University] As [educated at: (Uppsala University,located in,Uppsala Municipality)]"
+        ],
+        "original_constraints": [
+          "child: Astrid Ebba Christiana Sandels",
+          "educated at: Uppsala University"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which educational system encompasses an institution known for its vocational training in Los Angeles and another college situated in California's Bay Area?",
+      "answer": "California Community Colleges",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "California Community Colleges",
+          "subsidiary",
+          "Los Angeles Trade–Technical College"
+        ],
+        [
+          "California Community Colleges",
+          "subsidiary",
+          "City College of San Francisco"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P355 wd:Q9091546 . ?entity wdt:P355 wd:Q2974556 .\n}",
+      "original_level2_question": "What educational system includes both Los Angeles Trade–Technical College and City College of San Francisco as its subsidiaries?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "subsidiary: Los Angeles Trade–Technical College",
+          "abstract [subsidiary: City College of San Francisco] As [subsidiary: (City College of San Francisco,located in,California)]"
+        ],
+        "original_constraints": [
+          "subsidiary: Los Angeles Trade–Technical College",
+          "subsidiary: City College of San Francisco"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Identify the athlete who played for a German basketball team known for its association with a pharmaceutical company and also pursued higher education at an institution founded by a religious group in Utah.",
+      "answer": "Trent Plaisted",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Trent Plaisted",
+          "http://www.wikidata.org/prop/direct/P106",
+          "basketball player"
+        ],
+        [
+          "Trent Plaisted",
+          "member of sports team",
+          "Ratiopharm Ulm"
+        ],
+        [
+          "Trent Plaisted",
+          "http://www.wikidata.org/prop/direct/P69",
+          "Brigham Young University"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P106 wd:Q3665646 . ?entity wdt:P54 wd:Q266588 . ?entity wdt:P69 wd:Q332498 .\n}",
+      "original_level2_question": "Which basketball player was a member of Ratiopharm Ulm and attended Brigham Young University?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "http://www.wikidata.org/prop/direct/P106: basketball player",
+          "member of sports team: Ratiopharm Ulm",
+          "http://www.wikidata.org/prop/direct/P69: Brigham Young University"
+        ],
+        "original_constraints": [
+          "http://www.wikidata.org/prop/direct/P106: basketball player",
+          "member of sports team: Ratiopharm Ulm",
+          "http://www.wikidata.org/prop/direct/P69: Brigham Young University"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Identify the person who pursued higher education at an institution located in Rochester, New York, and has gained recognition in the field of composing lyrics and music.",
+      "answer": "Charles Strouse",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Charles Strouse",
+          "http://www.wikidata.org/prop/direct/P69",
+          "University of Rochester"
+        ],
+        [
+          "Charles Strouse",
+          "http://www.wikidata.org/prop/direct/P106",
+          "songwriter"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P69 wd:Q149990 . ?entity wdt:P106 wd:Q753110 .\n}",
+      "original_level2_question": "Which individual attended the University of Rochester and is known for being a songwriter?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "http://www.wikidata.org/prop/direct/P69: University of Rochester",
+          "http://www.wikidata.org/prop/direct/P106: songwriter"
+        ],
+        "original_constraints": [
+          "http://www.wikidata.org/prop/direct/P69: University of Rochester",
+          "http://www.wikidata.org/prop/direct/P106: songwriter"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which football player has been a member of a team based in Istanbul and also played for a team headquartered in Riga?",
+      "answer": "Miloš Jojić",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Miloš Jojić",
+          "member of sports team",
+          "İstanbul Başakşehir F.K."
+        ],
+        [
+          "Miloš Jojić",
+          "member of sports team",
+          "Riga FC"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P54 wd:Q857938 . ?entity wdt:P54 wd:Q19963391 .\n}",
+      "original_level2_question": "Which football player has been a member of both İstanbul Başakşehir F.K. and Riga FC?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [member of sports team: İstanbul Başakşehir F.K.] As [member of sports team: (İstanbul Başakşehir F.K.,headquarters location,Istanbul)]",
+          "abstract [member of sports team: Riga FC] As [member of sports team: (Riga FC,headquarters location,Riga)]"
+        ],
+        "original_constraints": [
+          "member of sports team: İstanbul Başakşehir F.K.",
+          "member of sports team: Riga FC"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Who is the individual known for holding a prominent ecclesiastical position in Sweden, specifically as the leader of a parish in the capital city, and later ascended to the highest clerical office in the Swedish Church?",
+      "answer": "Johan Olof Wallin",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Johan Olof Wallin",
+          "position held",
+          "Archbishop of Uppsala"
+        ],
+        [
+          "Johan Olof Wallin",
+          "position held",
+          "kyrkoherde i Adolf Fredriks församling"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P39 wd:Q1162994 . ?entity wdt:P39 wd:Q134576809 .\n}",
+      "original_level2_question": "Which individual held the position of kyrkoherde i Adolf Fredriks församling and also served as the Archbishop of Uppsala?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "position held: Archbishop of Uppsala",
+          "abstract [position held: kyrkoherde i Adolf Fredriks församling] As [position held: (kyrkoherde i Adolf Fredriks församling,country,Sweden)]"
+        ],
+        "original_constraints": [
+          "position held: Archbishop of Uppsala",
+          "position held: kyrkoherde i Adolf Fredriks församling"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which individual, recognized for their dual talents in painting and illustrating, has their creations housed in a collection located in the Netherlands, received their education at an institution known for its historical significance in Dumbarton, and held citizenship in a nation that existed prior to the formation of the modern United Kingdom?",
+      "answer": "William Strang",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "William Strang",
+          "has works in the collection",
+          "Huis van het boek"
+        ],
+        [
+          "William Strang",
+          "http://www.wikidata.org/prop/direct/P106",
+          "illustrator"
+        ],
+        [
+          "William Strang",
+          "http://www.wikidata.org/prop/direct/P106",
+          "painter"
+        ],
+        [
+          "William Strang",
+          "http://www.wikidata.org/prop/direct/P27",
+          "United Kingdom of Great Britain and Ireland"
+        ],
+        [
+          "William Strang",
+          "http://www.wikidata.org/prop/direct/P69",
+          "Dumbarton Academy"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P6379 wd:Q2754878 . ?entity wdt:P106 wd:Q644687 . ?entity wdt:P106 wd:Q1028181 . ?entity wdt:P27 wd:Q174193 . ?entity wdt:P69 wd:Q5313677 .\n}",
+      "original_level2_question": "Which individual, known for both painting and illustrating, has works featured in the collection at Huis van het boek, was educated at Dumbarton Academy, and was a citizen of the United Kingdom of Great Britain and Ireland?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [has works in the collection: Huis van het boek] As [has works in the collection: (Huis van het boek,country,Netherlands)]",
+          "http://www.wikidata.org/prop/direct/P106: illustrator",
+          "http://www.wikidata.org/prop/direct/P106: painter"
+        ],
+        "original_constraints": [
+          "has works in the collection: Huis van het boek",
+          "http://www.wikidata.org/prop/direct/P106: illustrator",
+          "http://www.wikidata.org/prop/direct/P106: painter",
+          "http://www.wikidata.org/prop/direct/P27: United Kingdom of Great Britain and Ireland",
+          "http://www.wikidata.org/prop/direct/P69: Dumbarton Academy"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Identify the sacred site that is recognized as a shrine of historical significance according to the Engishiki classification, holds the status of a Beppyo Shrine, and is situated within the Suzuka district.",
+      "answer": "Tsubaki Grand Shrine",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Tsubaki Grand Shrine",
+          "instance of",
+          "Shikinaisha"
+        ],
+        [
+          "Tsubaki Grand Shrine",
+          "instance of",
+          "Kokuhei Shosha (Engishiki)"
+        ],
+        [
+          "Tsubaki Grand Shrine",
+          "instance of",
+          "Beppyo Shrine"
+        ],
+        [
+          "Tsubaki Grand Shrine",
+          "located in the administrative territorial entity",
+          "Suzuka district"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P31 wd:Q134917286 . ?entity wdt:P31 wd:Q135206465 . ?entity wdt:P31 wd:Q10898274 . ?entity wdt:P131 wd:Q278828 .\n}",
+      "original_level2_question": "Which shrine is classified as a Shikinaisha, a Kokuhei Shosha according to Engishiki, a Beppyo Shrine, and is located in Suzuka district?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "instance of: Shikinaisha",
+          "instance of: Kokuhei Shosha (Engishiki)",
+          "instance of: Beppyo Shrine"
+        ],
+        "original_constraints": [
+          "instance of: Shikinaisha",
+          "instance of: Kokuhei Shosha (Engishiki)",
+          "instance of: Beppyo Shrine",
+          "located in the administrative territorial entity: Suzuka district"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    },
+    {
+      "question": "Which river, located in the United States, has tributaries including one found in McDowell County and another known as Davy Branch?",
+      "answer": "Tug Fork",
+      "level": 3,
+      "type": "abstract_multi_attribute",
+      "reasoning_chain": [
+        [
+          "Tug Fork",
+          "tributary",
+          "Davy Branch"
+        ],
+        [
+          "Tug Fork",
+          "tributary",
+          "Loop Branch"
+        ]
+      ],
+      "sparql_verification": "SELECT (COUNT(?entity) AS ?count) WHERE {\n  ?entity wdt:P974 wd:Q56528945 . ?entity wdt:P974 wd:Q35366475 .\n}",
+      "original_level2_question": "What river has both Davy Branch and Loop Branch as its tributaries?",
+      "abstraction_info": {
+        "abstract_constraints": [
+          "abstract [tributary: Davy Branch] As [tributary: (Davy Branch,country,United States)]",
+          "abstract [tributary: Loop Branch] As [tributary: (Loop Branch,located in,McDowell County)]"
+        ],
+        "original_constraints": [
+          "tributary: Davy Branch",
+          "tributary: Loop Branch"
+        ],
+        "cultural_depth": "maximum"
+      },
+      "answer_verified": true
+    }
+  ]
+}

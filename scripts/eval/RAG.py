@@ -29,12 +29,12 @@ DEFAULT_DATA_PATH = ""
 MODEL_NAME = ""  
 
 # OpenAI (or compatible) API configuration
-OPENAI_BASE_URL = "YOUR_API_BASE_URL"
-OPENAI_API_KEY = "YOUR_API_KEY"
+OPENAI_BASE_URL = ""
+OPENAI_API_KEY = ""
 
 # Search (Serper) configuration
-SERPER_API_KEY = "YOUR_SERPER_API_KEY"
-SERPER_ENDPOINT = "https://google.serper.dev/search"
+SERPER_API_KEY = ""
+SERPER_ENDPOINT = ""
 SERPER_TOP_DOCS = 3  # Number of top organic results to include
 
 # Generation parameters
@@ -54,15 +54,15 @@ client = OpenAI(base_url=OPENAI_BASE_URL, api_key=OPENAI_API_KEY)
 
 
 def parse_args() -> argparse.Namespace:
-        parser = argparse.ArgumentParser(description="QA Test Runner (Iterative Search / RAG)")
-        parser.add_argument("data", type=str, nargs="?", default=DEFAULT_DATA_PATH, help="Path to the test data file")
-        parser.add_argument("--model", type=str, default=MODEL_NAME, help="Model name to override the default")
-        parser.add_argument("--threads", type=int, default=MAX_THREADS, help="Number of parallel threads")
-        parser.add_argument("--temperature", type=float, default=TEMPERATURE, help="Sampling temperature")
-        parser.add_argument("--max-tokens", type=int, default=MAX_TOKENS, help="Maximum tokens to generate")
-        parser.add_argument("--max-iter", type=int, default=MAX_ITERATIONS, help="Maximum search iterations")
-        parser.add_argument("--serper-key", type=str, default=SERPER_API_KEY, help="Override for Serper API Key")
-        return parser.parse_args()
+    parser = argparse.ArgumentParser(description="QA Test Runner (Iterative Search / RAG)")
+    parser.add_argument("data", type=str, nargs="?", default=DEFAULT_DATA_PATH, help="Path to the test data file")
+    parser.add_argument("--model", type=str, default=MODEL_NAME, help="Model name to override the default")
+    parser.add_argument("--threads", type=int, default=MAX_THREADS, help="Number of parallel threads")
+    parser.add_argument("--temperature", type=float, default=TEMPERATURE, help="Sampling temperature")
+    parser.add_argument("--max-tokens", type=int, default=MAX_TOKENS, help="Maximum tokens to generate")
+    parser.add_argument("--max-iter", type=int, default=MAX_ITERATIONS, help="Maximum search iterations")
+    parser.add_argument("--serper-key", type=str, default=SERPER_API_KEY, help="Override for Serper API Key")
+    return parser.parse_args()
 
 def get_query(text: str) -> Optional[str]:
     pattern = re.compile(r"<search>(.*?)</search>", re.DOTALL)
@@ -209,7 +209,7 @@ def save_results(*, model_name: str, data_path: str, total: int, correct: int, a
     level = level_match.group(1) if level_match else "unknown"
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     model_safe_name = model_name.replace("-", "_").replace(".", "_").replace("/", "_")
-    output_dir = os.path.join("output", year)
+    output_dir = os.path.join("outputs", "evaluations", year)
     os.makedirs(output_dir, exist_ok=True)
     output_file = os.path.join(output_dir, f"{level}_results_RAG_{model_safe_name}_search_{timestamp}.json")
     summary_file = os.path.join(output_dir, f"{level}_summary_RAG_{model_safe_name}_search_{timestamp}.json")
