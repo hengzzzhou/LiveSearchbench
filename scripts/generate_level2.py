@@ -10,6 +10,8 @@ import json
 import requests
 import time
 import random
+import argparse
+import os
 from collections import defaultdict
 
 # API Configuration
@@ -650,13 +652,73 @@ Make it flow naturally and be specific. Generate only the question:"""
         
         return qa_pairs
 
-def main():
+def convert_extracted_triples_to_format(input_csv):
+    """
+    Convert extracted triples CSV to the format expected by generate_level2
+
+    Input columns (from 0_extract_triple_changes.py):
+        entity_id, entity_label, property_id, property_label, property_type,
+        old_value, new_value, new_value_label, change_type, change_timestamp, wiki_url
+
+    Output columns (expected by generate_level2.py):
+        subject_id, subject_label, predicate_id, predicate_label, object_id, object_label
+    """
+    print(f"Converting extracted triples from {input_csv}...")
+    df = pd.read_csv(input_csv)
+    print(f"Loaded {len(df)} extracted triples")
+
+    # Filter: only keep triples where new_value is a Wikibase Item (starts with Q)
+    df_filtered = df[df['new_value'].str.startswith('Q', na=False)].copy()
+    print(f"Filtered to {len(df_filtered)} triples with entity values (Q-items)")
+
+    # Rename columns to match expected format
+    df_converted = pd.DataFrame({
+        'subject_id': df_filtered['entity_id'],
+        'subject_label': df_filtered['entity_label'],
+        'predicate_id': df_filtered['property_id'],
+        'predicate_label': df_filtered['property_label'],
+        'object_id': df_filtered['new_value'],
+        'object_label': df_filtered['new_value_label']
+    })
+
+    print(f"Converted to format with {len(df_converted)} triples")
+    return df_converted
+
+def main(input_file=None):
     """Main function: only generate multi-attribute questions"""
-    
+
     # Load data
     print("Loading triple data...")
-    df = pd.read_csv('./data/final_changed_item_with_id.csv')
-    print(f"Loaded {len(df)} triples")
+
+    # Determine input file
+    if input_file:
+        if not os.path.exists(input_file):
+            raise FileNotFoundError(f"Input file not found: {input_file}")
+        print(f"Using specified input file: {input_file}")
+
+        # Check if it's from 0_extract_triple_changes.py (has new_value column)
+        df_test = pd.read_csv(input_file, nrows=1)
+        if 'new_value' in df_test.columns:
+            df = convert_extracted_triples_to_format(input_file)
+        else:
+            df = pd.read_csv(input_file)
+            print(f"Loaded {len(df)} triples")
+    else:
+        # Try to load from extracted triples first, fallback to old format
+        extracted_triples_path = './outputs/extracted_triples/triple_changes_latest.csv'
+        old_format_path = './data/final_changed_item_with_id.csv'
+
+        if os.path.exists(extracted_triples_path):
+            print(f"Found extracted triples: {extracted_triples_path}")
+            df = convert_extracted_triples_to_format(extracted_triples_path)
+        elif os.path.exists(old_format_path):
+            print(f"Using old format: {old_format_path}")
+            df = pd.read_csv(old_format_path)
+            print(f"Loaded {len(df)} triples")
+        else:
+            raise FileNotFoundError(f"No input file found. Please provide either:\n"
+                                    f"  - {extracted_triples_path} (from 0_extract_triple_changes.py)\n"
+                                    f"  - {old_format_path} (old format)")
     
     all_qa_pairs = []
     
@@ -687,7 +749,9 @@ def main():
     }
     
     # Save file
-    filename = './outputs/level2_multi_attribute_only.json'
+    import os
+    os.makedirs('./outputs/questions', exist_ok=True)
+    filename = './outputs/questions/level2_multi_attribute_only.json'
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(result, f, ensure_ascii=False, indent=2)
     
@@ -706,4 +770,9 @@ def main():
             print()
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Generate Level 2 questions from knowledge triples")
+    parser.add_argument("--input", type=str, default=None,
+                        help="Input CSV file path (auto-detects format from 0_extract_triple_changes.py or old format)")
+    args = parser.parse_args()
+
+    main(input_file=args.input)
