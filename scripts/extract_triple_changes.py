@@ -1,20 +1,20 @@
 """
-步骤 0：从 Wikidata 提取知识三元组变化
+Step 0: extract knowledge triple changes from Wikidata.
 
-功能：
-1. 获取 Wikidata 最近的编辑记录
-2. 过滤出符合条件的实体（有英文维基百科页面）
-3. 提取属性值的变化（新增、更新、删除）
-4. 输出为 CSV 文件供后续使用
+Features:
+1. Pull recent Wikidata edits
+2. Keep entities with English Wikipedia pages
+3. Capture property value changes (create/update/delete)
+4. Emit a CSV for downstream use
 
-运行示例：
-    python 0_extract_triple_changes.py --hours 2.0
+Example:
+    python extract_triple_changes.py --hours 2.0
 """
 
 import sys
 from pathlib import Path
 
-# 添加项目根目录到路径
+# Add project root to path
 PROJECT_ROOT = Path(__file__).parent.parent.resolve()
 sys.path.insert(0, str(PROJECT_ROOT))
 
@@ -29,21 +29,21 @@ from typing import List, Dict
 import re
 
 
-# ========== 配置 ==========
+# ========== Configuration ==========
 
-# Wikidata API 配置
+# Wikidata API
 WIKIDATA_API = "https://www.wikidata.org/w/api.php"
 WIKIDATA_USER_AGENT = "LiveSearchBench/1.0"
 
-# 输出目录配置
+# Output directories
 OUTPUTS_DIR = PROJECT_ROOT / "outputs"
 EXTRACTED_TRIPLES_DIR = OUTPUTS_DIR / "extracted_triples"
 
-# 创建必要的目录
+# Create directories if missing
 EXTRACTED_TRIPLES_DIR.mkdir(parents=True, exist_ok=True)
 
 
-# ========== 日志配置 ==========
+# ========== Logging ==========
 
 logging.basicConfig(
     level=logging.INFO,
@@ -53,64 +53,60 @@ logging.basicConfig(
 logger = logging.getLogger("triple_extractor")
 
 
-# ========== 全局配置 ==========
+# ========== Defaults ==========
 
 BASE_API = WIKIDATA_API
 USER_AGENT = WIKIDATA_USER_AGENT
-MAX_WORKERS = 10  # 并行线程数
-BATCH_SIZE = 50   # 批量请求大小
+MAX_WORKERS = 10  # Parallel workers
+BATCH_SIZE = 50   # Batch request size
 
-# 允许的属性数据类型
+# Allowed property datatypes
 ALLOWED_TYPES = {
-    "time",             # 时间
-    "quantity",         # 数量
-    "wikibase-item",    # 维基项
-    "globe-coordinate"  # 地理坐标
+    "time",             # Time
+    "quantity",         # Quantity
+    "wikibase-item",    # Wikibase item
+    "globe-coordinate"  # Coordinates
 }
 
 
-# ========== 辅助函数 ==========
+# ========== Helpers ==========
 
 def get_timestamp_str(dt: datetime) -> str:
-    """将 datetime 转为 Wikidata API 时间戳格式"""
+    """Format datetime as a Wikidata timestamp string."""
     return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-# ========== 主类 ==========
+# ========== Main class ==========
 
 class TripleChangeExtractor:
-    """从 Wikidata 提取知识三元组变化"""
+    """Extract knowledge triple changes from Wikidata."""
 
     def __init__(self, hours: float = None, output_file: str = "triple_changes.csv", max_triples: int = None):
         """
-        初始化提取器
+        Init extractor.
 
-        参数:
-            hours: 扫描时间窗口（小时，None 表示不限制时间）
-            output_file: 输出 CSV 文件路径
-            max_triples: 最大输出三元组数量（None 表示不限制）
+        Args:
+            hours: Time window in hours (None means unbounded).
+            output_file: Output CSV file path.
+            max_triples: Max triples to save (None means unbounded).
         """
-        # 计算时间范围（UTC）
+        # Compute UTC time range
         self.end_time = datetime.now(timezone.utc).replace(tzinfo=None)
         if hours is not None:
             self.start_time = self.end_time - timedelta(hours=hours)
         else:
-            # 不限制时间，设置为一个很久之前的时间
             self.start_time = None
         self.output_file = output_file
         self.max_triples = max_triples
         self.hours = hours
 
-        # 统计计数器
+        # Counters
         self.total_changes = 0
         self.kept_triples = 0
 
     def fetch_recent_changes_generator(self):
         """
-        生成器：分批获取最近更改记录
-
-        Yields:
-            list: 更改记录列表
+        Yield batches of recent change records.
         """
         rcstart = get_timestamp_str(self.end_time)
 
@@ -126,7 +122,7 @@ class TripleChangeExtractor:
             "formatversion": "2"
         }
 
-        # 只有当指定了时间窗口时才设置 rcend
+        # Only set rcend when a time window is provided
         if self.start_time is not None:
             params["rcend"] = get_timestamp_str(self.start_time)
 
@@ -136,7 +132,7 @@ class TripleChangeExtractor:
                 data = resp.json()
 
                 if "error" in data:
-                    logger.warning(f"API 错误: {data['error']}")
+                    logger.warning(f"API error: {data['error']}")
                     time.sleep(5)
                     continue
 
@@ -152,18 +148,12 @@ class TripleChangeExtractor:
                     break
 
             except Exception as e:
-                logger.error(f"网络错误: {e}")
+                logger.error(f"Network error: {e}")
                 time.sleep(5)
 
     def _fetch_property_labels(self, property_ids: List[str]) -> Dict[str, str]:
         """
-        批量获取属性标签
-
-        参数:
-            property_ids: 属性 ID 列表
-
-        返回:
-            dict: {property_id: label} 映射
+        Fetch property labels in batches.
         """
         if not property_ids:
             return {}
@@ -191,7 +181,7 @@ class TripleChangeExtractor:
                         labels[pid] = pid
 
             except Exception as e:
-                logger.warning(f"获取属性标签失败: {e}")
+                logger.warning(f"Failed to fetch property labels: {e}")
                 for pid in chunk:
                     if pid not in labels:
                         labels[pid] = pid
@@ -200,13 +190,7 @@ class TripleChangeExtractor:
 
     def _fetch_entity_labels(self, entity_ids: List[str]) -> Dict[str, str]:
         """
-        批量获取实体标签
-
-        参数:
-            entity_ids: 实体 ID 列表
-
-        返回:
-            dict: {entity_id: label} 映射
+        Fetch entity labels in batches.
         """
         if not entity_ids:
             return {}
@@ -234,7 +218,7 @@ class TripleChangeExtractor:
                         labels[eid] = eid
 
             except Exception as e:
-                logger.warning(f"获取实体标签失败: {e}")
+                logger.warning(f"Failed to fetch entity labels: {e}")
                 for eid in chunk:
                     if eid not in labels:
                         labels[eid] = eid
@@ -243,25 +227,19 @@ class TripleChangeExtractor:
 
     def process_batch_filters(self, changes: List[Dict]):
         """
-        处理一批更改记录
-
-        参数:
-            changes: 更改记录列表
-
-        返回:
-            list: 有效的三元组变化行列表
+        Process a batch of change records and return valid triple rows.
         """
-        # 1. 提取唯一的 QID
+        # 1. Extract unique QIDs
         unique_qids = list({c["title"] for c in changes if c["title"].startswith("Q")})
         if not unique_qids:
             return []
 
-        # 2. 批量获取实体详情
+        # 2. Fetch entity details in batches
         entity_map = {}
         chunks = [unique_qids[i:i + BATCH_SIZE] for i in range(0, len(unique_qids), BATCH_SIZE)]
 
         def fetch_chunk(chunk_ids):
-            """获取一批实体数据"""
+            """Get a chunk of entity data."""
             params = {
                 "action": "wbgetentities",
                 "ids": "|".join(chunk_ids),
@@ -277,7 +255,7 @@ class TripleChangeExtractor:
         for chunk in chunks:
             entity_map.update(fetch_chunk(chunk))
 
-        # 3. 过滤候选
+        # 3. Filter candidates
         candidates = []
         for c in changes:
             qid = c["title"]
@@ -287,16 +265,16 @@ class TripleChangeExtractor:
 
             ent = entity_map[qid]
 
-            # 必须有英文维基百科链接
+            # Require an English Wikipedia link
             if "enwiki" not in ent.get("sitelinks", {}):
                 continue
 
-            # 过滤掉维基百科分类页面
+            # Skip Wikipedia categories
             enwiki_title = ent.get("sitelinks", {}).get("enwiki", {}).get("title", "")
             if enwiki_title.startswith("Category:"):
                 continue
 
-            # 从评论中提取属性 ID
+            # Extract property ID from comment
             match = re.search(r"\[\[Property:(P\d+)\]\]", c.get("comment", ""))
             if not match:
                 continue
@@ -304,12 +282,12 @@ class TripleChangeExtractor:
             pid = match.group(1)
             claims = ent.get("claims", {})
 
-            # 确定属性类型
+            # Determine property type
             p_type = "unknown"
             if pid in claims and claims[pid]:
                 p_type = claims[pid][0].get("mainsnak", {}).get("datatype", "unknown")
 
-            # 属性类型必须在允许列表中
+            # Property type must be allowed
             if p_type not in ALLOWED_TYPES:
                 continue
 
@@ -324,14 +302,14 @@ class TripleChangeExtractor:
         if not candidates:
             return []
 
-        # 4. 批量获取属性标签
+        # 4. Fetch property labels in bulk
         unique_pids = list({c["pid"] for c in candidates})
         property_labels = self._fetch_property_labels(unique_pids)
 
         for cand in candidates:
             cand["p_label"] = property_labels.get(cand["pid"], cand["pid"])
 
-        # 5. 批量获取修订版本
+        # 5. Fetch revisions in bulk
         all_revids = set()
         for cand in candidates:
             c = cand["change"]
@@ -342,7 +320,7 @@ class TripleChangeExtractor:
 
         revision_cache = self._batch_fetch_revisions(list(all_revids))
 
-        # 6. 收集需要获取标签的对象 ID
+        # 6. Collect object IDs needing labels
         object_ids_to_fetch = set()
         for cand in candidates:
             c = cand["change"]
@@ -352,16 +330,16 @@ class TripleChangeExtractor:
             revid_new = str(c.get("revid", ""))
             if revid_new in revision_cache:
                 new_val = self._extract_property_value(revision_cache.get(revid_new), pid)
-                # 如果是 Wikibase Item（以 Q 开头），添加到待获取列表
+                # Fetch labels for wikibase item values
                 if new_val and isinstance(new_val, str) and new_val.startswith("Q"):
                     object_ids_to_fetch.add(new_val)
 
-        # 批量获取对象标签
+        # Fetch object labels
         object_labels = self._fetch_entity_labels(list(object_ids_to_fetch))
 
-        # 7. 并行解析差异
+        # 7. Parse diffs concurrently
         def resolve_diff_cached(item):
-            """使用缓存的修订版本解析差异"""
+            """Resolve diffs using cached revisions."""
             c = item["change"]
             qid = c["title"]
             pid = item["pid"]
@@ -370,7 +348,7 @@ class TripleChangeExtractor:
             revid_old = str(c.get("old_revid", ""))
 
             try:
-                # 获取新旧值
+                # Pull new and old values
                 new_val = self._extract_property_value(revision_cache.get(revid_new), pid)
 
                 if not revid_old or int(c.get("old_revid", 0)) == 0:
@@ -378,13 +356,13 @@ class TripleChangeExtractor:
                 else:
                     old_val = self._extract_property_value(revision_cache.get(revid_old), pid)
 
-                # 检查是否有变化
+                # Check for change
                 if new_val != old_val and new_val != "ERROR" and old_val != "ERROR":
                     enwiki_title = item["ent"]["sitelinks"]["enwiki"]["title"]
                     wiki_url = f"https://en.wikipedia.org/wiki/{enwiki_title.replace(' ', '_')}"
                     entity_label = item["ent"].get("labels", {}).get("en", {}).get("value", qid)
 
-                    # 判断变化类型
+                    # Determine change type
                     if old_val in ("NEW_CREATED", "NO_VALUE", "SOME_VALUE"):
                         change_type = "created"
                     elif new_val in ("NO_VALUE", "SOME_VALUE"):
@@ -392,7 +370,7 @@ class TripleChangeExtractor:
                     else:
                         change_type = "updated"
 
-                    # 获取 new_value 的标签
+                    # Map new_value to its label when needed
                     new_val_label = new_val
                     if isinstance(new_val, str) and new_val.startswith("Q"):
                         new_val_label = object_labels.get(new_val, new_val)
@@ -408,7 +386,7 @@ class TripleChangeExtractor:
 
             return None
 
-        # 并行处理
+        # Concurrent processing
         rows_to_save = []
         with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
             futures = [executor.submit(resolve_diff_cached, cand) for cand in candidates]
@@ -421,13 +399,7 @@ class TripleChangeExtractor:
 
     def _batch_fetch_revisions(self, revids: List[str]) -> Dict[str, dict]:
         """
-        批量获取修订版本内容
-
-        参数:
-            revids: 修订版本 ID 列表
-
-        返回:
-            dict: {revid: entity_data} 映射
+        Fetch revision contents in batches.
         """
         if not revids:
             return {}
@@ -436,7 +408,7 @@ class TripleChangeExtractor:
         chunks = [revids[i:i + 50] for i in range(0, len(revids), 50)]
 
         def fetch_chunk(chunk_ids):
-            """获取一批修订版本"""
+            """Fetch a batch of revisions."""
             try:
                 params = {
                     "action": "query",
@@ -463,10 +435,10 @@ class TripleChangeExtractor:
                                 results[revid] = None
                 return results
             except Exception as e:
-                logger.warning(f"获取修订版本失败: {e}")
+                logger.warning(f"Failed to fetch revisions: {e}")
                 return {}
 
-        # 并行获取
+        # Parallel fetch
         with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
             futures = {executor.submit(fetch_chunk, chunk): chunk for chunk in chunks}
             for future in concurrent.futures.as_completed(futures):
@@ -476,14 +448,7 @@ class TripleChangeExtractor:
 
     def _extract_property_value(self, entity_data: dict, property_id: str) -> str:
         """
-        从实体数据中提取属性值
-
-        参数:
-            entity_data: 实体 JSON 数据
-            property_id: 属性 ID
-
-        返回:
-            str: 属性值（或特殊标记）
+        Extract a property value from entity data.
         """
         if not entity_data:
             return "ERROR"
@@ -500,18 +465,18 @@ class TripleChangeExtractor:
                 datavalue = snak.get("datavalue", {})
                 val = datavalue.get("value")
 
-                # 处理不同数据类型
+                # Handle datatypes
                 if isinstance(val, dict):
                     if "id" in val:
-                        return val["id"]  # Wikibase Item
+                        return val["id"]
                     if "amount" in val:
-                        return val["amount"]  # Quantity
+                        return val["amount"]
                     if "time" in val:
-                        return val["time"]  # Time
+                        return val["time"]
                     if "latitude" in val:
-                        return f"{val['latitude']},{val['longitude']}"  # Coordinate
+                        return f"{val['latitude']},{val['longitude']}"
                     if "text" in val:
-                        return val["text"]  # Monolingual Text
+                        return val["text"]
 
                 return str(val)
 
@@ -526,22 +491,22 @@ class TripleChangeExtractor:
         return "ERROR"
 
     def run(self):
-        """运行提取流程"""
+        """Execute extraction workflow."""
         if self.start_time is not None:
-            logger.info(f"获取变更：从 {self.start_time} 到 {self.end_time} (UTC)")
-            logger.info(f"时间窗口：{(self.end_time - self.start_time).total_seconds() / 3600:.2f} 小时")
+            logger.info(f"Fetching changes from {self.start_time} to {self.end_time} (UTC)")
+            logger.info(f"Time window: {(self.end_time - self.start_time).total_seconds() / 3600:.2f} hours")
         else:
-            logger.info(f"获取变更：从最早记录到 {self.end_time} (UTC)")
-            logger.info(f"时间窗口：不限制")
+            logger.info(f"Fetching changes from earliest to {self.end_time} (UTC)")
+            logger.info("Time window: unlimited")
         if self.max_triples:
-            logger.info(f"目标三元组数量: {self.max_triples}")
+            logger.info(f"Target triple count: {self.max_triples}")
 
-        # 使用字典来去重：key=entity_id, value=最新的变更记录（同一实体只保留一个三元组）
+        # Deduplicate by entity_id, keeping the latest change
         unique_entities = {}
         total_before_dedup = 0
         start_t = time.time()
 
-        # 逐批处理
+        # Process batches
         for batch in self.fetch_recent_changes_generator():
             self.total_changes += len(batch)
 
@@ -549,33 +514,31 @@ class TripleChangeExtractor:
             if valid_rows:
                 total_before_dedup += len(valid_rows)
                 for row in valid_rows:
-                    entity_id = row[0]  # entity_id
-                    timestamp = row[9]  # change_timestamp (现在在索引 9)
+                    entity_id = row[0]
+                    timestamp = row[9]
 
-                    # 如果是新实体，或者时间戳更新，则更新记录（同一实体只保留最新的那个三元组）
+                    # Keep newest change per entity
                     if entity_id not in unique_entities or timestamp > unique_entities[entity_id][9]:
                         unique_entities[entity_id] = row
 
-                print(f"已扫描 {self.total_changes} 条变更 | 发现 {len(unique_entities)} 个唯一实体...", end="\r")
+                print(f"Scanned {self.total_changes} changes | Found {len(unique_entities)} unique entities...", end="\r")
 
-                # 如果指定了数量限制且已达到目标，提前退出
+                # Early exit when hitting target count
                 if self.max_triples and len(unique_entities) >= self.max_triples:
-                    logger.info(f"\n已达到目标数量 {self.max_triples}，停止扫描")
+                    logger.info(f"\nReached target {self.max_triples}, stopping scan")
                     break
 
-        # 去重统计
-        logger.info(f"\n去重前: {total_before_dedup} 条变更")
-        logger.info(f"去重后: {len(unique_entities)} 个唯一实体")
+        logger.info(f"\nBefore dedup: {total_before_dedup} changes")
+        logger.info(f"After dedup: {len(unique_entities)} unique entities")
 
-        # 按时间戳排序（时间戳现在在索引 9）
+        # Sort by timestamp (index 9)
         sorted_rows = sorted(unique_entities.values(), key=lambda x: x[9], reverse=True)
 
-        # 如果指定了数量限制，只取前 N 个
+        # Apply limit if requested
         if self.max_triples:
             sorted_rows = sorted_rows[:self.max_triples]
-            logger.info(f"限制输出: {len(sorted_rows)} 个三元组")
+            logger.info(f"Limited output: {len(sorted_rows)} triples")
 
-        # 写入文件
         with open(self.output_file, 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerow([
@@ -586,55 +549,55 @@ class TripleChangeExtractor:
 
         self.kept_triples = len(sorted_rows)
         duration = time.time() - start_t
-        logger.info(f"完成！共扫描 {self.total_changes} 条变更，耗时 {duration:.1f} 秒")
-        logger.info(f"保存了 {self.kept_triples} 个有效三元组到 {self.output_file}")
+        logger.info(f"Done! Scanned {self.total_changes} changes in {duration:.1f}s")
+        logger.info(f"Saved {self.kept_triples} triples to {self.output_file}")
 
 
-# ========== 主入口 ==========
+# ========== Entry point ==========
 
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="从 Wikidata 提取知识三元组变化")
+    parser = argparse.ArgumentParser(description="Extract knowledge triple changes from Wikidata")
     parser.add_argument("--hours", type=float, default=None,
-                        help="扫描时间窗口（小时，默认: 如果指定 --max-triples 则不限制，否则为 2.0）")
+                        help="Time window in hours (default: unlimited when --max-triples is set, otherwise 2.0)")
     parser.add_argument("--output", type=str, default=None,
-                        help="输出文件路径（默认: outputs/extracted_triples/triple_changes_时间戳.csv）")
+                        help="Output file path (default: outputs/extracted_triples/triple_changes_<timestamp>.csv)")
     parser.add_argument("--max-triples", type=int, default=None,
-                        help="最大输出三元组数量（默认: 不限制，按时间窗口获取所有）")
+                        help="Max triples to output (default: unlimited, constrained by time window)")
     args = parser.parse_args()
 
-    # 自动设置时间窗口
+    # Auto-configure the time window
     if args.hours is None:
         if args.max_triples:
-            # 如果只指定了数量，不限制时间窗口，持续扫描直到找到足够的三元组
+            # No time limit when only max_triples is set
             hours = None
         else:
-            # 如果都没指定，使用默认的 2 小时
+            # Default window is 2 hours
             hours = 2.0
     else:
         hours = args.hours
 
-    # 默认输出路径
+    # Default output path
     if args.output is None:
         timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
         output_file = str(EXTRACTED_TRIPLES_DIR / f"triple_changes_{timestamp}.csv")
     else:
         output_file = args.output
 
-    # 打印启动信息
+    # Startup info
     print("\n" + "=" * 60)
-    print("Wikidata 知识三元组变化提取器")
+    print("Wikidata triple change extractor")
     print("=" * 60)
     if hours is not None:
-        print(f"时间窗口: {hours} 小时 (UTC)")
+        print(f"Time window: {hours} hours (UTC)")
     else:
-        print(f"时间窗口: 不限制（持续扫描直到达到目标数量）")
+        print("Time window: unlimited (scan until target count is reached)")
     if args.max_triples:
-        print(f"目标数量: {args.max_triples} 个三元组")
-    print(f"输出文件: {output_file}")
+        print(f"Target count: {args.max_triples} triples")
+    print(f"Output file: {output_file}")
     print("=" * 60 + "\n")
 
-    # 运行
+    # Run extractor
     extractor = TripleChangeExtractor(hours=hours, output_file=output_file, max_triples=args.max_triples)
     extractor.run()
