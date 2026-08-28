@@ -1,0 +1,65 @@
+LiveSearchBench
+===============
+
+Licensing summary
+-----------------
+
+  Component                         License           SPDX
+  --------------------------------  ----------------  ------------
+  Source code (scripts/, livesearchbench/, tests/)
+                                    MIT               MIT
+  Benchmark data (bench/, demo.json, data/)
+                                    CC BY 4.0         CC-BY-4.0
+  Upstream source facts (Wikidata)  CC0 1.0           CC0-1.0
+
+Full texts: LICENSE (MIT) and LICENSE-DATA (CC BY 4.0).
+
+
+Attribution for upstream data
+-----------------------------
+
+Data from Wikidata.
+
+All structured data in the Wikidata main, Property, Lexeme and EntitySchema
+namespaces is released under the Creative Commons CC0 1.0 Universal Public
+Domain Dedication ("No rights reserved"). CC0 imposes no attribution
+requirement; this notice is provided because the Wikidata community asks that
+reusers credit the project, and because the ACL Rolling Review Responsible NLP
+Research checklist (item B2) asks authors to name the license of every artifact
+they build on.
+
+  Source:    https://www.wikidata.org/
+  License:   https://creativecommons.org/publicdomain/zero/1.0/
+  Copyright: https://www.wikidata.org/wiki/Wikidata:Copyright
+
+Snapshot identifiers, retrieval dates and file hashes for each benchmark
+release are recorded in the release MANIFEST written by
+scripts/extract_dump_delta.py. Note that Wikidata text outside the main
+namespace, and Wikipedia article text, are CC BY-SA rather than CC0; no such
+text is redistributed here.
+
+
+Disclosure of machine generation
+--------------------------------
+
+The natural-language questions in this benchmark were SYNTHESISED BY LARGE
+LANGUAGE MODELS from Wikidata triples, then validated automatically (SPARQL
+uniqueness checking and contextual solvability verification) and reviewed by
+human annotators. They are not human-written text.
+
+This disclosure is made explicitly because OpenAI's terms of use permit the
+redistribution of model output but forbid representing that output as
+human-generated.
+
+The model used for each released file is recorded in that file's metadata
+block. Where a model identifier is absent from an older release file, treat
+the generating model as unrecorded rather than assuming any particular one.
+
+
+Intended use
+------------
+
+LiveSearchBench is an EVALUATION resource. It is intended for measuring
+retrieval-augmented question answering over evolving knowledge, and is not
+intended as training data. Training on these instances defeats the purpose of
+a contamination-resistant benchmark.

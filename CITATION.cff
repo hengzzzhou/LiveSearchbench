@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use LiveSearchBench, please cite the paper below."
+title: "LiveSearchBench"
+abstract: >-
+  An automated pipeline that constructs continually updating,
+  snapshot-grounded question answering benchmarks from Wikidata
+  differentials, with SPARQL-verified answer uniqueness.
+type: software
+license: MIT
+repository-code: "https://github.com/hengzzzhou/LiveSearchbench"
+keywords:
+  - question-answering
+  - retrieval-augmented-generation
+  - benchmark
+  - knowledge-graph
+  - wikidata
+authors:
+  # TODO: replace with the full author list exactly as it appears on the paper,
+  # in the same order, and add an ORCID for each author who has one.
+  - family-names: Zhou
+    given-names: Heng
+preferred-citation:
+  # TODO: after the proceedings appear (expected around the conference,
+  # 24-29 October 2026), replace the arXiv fields below with the ACL Anthology
+  # entry from https://aclanthology.org/2026.findings-emnlp.N.bib
+  type: conference-paper
+  title: "LiveSearchBench: An Automated Pipeline for Benchmark Construction over Dynamic Knowledge"
+  collection-title: "Findings of the Association for Computational Linguistics: EMNLP 2026"
+  publisher:
+    name: "Association for Computational Linguistics"
+  year: 2026
+  authors:
+    - family-names: Zhou
+      given-names: Heng

@@ -1,8 +1,23 @@
-# Python cache directories
+# Python
 __pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
 
-# macOS Finder metadata
+# Credentials -- never commit these
+.env
+
+# macOS
 .DS_Store
 
-# 输出目录
-outputs/
+# Run outputs. outputs/analysis/ is tracked because those files are cited
+# in the paper; everything else under outputs/ is reproducible.
+outputs/*
+!outputs/analysis/
+!outputs/analysis/*.json
+!outputs/analysis/*.md
+
+# Local scratch
+*.log
+.pytest_cache/

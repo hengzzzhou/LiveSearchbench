@@ -1,0 +1,13 @@
+# Runtime dependencies for LiveSearchBench.
+#
+# Tested on Python 3.9 and 3.11. Regenerate from requirements.in with
+#   uv pip compile requirements.in -o requirements.txt
+#
+# Note: python-dotenv is NOT required. livesearchbench.config parses .env
+# itself so the library imports cleanly in a bare environment.
+
+requests>=2.28,<3
+openai>=1.0,<3
+pandas>=1.5,<3
+
+# Test-only (install with: pip install -r requirements-dev.txt)
