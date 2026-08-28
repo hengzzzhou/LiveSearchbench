@@ -1,1101 +1,921 @@
 #!/usr/bin/env python3
+"""Level 3 (abstracted) question generation.
+
+Level 3 rewrites a Level 2 question so that the entities it names are replaced
+by indirect descriptions ("node expansion"), which makes the question harder to
+answer by surface matching while leaving the answer unchanged.
+
+Because the answer is unchanged, the verification program is inherited from the
+Level 2 parent. The previous release inherited it silently *and* wrote
+``"answer_verified": True`` on every instance while the uniqueness check itself
+was commented out. Here:
+
+* the check runs again by default (``--verify count``), against the endpoint
+  named in the metadata;
+* ``answer_verified`` reports what actually happened and is never a literal
+  ``True``;
+* every instance carries ``sparql_verification_source: "inherited_from_level2"``
+  and a ``verification`` block recording the mode, the endpoint, the timestamp
+  and the observed result count;
+* ``--verify skip`` is still available, but then writes ``answer_verified:
+  false`` rather than claiming a check that did not run.
+
+Descriptions are drawn from the input CSV and from Wikidata. Predicates are
+screened against :data:`livesearchbench.filters.EXCLUDED_PROPERTY_IDS` so that
+meta/formatting properties never leak into a description; the narrower 198-label
+relation allow-list is deliberately *not* applied here, because it governs which
+relations may carry a question, not which facts may describe an entity.
+
+Examples:
+    python scripts/generate_level3.py --input data/sample/triple_changes_sample.csv \
+        --level2 outputs/questions/smoketest_level2.json \
+        --dry-run --num-questions 5 --output outputs/questions/demo_level3.json
+
+    python scripts/generate_level3.py --input outputs/extracted_triples/triple_changes.csv \
+        --level2 outputs/questions/level2_300_questions_2025.json \
+        --model gpt-4o --num-questions 200 --seed 0 --verify answer
 """
-Level 3 Advanced Question Generation System
-Based on Level 2 questions, using node expansion and cultural metaphors for multi-layer obfuscation
-"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import logging
+import random
+import re
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Dict, List, Optional, Sequence, Tuple
 
 import pandas as pd
-import json
-import requests
-import time
-import random
-import argparse
-import os
-from collections import defaultdict
 
-# API Configuration
-API_KEY = "your_api_key_here"
-API_BASE_URL = "https://api.openai.com/v1/chat/completions"
-API_MODEL = "gpt-4o"
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from livesearchbench import config, filters, scoring
+from livesearchbench.config import MissingCredential
+from livesearchbench.dataio import DatasetFormatError, ensure_parent, load_instances
+from livesearchbench.http import PoliteSession, RequestFailed
+from livesearchbench.sparql import SparqlClient, SparqlError, to_label_select
+
+logger = logging.getLogger("generate_level3")
+
+#: Shared default across the three generators; override with --model.
+DEFAULT_MODEL = "gpt-4o"
+DEFAULT_NUM_QUESTIONS = 200
+
+EXTRACTOR_COLUMNS = ("entity_id", "entity_label", "property_id", "property_label", "new_value")
+TRIPLE_COLUMNS = ("subject_id", "subject_label", "predicate_id", "predicate_label",
+                  "object_id", "object_label")
+
+FALLBACK_INPUTS = (
+    PROJECT_ROOT / "outputs" / "extracted_triples" / "triple_changes_latest.csv",
+    PROJECT_ROOT / "data" / "final_changed_item_with_id.csv",
+    PROJECT_ROOT / "data" / "sample" / "triple_changes_sample.csv",
+)
+
+#: Descriptive properties queried when expanding an entity into indirect
+#: descriptions. Deny-listed IDs are removed, so P31/P279 cannot appear.
+DESCRIPTIVE_PROPERTY_IDS: Tuple[str, ...] = tuple(
+    pid for pid in (
+        "P27", "P19", "P20", "P103", "P136", "P106", "P495", "P37", "P36", "P571",
+        "P577", "P57", "P50", "P175", "P1412", "P17", "P131", "P276", "P159",
+        "P140", "P108", "P69", "P54", "P166", "P127", "P449", "P123", "P364",
+        "P30", "P38", "P122", "P735", "P734", "P4552",
+    ) if pid not in filters.EXCLUDED_PROPERTY_IDS
+)
+
+#: Properties used by the reverse-hop abstraction (C --p--> V, describe V by C).
+REVERSE_HOP_PROPERTY_IDS: Tuple[str, ...] = tuple(
+    pid for pid in (
+        "P30", "P17", "P131", "P361", "P276", "P150", "P706", "P527", "P190",
+        "P47", "P206", "P138", "P170", "P178", "P272", "P264", "P449", "P750",
+        "P123", "P127", "P1830", "P355", "P749", "P112", "P37", "P103", "P1412",
+        "P364", "P407", "P495", "P840", "P915", "P291", "P159", "P740",
+    ) if pid not in filters.EXCLUDED_PROPERTY_IDS
+)
+
+#: Phrasings for the reverse-hop descriptions, keyed by property label.
+REVERSE_HOP_PHRASINGS: Dict[str, str] = {
+    "continent": "{label} entity",
+    "country": "{label} based",
+    "contains the administrative territorial entity": "{label} region",
+    "located on terrain feature": "{label} region",
+    "shares border with": "neighbour of {label}",
+    "twinned administrative body": "neighbour of {label}",
+    "located in or next to body of water": "{label} adjacent",
+    "parent organization": "{label} affiliate",
+    "owned by": "{label} affiliate",
+    "founded by": "{label} affiliate",
+    "subsidiary": "{label} branch",
+    "has part": "{label} branch",
+    "production company": "{label} production",
+    "record label": "{label} production",
+    "publisher": "{label} production",
+    "distributed by": "{label} production",
+    "original broadcaster": "{label} network",
+    "creator": "{label} creation",
+    "developer": "{label} creation",
+    "named after": "namesake of {label}",
+    "official language": "{label} speaking",
+    "native language": "{label} speaking",
+    "original language of film or TV show": "{label} speaking",
+    "filming location": "{label} associated",
+    "narrative location": "{label} associated",
+    "place of publication": "{label} associated",
+    "headquarters location": "{label} established",
+    "location of formation": "{label} established",
+    "part of": "{label}",
+}
+
+ABSTRACT_CONCEPTS = frozenset({"profession", "occupation", "concept", "category",
+                               "classification", "type", "kind", "form", "class"})
 
 
-def call_gpt_api(messages, model=None, temperature=0.8, max_tokens=250):
-    """Call GPT API"""
-    if model is None:
-        model = API_MODEL
+class QuestionWriter:
+    """Chat-completions client with a deterministic offline stub."""
 
-    headers = {
-        "Authorization": f"Bearer {API_KEY}",
-        "Content-Type": "application/json"
-    }
+    def __init__(self, *, model: str, base_url: Optional[str] = None, api_key: Optional[str] = None,
+                 dry_run: bool = False, temperature: float = 0.3, max_tokens: int = 256,
+                 max_attempts: int = 3) -> None:
+        self.model = model
+        self.dry_run = dry_run
+        self.temperature = temperature
+        self.max_tokens = max_tokens
+        self.calls = 0
+        self.failures = 0
+        self._session: Optional[PoliteSession] = None
+        self._endpoint = ""
+        self._api_key = ""
+        if not dry_run:
+            base, key = config.openai_credentials(base_url=base_url, api_key=api_key)
+            base = base.rstrip("/")
+            self._endpoint = base if base.endswith("/chat/completions") else base + "/chat/completions"
+            self._api_key = key
+            self._session = PoliteSession(component="LiveSearchBench-L3", max_attempts=max_attempts)
 
-    data = {
-        "model": model,
-        "messages": messages,
-        "temperature": temperature,
-        "max_tokens": max_tokens
-    }
+    @property
+    def source_label(self) -> str:
+        return "template_stub" if self.dry_run else "llm"
 
-    try:
-        response = requests.post(
-            API_BASE_URL, headers=headers, json=data, timeout=30)
-        if response.status_code == 200:
-            result = response.json()
-            return result['choices'][0]['message']['content'].strip()
-        else:
-            print(f"API error: {response.status_code}")
+    @property
+    def model_label(self) -> str:
+        return "template-stub (dry run)" if self.dry_run else self.model
+
+    def write(self, messages: Sequence[Dict[str, str]], *, stub: str) -> Optional[str]:
+        self.calls += 1
+        if self.dry_run:
+            return stub
+        payload = {"model": self.model, "messages": list(messages),
+                   "temperature": self.temperature, "max_tokens": self.max_tokens}
+        try:
+            response = self._session.post(
+                self._endpoint,
+                headers={"Authorization": f"Bearer {self._api_key}",
+                         "Content-Type": "application/json"},
+                json=payload,
+            )
+        except RequestFailed as exc:
+            logger.warning("chat completion failed: %s", exc)
+            self.failures += 1
             return None
-    except Exception as e:
-        print(f"API call failed: {e}")
-        return None
-
-
-def query_wikidata_sparql(query):
-    """Execute SPARQL query"""
-    endpoint = "https://query.wikidata.org/sparql"
-    headers = {
-        'User-Agent': 'Level3-Advanced/1.0',
-        'Accept': 'application/json'
-    }
-    params = {'query': query, 'format': 'json'}
-
-    try:
-        response = requests.get(endpoint, headers=headers,
-                                params=params, timeout=30)
-        if response.status_code == 200:
-            return response.json()
-        else:
+        if response.status_code != 200:
+            logger.warning("chat completion HTTP %d: %s", response.status_code, response.text[:200])
+            self.failures += 1
             return None
-    except Exception:
-        return None
+        try:
+            return response.json()["choices"][0]["message"]["content"].strip()
+        except (KeyError, IndexError, ValueError) as exc:
+            logger.warning("unexpected chat completion payload: %s", exc)
+            self.failures += 1
+            return None
+
+    def close(self) -> None:
+        if self._session is not None:
+            self._session.close()
+
+
+def resolve_input(argument: Optional[str]) -> Path:
+    """Return the triple CSV to read, honouring the historical search order."""
+    if argument:
+        path = Path(argument)
+        if not path.is_file():
+            raise SystemExit(f"Input file not found: {path}")
+        return path
+    for candidate in FALLBACK_INPUTS:
+        if candidate.is_file():
+            logger.info("No --input given; using %s", candidate)
+            return candidate
+    raise SystemExit(
+        "No input CSV given and none of the default locations exist:\n  "
+        + "\n  ".join(str(c) for c in FALLBACK_INPUTS)
+    )
+
+
+def resolve_level2(argument: Optional[str]) -> Path:
+    """Return the Level 2 file, defaulting to the newest one in outputs/questions."""
+    if argument:
+        path = Path(argument)
+        if not path.is_file():
+            raise SystemExit(
+                f"Level 2 file not found: {path}\n"
+                f"  Generate one with scripts/generate_level2.py --output {path}"
+            )
+        return path
+    directory = PROJECT_ROOT / "outputs" / "questions"
+    matches = sorted(directory.glob("level2_*.json"), key=lambda p: p.stat().st_mtime, reverse=True)
+    matches = [m for m in matches if not m.name.endswith(".run_report.json")]
+    if not matches:
+        raise SystemExit(
+            "No --level2 file given and none found in outputs/questions/.\n"
+            "  Run scripts/generate_level2.py first, then pass its output with --level2."
+        )
+    logger.info("No --level2 given; using the newest match %s", matches[0])
+    return matches[0]
+
+
+def load_triples(path: Path) -> pd.DataFrame:
+    """Load the triple CSV used as a local source of entity descriptions."""
+    frame = pd.read_csv(path)
+    logger.info("Loaded %d rows from %s", len(frame), path)
+    if "new_value" in frame.columns:
+        missing = [c for c in EXTRACTOR_COLUMNS if c not in frame.columns]
+        if missing:
+            raise ValueError(f"{path} looks like extractor output but lacks columns: {missing}")
+        entity_valued = frame[frame["new_value"].astype(str).str.match(r"^Q\d+$", na=False)]
+        frame = pd.DataFrame({
+            "subject_id": entity_valued["entity_id"],
+            "subject_label": entity_valued["entity_label"],
+            "predicate_id": entity_valued["property_id"],
+            "predicate_label": entity_valued["property_label"],
+            "object_id": entity_valued["new_value"],
+            "object_label": entity_valued["new_value_label"],
+        })
+    else:
+        missing = [c for c in TRIPLE_COLUMNS if c not in frame.columns]
+        if missing:
+            raise ValueError(
+                f"{path} is neither extractor output (needs 'new_value') nor a triple CSV "
+                f"(missing {missing})."
+            )
+        frame = frame[list(TRIPLE_COLUMNS)]
+    frame = frame.dropna(subset=["subject_id", "predicate_id", "object_id"]).astype(str)
+    if frame.empty:
+        raise ValueError(f"{path} yielded zero usable triples after format conversion.")
+    return frame
+
+
+QID_PATTERN = re.compile(r"^Q\d+$")
+
+
+def resolve_surface_forms(client: SparqlClient, values: Sequence[str]) -> List[str]:
+    """Expand bare QIDs into their English label and aliases.
+
+    ``SparqlClient.select_labels`` falls back to the bare QID when the label
+    service returns nothing, which it does for ``SELECT DISTINCT`` projections.
+    Comparing a QID against a gold string would fail every time, so the labels
+    are fetched explicitly here, aliases included, before the comparison.
+    """
+    out: List[str] = []
+    for value in values:
+        if not QID_PATTERN.match(value):
+            out.append(value)
+            continue
+        query = (f'SELECT ?form WHERE {{\n'
+                 f'  {{ wd:{value} rdfs:label ?form . }} UNION '
+                 f'{{ wd:{value} skos:altLabel ?form . }}\n'
+                 f'  FILTER(LANG(?form) = "en")\n}}\nLIMIT 20')
+        try:
+            data = client.query(query)
+        except SparqlError as exc:
+            logger.warning("label lookup for %s failed: %s", value, exc)
+            out.append(value)
+            continue
+        forms = [row["form"]["value"] for row in data.get("results", {}).get("bindings", [])
+                 if row.get("form", {}).get("value")]
+        out.extend(forms or [value])
+    return out
 
 
 class NodeExpansionEngine:
-    """Node expansion engine: find multi-level indirect descriptions for entities"""
+    """Turn an entity name into indirect descriptions of that entity."""
 
-    def __init__(self, df):
-        self.df = df
-        self.entity_cache = {}
+    def __init__(self, frame: pd.DataFrame, client: Optional[SparqlClient], *,
+                 source: str, max_properties: int, stats: filters.FilterStats) -> None:
+        self.frame = frame
+        self.client = client
+        self.source = source
+        self.max_properties = max_properties
+        self.stats = stats
+        self._cache: Dict[str, List[str]] = {}
 
-    def get_entity_expansions(self, entity_label, max_depth=2):
-        """Get multi-level expansion information for entity"""
-        if entity_label in self.entity_cache:
-            return self.entity_cache[entity_label]
+    def find_entity_id(self, entity_label: str) -> Optional[str]:
+        """Look the label up in the triple table (either end of a triple)."""
+        matches = self.frame[(self.frame["subject_label"] == entity_label)
+                             | (self.frame["object_label"] == entity_label)]
+        if matches.empty:
+            return None
+        row = matches.iloc[0]
+        return row["subject_id"] if row["subject_label"] == entity_label else row["object_id"]
 
-        expansions = {
-            'direct_attributes': [],
-            'cultural_references': [],
-            'historical_context': [],
-            'metaphorical_descriptions': []
-        }
-
-        # Find entity ID
+    def describe(self, entity_label: str) -> List[str]:
+        """Return indirect descriptions for ``entity_label``, best first."""
+        if entity_label in self._cache:
+            return self._cache[entity_label]
+        descriptions: List[str] = []
         entity_id = self.find_entity_id(entity_label)
-        if not entity_id:
-            return expansions
 
-        # Direct attributes
-        direct_attrs = self.get_direct_attributes(entity_id, entity_label)
-        expansions['direct_attributes'] = self.query_wikidata_entity_properties(
-            entity_id, entity_label)
+        if self.source in ("auto", "wikidata") and entity_id and self.client is not None:
+            descriptions.extend(self.wikidata_descriptions(entity_id, entity_label))
+        if self.source in ("auto", "local") and not descriptions:
+            descriptions.extend(self.local_descriptions(entity_label))
+        if self.source == "reverse_hop" or (self.source == "auto" and not descriptions):
+            if entity_id and self.client is not None:
+                descriptions.extend(self.reverse_hop_descriptions(entity_id, entity_label))
 
-        # Use GPT to generate cultural references
-        # cultural_refs = self.generate_cultural_references_with_gpt(
-        #     entity_label, wikidata_props)
-        # expansions['cultural_references'] = cultural_refs
+        # Deduplicate while keeping order.
+        seen, unique = set(), []
+        for description in descriptions:
+            text = description.strip()
+            if text and text.lower() not in seen:
+                seen.add(text.lower())
+                unique.append(text)
+        self._cache[entity_label] = unique
+        return unique
 
-        # # Metaphorical descriptions
-        # metaphors = self.generate_metaphorical_descriptions(
-        #     entity_label, direct_attrs)
-        # expansions['metaphorical_descriptions'] = metaphors
-        self.entity_cache[entity_label] = expansions
-        return expansions
-
-    def find_entity_id(self, entity_label):
-        """Find entity ID"""
-        matches = self.df[(self.df['subject_label'] == entity_label) |
-                          (self.df['object_label'] == entity_label)]
-
-        if not matches.empty:
-            row = matches.iloc[0]
-            entity_id = row['subject_id'] if row['subject_label'] == entity_label else row['object_id']
-            print(f"      Found entity ID: {entity_label} -> {entity_id}")
-            return entity_id
-        print(f"      Entity ID not found: {entity_label}")
-        return None
-
-    def get_direct_attributes(self, entity_id, entity_label):
-        """Get direct attributes"""
-        attributes = []
-
-        # Relations as subject
-        as_subject = self.df[self.df['subject_id'] == entity_id].head(5)
-        for _, row in as_subject.iterrows():
-            attributes.append({
-                'type': 'has',
-                'relation': row['predicate_label'],
-                'value': row['object_label'],
-                'description': f"has {row['predicate_label']} {row['object_label']}"
-            })
-
-        # Relations as object
-        as_object = self.df[self.df['object_id'] == entity_id].head(5)
-        for _, row in as_object.iterrows():
-            attributes.append({
-                'type': 'is',
-                'relation': row['predicate_label'],
-                'value': row['subject_label'],
-                'description': f"is the {row['predicate_label']} of {row['subject_label']}"
-            })
-
-        return attributes
-
-    def query_wikidata_entity_properties(self, entity_id, entity_label, max_properties=100):
-        """Use SPARQL to query rich attribute information for entity"""
-        sparql_query = f"""
-SELECT ?property ?propertyLabel ?value ?valueLabel WHERE {{
-  wd:{entity_id} ?property ?value .
-  
-  # Only get useful descriptive attributes, exclude overly abstract classification attributes
-  FILTER(?property IN (
-    wdt:P27,   # country of citizenship
-    wdt:P19,   # place of birth
-    wdt:P20,   # place of death
-    wdt:P103,  # native language
-    wdt:P136,  # genre
-    wdt:P106,  # occupation
-    wdt:P495,  # country of origin
-    wdt:P37,   # official language
-    wdt:P36,   # capital
-    wdt:P571,  # inception
-    wdt:P577,  # publication date
-    wdt:P57,   # director
-    wdt:P50,   # author
-    wdt:P175,  # performer
-    wdt:P1412, # languages spoken
-    wdt:P17,   # country
-    wdt:P131,  # located in administrative territorial entity
-    wdt:P276,  # location
-    wdt:P159,  # headquarters location
-    wdt:P140,  # religion
-    wdt:P108,  # employer
-    wdt:P69,   # educated at
-    wdt:P54,   # member of sports team
-    wdt:P166,  # award received
-    wdt:P127,  # owned by
-    wdt:P449,  # original broadcaster
-    wdt:P123,  # publisher
-    wdt:P364   # original language of work
-  ))
-  
-  # Wikibase label service will automatically generate labels for all entity URIs
-  SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en" . }}
-}}
-LIMIT {max_properties}
-"""
-
-        result = query_wikidata_sparql(sparql_query)
-        properties = []
-
-        if result and result.get('results', {}).get('bindings'):
-            for binding in result['results']['bindings']:
-                prop_label = binding.get('propertyLabel', {}).get('value', '')
-                value_label = binding.get('valueLabel', {}).get('value', '')
-
-                # Clean property labels, convert URI to readable text
-                clean_prop_label = self._clean_property_label(prop_label)
-
-                # Filter out invalid labels and links
-                if self._is_valid_property_value(clean_prop_label, value_label):
-                    properties.append({
-                        'property': clean_prop_label,
-                        'value': value_label,
-                        'description': f"({entity_label},{clean_prop_label},{value_label})"
-                    })
-
-        return properties
-
-    def _clean_property_label(self, prop_label):
-        """Clean property labels, convert URI to readable text"""
-        if not prop_label:
-            return prop_label
-
-        # If URI format, try to extract readable part or map to standard name
-        if 'http://www.wikidata.org/prop/direct/' in prop_label:
-            # Extract property ID (like P31)
-            prop_id = prop_label.split('/')[-1]
-
-            # Map common property IDs to readable names
-            property_mappings = {
-                'P31': 'instance of',
-                'P279': 'subclass of',
-                'P27': 'country of citizenship',
-                'P19': 'place of birth',
-                'P20': 'place of death',
-                'P103': 'native language',
-                'P136': 'genre',
-                'P106': 'occupation',
-                'P495': 'country of origin',
-                'P37': 'official language',
-                'P36': 'capital',
-                'P571': 'inception',
-                'P577': 'publication date',
-                'P57': 'director',
-                'P50': 'author',
-                'P175': 'performer',
-                'P1412': 'languages spoken',
-                'P17': 'country',
-                'P131': 'located in',
-                'P276': 'location',
-                'P159': 'headquarters location',
-                'P140': 'religion',
-                'P108': 'employer',
-                'P69': 'educated at',
-                'P54': 'member of sports team',
-                'P166': 'award received',
-                'P127': 'owned by',
-                'P449': 'original broadcaster',
-                'P123': 'publisher',
-                'P364': 'original language'
-            }
-
-            return property_mappings.get(prop_id, prop_id)
-
-        return prop_label
-
-    def _is_valid_property_value(self, prop_label, value_label):
-        """Verify if property value is valid (non-link, non-ID, non-abstract concept)"""
-        if not prop_label or not value_label:
-            return False
-
-        # Filter out values containing Wikidata ID
-        if value_label.startswith('Q') and value_label[1:].isdigit():
-            return False
-
-        # Filter out property names containing URI
-        if 'http://' in prop_label or 'https://' in prop_label:
-            return False
-
-        # Filter out values containing HTTP links
-        if 'http://' in value_label.lower() or 'https://' in value_label.lower():
-            return False
-
-        # Filter out values containing URI patterns
-        if value_label.startswith('http://') or value_label.startswith('https://'):
-            return False
-
-        # Filter out overly long values (possibly descriptions rather than simple labels)
-        if len(value_label) > 100:
-            return False
-
-        # Filter out values containing multiple slashes (possibly paths)
-        if value_label.count('/') > 1:
-            return False
-
-        # Filter out overly abstract concept values
-        abstract_concepts = ['profession', 'occupation', 'concept', 'category',
-                             'classification', 'type', 'kind', 'form', 'class']
-        if value_label.lower() in abstract_concepts:
-            return False
-
-        return True
-
-    def _select_diverse_properties(self, wikidata_properties, max_properties=5):
-        """Select diverse properties, avoid duplicate types"""
-        if not wikidata_properties:
-            return []
-
-        # Group by property type, deduplicate
-        property_groups = {}
-        seen_descriptions = set()
-
-        for prop in wikidata_properties:
-            property_name = prop.get('property', '')
-            description = prop.get('description', '')
-
-            # Skip duplicate descriptions
-            if description in seen_descriptions:
+    def local_descriptions(self, entity_label: str) -> List[str]:
+        """Descriptions taken from the input CSV only (no network)."""
+        out: List[str] = []
+        as_subject = self.frame[self.frame["subject_label"] == entity_label].head(5)
+        for row in as_subject.itertuples(index=False):
+            if not filters.is_allowed_relation(str(row.predicate_id), use_allowlist=False):
                 continue
-            seen_descriptions.add(description)
+            out.append(f"has {row.predicate_label} {row.object_label}")
+        as_object = self.frame[self.frame["object_label"] == entity_label].head(5)
+        for row in as_object.itertuples(index=False):
+            if not filters.is_allowed_relation(str(row.predicate_id), use_allowlist=False):
+                continue
+            out.append(f"is the {row.predicate_label} of {row.subject_label}")
+        return out
 
-            # Group by property type
-            if property_name not in property_groups:
-                property_groups[property_name] = []
-            property_groups[property_name].append(prop)
-
-        # Select the most representative property from each group
-        diverse_properties = []
-        for property_name, props in property_groups.items():
-            # Prioritize properties with shorter values that don't contain IDs or links
-            best_prop = min(props, key=lambda p: (
-                len(p.get('value', '')),
-                'Q' in p.get('value', ''),  # Avoid Wikidata ID
-                'http' in p.get('value', '').lower()  # Avoid links
-            ))
-            diverse_properties.append(best_prop)
-
-            if len(diverse_properties) >= max_properties:
-                break
-
-        return diverse_properties
-
-    def _generate_multi_hop_descriptions(self, entity_label, wikidata_properties):
-        """Generate multi-hop indirect descriptions through property chains"""
-        descriptions = []
-
-        for prop in wikidata_properties:
-            property_name = prop.get('property', '')
-            value = prop.get('value', '')
-
-            # Geographic location multi-hop
-            if property_name in ['located in', 'country', 'country of citizenship']:
-                multi_hop_desc = self._create_geographic_hop(value)
-                if multi_hop_desc:
-                    descriptions.append(multi_hop_desc)
-
-            # Temporal multi-hop
-            elif property_name in ['inception', 'publication date']:
-                multi_hop_desc = self._create_temporal_hop(value)
-                if multi_hop_desc:
-                    descriptions.append(multi_hop_desc)
-
-            # Occupation/type multi-hop
-            elif property_name in ['occupation', 'genre']:
-                multi_hop_desc = self._create_categorical_hop(
-                    property_name, value)
-                if multi_hop_desc:
-                    descriptions.append(multi_hop_desc)
-
-        return descriptions[:2]  # Return at most 2 descriptions
-
-    def _create_geographic_hop(self, location):
-        """Create multi-hop description for geographic location"""
-        # Common geographic multi-hop mappings
-        geographic_hops = {
-            'Italy': 'Mediterranean country',
-            'Sicily': 'Italian island',
-            'France': 'European republic',
-            'Germany': 'Central European nation',
-            'United Kingdom': 'island nation',
-            'Scotland': 'northern British territory',
-            'England': 'southern British territory',
-            'United States': 'North American federation',
-            'California': 'Pacific coast state',
-            'Texas': 'southwestern state',
-            'New York': 'northeastern state',
-            'Denmark': 'Scandinavian kingdom',
-            'Sweden': 'Nordic country',
-            'Norway': 'fjord nation'
-        }
-
-        return geographic_hops.get(location)
-
-    def _create_temporal_hop(self, date_str):
-        """Create multi-hop description for temporal data"""
+    def wikidata_descriptions(self, entity_id: str, entity_label: str) -> List[str]:
+        """Descriptions built from descriptive Wikidata statements."""
+        values = " ".join(f"wd:{pid}" for pid in DESCRIPTIVE_PROPERTY_IDS)
+        query = f"""
+SELECT ?prop ?propLabel ?value ?valueLabel WHERE {{
+  VALUES ?prop {{ {values} }}
+  ?prop wikibase:directClaim ?property .
+  wd:{entity_id} ?property ?value .
+  SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
+}}
+LIMIT {max(self.max_properties * 4, 20)}
+"""
         try:
-            if '-' in date_str:
-                year = int(date_str.split('-')[0])
-                if year < 1900:
-                    return 'pre-industrial era'
-                elif year < 1950:
-                    return 'early 20th century'
-                elif year < 2000:
-                    return 'late 20th century'
-                else:
-                    return 'modern era'
-        except:
-            pass
-        return None
-
-    def _create_categorical_hop(self, property_name, value):
-        """Create multi-hop description for categorical data"""
-        category_hops = {
-            # Occupation multi-hop
-            'teacher': 'education professional',
-            'director': 'film industry figure',
-            'author': 'literary figure',
-            'politician': 'public servant',
-            'athlete': 'sports professional',
-
-            # Type multi-hop
-            'football club': 'sports organization',
-            'university': 'academic institution',
-            'museum': 'cultural institution',
-            'film': 'cinematic work',
-            'album': 'musical work'
-        }
-
-        return category_hops.get(value.lower())
-
-    def generate_cultural_references_with_gpt(self, entity_label, wikidata_properties):
-        """Generate indirect references through SPARQL multi-hop queries, completely remove GPT cultural associations"""
-        if not wikidata_properties:
+            data = self.client.query(query)
+        except SparqlError as exc:
+            self.stats.drop("expansion_sparql_error")
+            logger.warning("description query failed for %s: %s", entity_id, exc)
             return []
 
-        # Find entity ID for SPARQL query
-        entity_id = self.find_entity_id(entity_label)
-        if not entity_id:
+        described: List[str] = []
+        for row in data.get("results", {}).get("bindings", []):
+            property_id = row.get("prop", {}).get("value", "").rsplit("/", 1)[-1]
+            property_label = row.get("propLabel", {}).get("value", "") or property_id
+            value_label = simplify_value(row.get("valueLabel", {}).get("value", ""))
+            if not filters.is_allowed_relation(property_id, use_allowlist=False):
+                continue
+            if not is_usable_value(property_label, value_label):
+                continue
+            if value_label.strip().lower() == entity_label.strip().lower():
+                continue
+            described.append(f"({entity_label},{property_label},{value_label})")
+        return select_diverse(described, self.max_properties)
+
+    def reverse_hop_descriptions(self, entity_id: str, entity_label: str) -> List[str]:
+        """Describe the entity through entities that point at it.
+
+        The subject of the reverse hop is bound by QID rather than by an
+        ``rdfs:label`` lookup; matching on the label made this query scan a
+        large part of the graph and time out.
+        """
+        values = " ".join(f"wd:{pid}" for pid in REVERSE_HOP_PROPERTY_IDS)
+        query = f"""
+SELECT ?reverseEntity ?reverseEntityLabel ?prop ?propLabel WHERE {{
+  VALUES ?prop {{ {values} }}
+  ?prop wikibase:directClaim ?property .
+  ?reverseEntity ?property wd:{entity_id} .
+  SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
+}}
+LIMIT 10
+"""
+        try:
+            data = self.client.query(query)
+        except SparqlError as exc:
+            self.stats.drop("expansion_sparql_error")
+            logger.warning("reverse-hop query failed for %s: %s", entity_label, exc)
             return []
 
-        # Simple multi-hop obfuscation of existing attributes
-        multi_hop_descriptions = self._create_simple_multi_hop_descriptions(
-            entity_id, wikidata_properties)
+        out: List[str] = []
+        for row in data.get("results", {}).get("bindings", []):
+            reverse_label = row.get("reverseEntityLabel", {}).get("value", "")
+            property_label = row.get("propLabel", {}).get("value", "")
+            if not (2 < len(reverse_label) < 50) or QID_PATTERN.match(reverse_label):
+                continue
+            template = REVERSE_HOP_PHRASINGS.get(property_label)
+            if template:
+                out.append(template.format(label=reverse_label))
+        return out
 
-        return multi_hop_descriptions
 
-    def _create_simple_multi_hop_descriptions(self, entity_id, wikidata_properties):
-        """Simple reverse multi-hop for attributes: original attribute A->B, find C such that C->A->B"""
-        descriptions = []
+def simplify_value(value_label: str) -> str:
+    """Render a Wikidata datetime literal as a plain year."""
+    match = re.match(r"^[+-]?0*(\d{1,4})-\d{2}-\d{2}T", value_label or "")
+    return match.group(1) if match else value_label
 
-        for prop in wikidata_properties[:3]:  # Only process first 3 attributes
-            property_name = prop.get('property', '')
-            value = prop.get('value', '')
 
-            # Perform reverse query multi-hop for each attribute
-            multi_hop_desc = self._reverse_hop_property(
-                entity_id, property_name, value)
-            if multi_hop_desc:
-                descriptions.append(multi_hop_desc)
+def is_usable_value(property_label: str, value_label: str) -> bool:
+    """Reject URIs, bare QIDs, over-long strings and empty abstractions."""
+    if not property_label or not value_label:
+        return False
+    if value_label.startswith("Q") and value_label[1:].isdigit():
+        return False
+    if "http://" in property_label or "https://" in property_label:
+        return False
+    if "http://" in value_label.lower() or "https://" in value_label.lower():
+        return False
+    if len(value_label) > 100 or value_label.count("/") > 1:
+        return False
+    return value_label.lower() not in ABSTRACT_CONCEPTS
 
-        return descriptions[:2]  # Return at most 2 descriptions
 
-    def _reverse_hop_property(self, entity_id, property_name, value):
-        """Generic reverse multi-hop: A->B, find all C satisfying C->B, choose appropriate C for description"""
-        # Generic reverse query: find all entities pointing to value
-        sparql_query = f"""
-        SELECT ?reverseEntity ?reverseEntityLabel ?property ?propertyLabel WHERE {{
-          ?reverseEntity ?property ?valueEntity .
-          ?valueEntity rdfs:label "{value}"@en .
-          
-          # Filter useful reverse attributes
-          FILTER(?property IN (
-            wdt:P30,   # continent
-            wdt:P17,   # country  
-            wdt:P279,  # subclass of
-            wdt:P131,  # located in
-            wdt:P361,  # part of
-            wdt:P276,  # location
-            wdt:P150,  # contains administrative territorial entity
-            wdt:P706,  # located on terrain feature
-            wdt:P527,  # has part
-            wdt:P190,  # sister city
-            wdt:P47,   # shares border with
-            wdt:P206,  # located in or next to body of water
-            wdt:P138,  # named after
-            wdt:P170,  # creator
-            wdt:P178,  # developer
-            wdt:P272,  # production company
-            wdt:P264,  # record label
-            wdt:P449,  # original broadcaster
-            wdt:P750,  # distributor
-            wdt:P123,  # publisher
-            wdt:P127,  # owned by
-            wdt:P1830, # owner of
-            wdt:P355,  # subsidiary
-            wdt:P749,  # parent organization
-            wdt:P112,  # founded by
-            wdt:P1037, # director/manager
-            wdt:P3320, # board member
-            wdt:P488,  # chairperson
-            wdt:P35,   # head of state
-            wdt:P6,    # head of government
-            wdt:P1313, # office held by head of government
-            wdt:P1906, # office held by head of state
-            wdt:P37,   # official language
-            wdt:P103,  # native language
-            wdt:P1412, # languages spoken/written
-            wdt:P364,  # original language of work
-            wdt:P407,  # language of work
-            wdt:P495,  # country of origin
-            wdt:P840,  # narrative location
-            wdt:P915,  # filming location
-            wdt:P291,  # place of publication
-            wdt:P159,  # headquarters location
-            wdt:P740,  # location of formation
-            wdt:P571,  # inception
-            wdt:P576,  # dissolved/abolished
-            wdt:P580,  # start time
-            wdt:P582,  # end time
-            wdt:P585   # point in time
-          ))
-          
-          SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en" . }}
-        }}
-        LIMIT 5
-        """
-
-        result = query_wikidata_sparql(sparql_query)
-        if result and result.get('results', {}).get('bindings'):
-            for binding in result['results']['bindings']:
-                reverse_label = binding.get(
-                    'reverseEntityLabel', {}).get('value', '')
-                prop_label = binding.get('propertyLabel', {}).get('value', '')
-
-                # Filter out useless results and generate descriptions
-                if reverse_label and len(reverse_label) > 2 and len(reverse_label) < 50:
-                    # Geographic attributes
-                    if prop_label == 'continent':
-                        return f"{reverse_label} entity"
-                    elif prop_label == 'country':
-                        return f"{reverse_label} based"
-                    elif prop_label in ['contains administrative territorial entity', 'located on terrain feature']:
-                        return f"{reverse_label} region"
-                    elif prop_label in ['shares border with', 'sister city']:
-                        return f"neighbor of {reverse_label}"
-                    elif prop_label == 'located in or next to body of water':
-                        return f"{reverse_label} adjacent"
-
-                    # Organization/enterprise attributes
-                    elif prop_label in ['parent organization', 'owned by', 'founded by']:
-                        return f"{reverse_label} affiliate"
-                    elif prop_label in ['subsidiary', 'has part']:
-                        return f"{reverse_label} branch"
-                    elif prop_label in ['production company', 'record label', 'publisher', 'distributor']:
-                        return f"{reverse_label} production"
-                    elif prop_label == 'original broadcaster':
-                        return f"{reverse_label} network"
-
-                    # Creative attributes
-                    elif prop_label in ['creator', 'developer']:
-                        return f"{reverse_label} creation"
-                    elif prop_label == 'named after':
-                        return f"namesake of {reverse_label}"
-
-                    # Language attributes
-                    elif prop_label in ['official language', 'native language', 'original language of work']:
-                        return f"{reverse_label} speaking"
-
-                    # Temporal/location attributes
-                    elif prop_label in ['filming location', 'narrative location', 'place of publication']:
-                        return f"{reverse_label} associated"
-                    elif prop_label in ['headquarters location', 'location of formation']:
-                        return f"{reverse_label} established"
-
-                    # Classification attributes
-                    elif prop_label in ['subclass of', 'part of']:
-                        return f"{reverse_label.lower()}"
-
-        return None
-
-    def _get_geographic_multi_hop(self, entity_id):
-        """Multi-hop query through geographic location attributes"""
-        sparql_query = f"""
-        SELECT ?location ?locationLabel ?country ?countryLabel ?continent ?continentLabel WHERE {{
-          wd:{entity_id} wdt:P131|wdt:P276|wdt:P17|wdt:P495 ?location .
-          OPTIONAL {{ ?location wdt:P17|wdt:P131 ?country . }}
-          OPTIONAL {{ ?country wdt:P30 ?continent . }}
-          
-          SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en" . }}
-        }}
-        LIMIT 5
-        """
-
-        result = query_wikidata_sparql(sparql_query)
-        descriptions = []
-
-        if result and result.get('results', {}).get('bindings'):
-            for binding in result['results']['bindings']:
-                location_label = binding.get(
-                    'locationLabel', {}).get('value', '')
-                country_label = binding.get(
-                    'countryLabel', {}).get('value', '')
-                continent_label = binding.get(
-                    'continentLabel', {}).get('value', '')
-
-                # Generate multi-hop description: entity → region → country → continent
-                if country_label and location_label != country_label:
-                    descriptions.append(f"{country_label} entity")
-                elif continent_label:
-                    descriptions.append(f"{continent_label} organization")
-                elif location_label:
-                    descriptions.append(f"{location_label} based")
-
-        return list(set(descriptions))  # Deduplicate
-
-    def _get_organizational_multi_hop(self, entity_id):
-        """Multi-hop query through organizational type attributes"""
-        sparql_query = f"""
-        SELECT ?type ?typeLabel ?parent ?parentLabel WHERE {{
-          wd:{entity_id} wdt:P31|wdt:P279 ?type .
-          OPTIONAL {{ ?type wdt:P279 ?parent . }}
-          
-          SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en" . }}
-        }}
-        LIMIT 5
-        """
-
-        result = query_wikidata_sparql(sparql_query)
-        descriptions = []
-
-        if result and result.get('results', {}).get('bindings'):
-            for binding in result['results']['bindings']:
-                type_label = binding.get('typeLabel', {}).get('value', '')
-                parent_label = binding.get('parentLabel', {}).get('value', '')
-
-                # Generate multi-hop description: entity → type → parent type
-                if parent_label and 'organization' in parent_label.lower():
-                    descriptions.append(f"{parent_label.lower()}")
-                elif type_label and any(word in type_label.lower() for word in ['club', 'team', 'organization', 'institution']):
-                    descriptions.append(f"{type_label.lower()}")
-
-        return list(set(descriptions))  # Deduplicate
-
-    def _get_temporal_multi_hop(self, entity_id):
-        """Multi-hop query through temporal attributes"""
-        sparql_query = f"""
-        SELECT ?date ?dateLabel WHERE {{
-          wd:{entity_id} wdt:P571|wdt:P577|wdt:P580 ?date .
-          
-          SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en" . }}
-        }}
-        LIMIT 3
-        """
-
-        result = query_wikidata_sparql(sparql_query)
-        descriptions = []
-
-        if result and result.get('results', {}).get('bindings'):
-            for binding in result['results']['bindings']:
-                date_str = binding.get('date', {}).get('value', '')
-
-                # Generate era descriptions from dates
-                try:
-                    if 'T' in date_str:  # ISO format
-                        year = int(date_str.split('T')[0].split('-')[0])
-                    elif '-' in date_str:
-                        year = int(date_str.split('-')[0])
-                    else:
-                        continue
-
-                    if year < 1900:
-                        descriptions.append("pre-modern era")
-                    elif year < 1950:
-                        descriptions.append("early 20th century")
-                    elif year < 2000:
-                        descriptions.append("late 20th century")
-                    else:
-                        descriptions.append("21st century")
-
-                except (ValueError, IndexError):
-                    continue
-
-        return list(set(descriptions))  # Deduplicate
-
-    def generate_metaphorical_descriptions(self, entity_label, attributes):
-        """Generate metaphorical descriptions"""
-        metaphors = []
-
-        for attr in attributes[:3]:
-            relation = attr.get('relation', '')
-            value = attr.get('value', '')
-
-            if 'birth' in relation.lower():
-                metaphors.append(f"offspring of {value}")
-            elif 'capital' in relation.lower():
-                metaphors.append(f"crowned jewel of {value}")
-            elif 'language' in relation.lower():
-                metaphors.append(f"voice that speaks {value}")
-            elif 'director' in relation.lower():
-                metaphors.append(f"cinematic architect")
-
-        return metaphors
+def select_diverse(descriptions: Sequence[str], limit: int) -> List[str]:
+    """Keep at most one description per property, shortest value first."""
+    by_property: Dict[str, str] = {}
+    for description in descriptions:
+        parts = description.strip("()").split(",")
+        key = parts[1] if len(parts) > 2 else description
+        current = by_property.get(key)
+        if current is None or len(description) < len(current):
+            by_property[key] = description
+    return list(by_property.values())[:limit]
 
 
 class Level3Generator:
-    """Level 3 question generator"""
+    """Rewrite Level 2 questions into abstracted Level 3 questions."""
 
-    def __init__(self, df):
-        self.df = df
-        self.expansion_engine = NodeExpansionEngine(df)
-        self.level2_questions = []
+    def __init__(self, *, engine: NodeExpansionEngine, writer: QuestionWriter,
+                 client: Optional[SparqlClient], verify: str, keep_unverified: bool,
+                 max_constraints: int, rng: random.Random,
+                 stats: filters.FilterStats, endpoint: Optional[str]) -> None:
+        self.engine = engine
+        self.writer = writer
+        self.client = client
+        self.verify = verify
+        self.keep_unverified = keep_unverified
+        self.max_constraints = max_constraints
+        self.rng = rng
+        self.stats = stats
+        self.endpoint = endpoint
 
-    def load_level2_questions(self, file_path):
-        """Load Level 2 questions"""
+    # -- verification ------------------------------------------------------
+
+    def verify_answer(self, sparql: str, expected_answer: str,
+                      parent_flag: Optional[bool]) -> Dict:
+        """Run the inherited program and report exactly what was observed."""
+        checked = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        if self.verify == "skip":
+            return {"mode": "skip", "verified": False, "checked_utc": None,
+                    "endpoint": None, "result_count": None,
+                    "note": "no check was run (--verify skip)"}
+        if self.verify == "inherit":
+            return {"mode": "inherit", "verified": bool(parent_flag), "checked_utc": None,
+                    "endpoint": None, "result_count": None,
+                    "note": "copied from the Level 2 parent's own verification flag"}
+        if not sparql:
+            return {"mode": self.verify, "verified": False, "checked_utc": checked,
+                    "endpoint": self.endpoint, "result_count": None,
+                    "note": "the Level 2 parent carried no SPARQL program"}
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-            self.level2_questions = data.get('qa_pairs', [])
-            print(f"Loaded {len(self.level2_questions)} Level 2 questions")
-        except FileNotFoundError:
-            print(f"Level 2 file not found: {file_path}")
+            count = self.client.count(sparql)
+        except SparqlError as exc:
+            self.stats.drop("sparql_error")
+            return {"mode": self.verify, "verified": False, "checked_utc": checked,
+                    "endpoint": self.endpoint, "result_count": None,
+                    "note": f"verification request failed: {exc}"}
+        if count != 1:
+            return {"mode": self.verify, "verified": False, "checked_utc": checked,
+                    "endpoint": self.endpoint, "result_count": count,
+                    "note": "the inherited program no longer has a unique answer"}
+        if self.verify == "count":
+            return {"mode": "count", "verified": True, "checked_utc": checked,
+                    "endpoint": self.endpoint, "result_count": 1,
+                    "note": "COUNT == 1 on the endpoint above"}
 
-    def create_abstract_bridge_question(self, level2_qa):
-        """Create abstract bridge question"""
-        if level2_qa.get('type') != 'bridge':
-            return None
-
+        select = to_label_select(sparql)
+        if not select:
+            return {"mode": "answer", "verified": False, "checked_utc": checked,
+                    "endpoint": self.endpoint, "result_count": 1,
+                    "note": "the inherited program is not a COUNT query, so the returned "
+                            "entity could not be compared with the gold answer"}
         try:
-            bridge_info = level2_qa.get('bridge_info', {})
-            start_entity = bridge_info.get('start_entity', '')
-            intermediate_entity = bridge_info.get('intermediate_entity', '')
-            final_entity = bridge_info.get('final_entity', '')
+            labels = self.client.select_labels(select)
+        except SparqlError as exc:
+            self.stats.drop("sparql_error")
+            return {"mode": "answer", "verified": False, "checked_utc": checked,
+                    "endpoint": self.endpoint, "result_count": 1,
+                    "note": f"label lookup failed: {exc}"}
+        surface_forms = resolve_surface_forms(self.client, labels)
+        matched = any(scoring.exact_match(form, expected_answer) for form in surface_forms)
+        if matched:
+            note = "the endpoint returns the gold answer"
+        elif all(QID_PATTERN.match(form) for form in surface_forms):
+            # Not every item carries an English label; say so instead of
+            # implying the endpoint returned the wrong entity.
+            note = ("the unique answer has no English label on the endpoint, so it could not "
+                    "be compared with the gold string")
+        else:
+            note = "the endpoint returns a unique answer that does not match the gold string"
+        return {"mode": "answer", "verified": matched, "checked_utc": checked,
+                "endpoint": self.endpoint, "result_count": 1,
+                "returned_labels": surface_forms[:5], "note": note}
 
-            if not all([start_entity, intermediate_entity, final_entity]):
-                return None
+    # -- abstraction -------------------------------------------------------
 
-            # Get entity expansion descriptions
-            print(f"    Expanding entities: {start_entity} -> {intermediate_entity}")
-            start_expansions = self.expansion_engine.get_entity_expansions(
-                start_entity)
-            intermediate_expansions = self.expansion_engine.get_entity_expansions(
-                intermediate_entity)
+    def usable_descriptions(self, entity_label: str, answer: str) -> List[str]:
+        """Descriptions of ``entity_label`` that do not give the answer away."""
+        needle = (answer or "").strip().lower()
+        out = []
+        for description in self.engine.describe(entity_label):
+            if needle and needle in description.lower():
+                self.stats.drop("description_leaks_the_answer")
+                continue
+            out.append(description)
+        return out
 
-            # Select best indirect descriptions
-            start_desc = self.select_best_description(
-                start_entity, start_expansions)
-            intermediate_desc = self.select_best_description(
-                intermediate_entity, intermediate_expansions)
+    def abstract_constraints(self, constraints: Sequence[str], answer: str) -> List[str]:
+        """Replace each constraint value with an indirect description of it."""
+        out: List[str] = []
+        for constraint in constraints[:self.max_constraints]:
+            if ": " not in constraint:
+                out.append(constraint)
+                continue
+            relation, entity = constraint.split(": ", 1)
+            descriptions = self.usable_descriptions(entity, answer)
+            if descriptions:
+                description = self.rng.choice(descriptions[:3])
+                out.append(f"abstract [{relation}: {entity}] As [{relation}: {description}]")
+            else:
+                out.append(constraint)
+        return out
 
-            print(
-                f"    Description: {start_entity} -> {start_desc[:50] if start_desc else 'None'}")
-            print(
-                f"    Description: {intermediate_entity} -> {intermediate_desc[:50] if intermediate_desc else 'None'}")
-
-            if not start_desc or not intermediate_desc:
-                print(f"    Skip: lacking valid descriptions")
-                return None
-
-            # Generate abstract questions
-            prompt = f"""
-Create a more abstract but still understandable question using these indirect descriptions:
-
-Original: {level2_qa['question']}
-Answer: {level2_qa['answer']}
-
-Entity 1 ({start_entity}) → {start_desc}
-Entity 2 ({intermediate_entity}) → {intermediate_desc}
-
-Requirements:
-1. Use indirect descriptions instead of direct names
-2. Make it more challenging but still solvable
-3. Use cultural references or metaphors when appropriate
-4. Keep the logical reasoning path clear
-5. Avoid overly poetic language that obscures meaning
-
-Examples of appropriate abstraction level:
-- "What was the predecessor of the democratic process in the East African nation known for its thousand hills?"
-- "Which electoral event preceded the governance selection in the land of drummers and coffee?"
-- "What came before the parliamentary choice in the country that neighbors Lake Tanganyika?"
-
-Generate only the question:"""
-
-            messages = [
-                {"role": "system", "content": "You create challenging but solvable questions using indirect descriptions. Focus on clarity while maintaining difficulty."},
-                {"role": "user", "content": prompt}
-            ]
-
-            question = call_gpt_api(messages, temperature=0.8)
-            print(f"    GPT response: {question[:50] if question else 'None'}...")
-
-            if question:
-                # Verify answer uniqueness
-                if not self.verify_answer_uniqueness(level2_qa.get('sparql_verification', ''), level2_qa['answer']):
-                    print(f"  Answer verification failed: {level2_qa['answer']}")
-                    return None
-
-                return {
-                    'question': question,
-                    'answer': level2_qa['answer'],
-                    'level': 3,
-                    'type': 'abstract_bridge',
-                    'reasoning_chain': level2_qa['reasoning_chain'],
-                    'sparql_verification': level2_qa['sparql_verification'],
-                    'original_level2_question': level2_qa['question'],
-                    'abstraction_info': {
-                        'start_entity_abstraction': start_desc,
-                        'intermediate_entity_abstraction': intermediate_desc,
-                        'metaphor_level': 'very_high'
-                    },
-                    'answer_verified': True
-                }
-        except Exception as e:
-            print(f"Bridge question processing error: {e}")
+    def build_multi_attribute(self, parent: Dict) -> Optional[Dict]:
+        constraints = (parent.get("constraint_info") or {}).get("constraints") or []
+        if len(constraints) < 2:
+            self.stats.drop("parent_has_too_few_constraints")
             return None
-
-    def create_abstract_multi_attribute_question(self, level2_qa):
-        """Create abstract multi-attribute question"""
-        if level2_qa.get('type') != 'multi_attribute':
+        abstracted = self.abstract_constraints(constraints, str(parent.get('answer', '')))
+        if sum(1 for a in abstracted if a.startswith("abstract [")) < 1:
+            self.stats.drop("no_abstraction_available")
             return None
-
-        try:
-            constraint_info = level2_qa.get('constraint_info', {})
-            constraints = constraint_info.get('constraints', [])
-
-            if len(constraints) < 2:
-                return None
-
-            # Generate abstract descriptions for constraint entities
-            abstract_constraints = []
-            for constraint in constraints[:3]:  # Use at most 3 constraints
-                if ': ' in constraint:
-                    relation, entity = constraint.split(': ', 1)
-                    entity_expansions = self.expansion_engine.get_entity_expansions(
-                        entity)
-                    abstract_desc = self.select_best_description(
-                        entity, entity_expansions)
-
-                    if abstract_desc:
-                        abstract_constraints.append(
-                            f"abstract [{relation}: {entity}] As [{relation}: {abstract_desc}]")
-                    else:
-                        abstract_constraints.append(constraint)
-
-            if len(abstract_constraints) < 2:
-                return None
-
-            prompt = f"""
+        prompt = f"""
 Reframe the original question into a more challenging but still solvable version.
 
-Original Question: {level2_qa['question']}
-Answer: {level2_qa['answer']}
+Original Question: {parent['question']}
+Answer: {parent['answer']}
 
 Abstract Constraints (structured form):
-{'; '.join(abstract_constraints)}
+{'; '.join(abstracted)}
 
 Instructions:
 1. Use the abstract constraints instead of the original entities when rewriting the question.
-2. Convert the structured triples into natural language phrasing. 
+2. Convert the structured triples into natural language phrasing.
    For example:
-   - (Sinulog festival, location, Cebu City) → "a festival held in Cebu City"
-   - (Partido Demokratiko Pilipino, country, Philippines) → "a political party in the Philippines"
+   - (Sinulog festival, location, Cebu City) -> "a festival held in Cebu City"
+   - (Partido Demokratiko Pilipino, country, Philippines) -> "a political party in the Philippines"
 3. Combine the abstract constraints naturally into a single question.
 4. Make the new question more challenging than the original, but still fair and solvable.
 5. Ensure the reasoning path is clear and avoid obscure metaphors.
 
 Output: Only generate the transformed question, nothing else.
 """
-            messages = [
-                {"role": "system", "content": "You create challenging questions using multiple indirect constraints. Keep them understandable but requiring knowledge to solve."},
-                {"role": "user", "content": prompt}
-            ]
-
-            question = call_gpt_api(messages, temperature=0.1)
-
-            if question:
-                # Verify answer uniqueness
-                # if not self.verify_answer_uniqueness(level2_qa.get('sparql_verification', ''), level2_qa['answer']):
-                #     print(f"  Answer verification failed: {level2_qa['answer']}")
-                #     return None
-
-                return {
-                    'question': question,
-                    'answer': level2_qa['answer'],
-                    'level': 3,
-                    'type': 'abstract_multi_attribute',
-                    'reasoning_chain': level2_qa['reasoning_chain'],
-                    'sparql_verification': level2_qa['sparql_verification'],
-                    'original_level2_question': level2_qa['question'],
-                    'abstraction_info': {
-                        'abstract_constraints': abstract_constraints,
-                        'original_constraints': constraints,
-                        'cultural_depth': 'maximum'
-                    },
-                    'answer_verified': True
-                }
-        except Exception as e:
-            print(f"Multi-attribute question processing error: {e}")
+        messages = [{"role": "system",
+                     "content": "You create challenging questions using multiple indirect "
+                                "constraints. Keep them understandable but requiring knowledge "
+                                "to solve."},
+                    {"role": "user", "content": prompt}]
+        question = self.writer.write(messages, stub=stub_question(abstracted))
+        if not question or len(question.strip()) <= 5:
+            self.stats.drop("llm_failure")
             return None
+        return {
+            "question": question.strip(),
+            "type": "abstract_multi_attribute",
+            "abstraction_info": {
+                "abstract_constraints": abstracted,
+                "original_constraints": list(constraints),
+                "abstraction_source": self.engine.source,
+            },
+        }
 
-    def select_best_description(self, entity, expansions):
-        """Simple selection of best description"""
+    def build_bridge(self, parent: Dict) -> Optional[Dict]:
+        bridge = parent.get("bridge_info") or {}
+        start = bridge.get("start_entity", "")
+        intermediate = bridge.get("intermediate_entity", "")
+        if not (start and intermediate):
+            self.stats.drop("parent_bridge_info_incomplete")
+            return None
+        answer = str(parent.get("answer", ""))
+        start_descriptions = self.usable_descriptions(start, answer)
+        intermediate_descriptions = self.usable_descriptions(intermediate, answer)
+        if not start_descriptions or not intermediate_descriptions:
+            self.stats.drop("no_abstraction_available")
+            return None
+        start_description = self.rng.choice(start_descriptions[:3])
+        intermediate_description = self.rng.choice(intermediate_descriptions[:3])
+        prompt = f"""
+Create a more abstract but still understandable question using these indirect descriptions:
 
-        # If no multi-hop descriptions, use direct attributes
-        direct_attrs = expansions.get('direct_attributes', [])
-        if direct_attrs:
-            attr = random.choice(direct_attrs[:2])
-            return attr.get('description', '')
+Original: {parent['question']}
+Answer: {parent['answer']}
 
-        return None
+Entity 1 ({start}) -> {start_description}
+Entity 2 ({intermediate}) -> {intermediate_description}
 
-    def verify_answer_uniqueness(self, sparql_query, expected_answer):
-        """Verify answer uniqueness for Level 3 questions"""
-        if not sparql_query:
-            return False
+Requirements:
+1. Use indirect descriptions instead of direct names
+2. Make it more challenging but still solvable
+3. Keep the logical reasoning path clear
+4. Avoid overly poetic language that obscures meaning
 
-        try:
-            # Execute original SPARQL query to verify answer is still unique
-            result = query_wikidata_sparql(sparql_query)
+Generate only the question:"""
+        messages = [{"role": "system",
+                     "content": "You create challenging but solvable questions using indirect "
+                                "descriptions. Focus on clarity while maintaining difficulty."},
+                    {"role": "user", "content": prompt}]
+        question = self.writer.write(
+            messages, stub=stub_question([start_description, intermediate_description]))
+        if not question or len(question.strip()) <= 5:
+            self.stats.drop("llm_failure")
+            return None
+        return {
+            "question": question.strip(),
+            "type": "abstract_bridge",
+            "abstraction_info": {
+                "start_entity_abstraction": start_description,
+                "intermediate_entity_abstraction": intermediate_description,
+                "abstraction_source": self.engine.source,
+            },
+        }
 
-            if result and result.get('results', {}).get('bindings'):
-                # Check if it's a count query
-                bindings = result['results']['bindings']
-                if len(bindings) == 1 and 'count' in bindings[0]:
-                    count = int(bindings[0]['count']['value'])
-                    return count == 1
-                else:
-                    # Direct result query, check result count
-                    return len(bindings) == 1
-            return False
-        except Exception as e:
-            print(f"Answer verification error: {e}")
-            return False
-
-    def generate_level3_questions(self, max_questions=50):
-        """Generate Level 3 questions"""
-        print(f"Starting Level 3 question generation, target: {max_questions} questions")
-
-        if not self.level2_questions:
-            print("No Level 2 questions, cannot generate Level 3")
-            return []
-
-        level3_qa_pairs = []
-        processed = 0
-
-        # Randomly shuffle Level 2 questions
-        shuffled_level2 = random.sample(
-            self.level2_questions, len(self.level2_questions))
-
-        for level2_qa in shuffled_level2:
-            if len(level3_qa_pairs) >= max_questions:
+    def run(self, parents: Sequence[Dict], target: int) -> List[Dict]:
+        shuffled = self.rng.sample(list(parents), len(parents))
+        produced: List[Dict] = []
+        for index, parent in enumerate(shuffled, start=1):
+            if len(produced) >= target:
                 break
+            kind = parent.get("type")
+            if kind == "multi_attribute":
+                built = self.build_multi_attribute(parent)
+            elif kind == "bridge":
+                built = self.build_bridge(parent)
+            else:
+                self.stats.drop(f"unsupported_parent_type:{kind}")
+                continue
+            if built is None:
+                continue
 
-            processed += 1
-            if processed % 10 == 0:
-                print(
-                    f"Processing progress: {processed}/{len(shuffled_level2)}, generated: {len(level3_qa_pairs)}")
+            parent_flag = parent.get("answer_verified")
+            if parent_flag is None:
+                parent_flag = parent.get("verified_with_sparql")
+            verification = self.verify_answer(parent.get("sparql_verification", ""),
+                                              str(parent.get("answer", "")), parent_flag)
+            if not verification["verified"] and not self.keep_unverified:
+                self.stats.drop("answer_not_verified")
+                logger.info("dropped '%s': %s", str(parent.get("answer"))[:40],
+                            verification["note"])
+                continue
 
-            # Generate Level 3 questions based on type
-            level3_qa = None
-
-            if level2_qa.get('type') == 'bridge':
-                level3_qa = self.create_abstract_bridge_question(level2_qa)
-            elif level2_qa.get('type') == 'multi_attribute':
-                level3_qa = self.create_abstract_multi_attribute_question(
-                    level2_qa)
-
-            if level3_qa:
-                level3_qa_pairs.append(level3_qa)
-                print(f"  ✓ Generated: {level3_qa['question'][:70]}...")
-
-            time.sleep(0.3)
-
-        print(f"Level 3 generation complete, {len(level3_qa_pairs)} questions total")
-        return level3_qa_pairs
-
-
-def convert_extracted_triples_to_format(input_csv):
-    """
-    Convert extracted triples CSV to the format expected by generate_level3
-
-    Input columns (from 0_extract_triple_changes.py):
-        entity_id, entity_label, property_id, property_label, property_type,
-        old_value, new_value, new_value_label, change_type, change_timestamp, wiki_url
-
-    Output columns (expected by generate_level3.py):
-        subject_id, subject_label, predicate_id, predicate_label, object_id, object_label
-    """
-    print(f"Converting extracted triples from {input_csv}...")
-    df = pd.read_csv(input_csv)
-    print(f"Loaded {len(df)} extracted triples")
-
-    # Filter: only keep triples where new_value is a Wikibase Item (starts with Q)
-    df_filtered = df[df['new_value'].str.startswith('Q', na=False)].copy()
-    print(f"Filtered to {len(df_filtered)} triples with entity values (Q-items)")
-
-    # Rename columns to match expected format
-    df_converted = pd.DataFrame({
-        'subject_id': df_filtered['entity_id'],
-        'subject_label': df_filtered['entity_label'],
-        'predicate_id': df_filtered['property_id'],
-        'predicate_label': df_filtered['property_label'],
-        'object_id': df_filtered['new_value'],
-        'object_label': df_filtered['new_value_label']
-    })
-
-    print(f"Converted to format with {len(df_converted)} triples")
-    return df_converted
+            produced.append({
+                "question": built["question"],
+                "answer": parent.get("answer"),
+                "level": 3,
+                "type": built["type"],
+                "reasoning_chain": parent.get("reasoning_chain", []),
+                "sparql_verification": parent.get("sparql_verification", ""),
+                "sparql_verification_source": "inherited_from_level2",
+                "original_level2_question": parent.get("question", ""),
+                "abstraction_info": built["abstraction_info"],
+                "answer_verified": bool(verification["verified"]),
+                "verification": verification,
+                "question_source": self.writer.source_label,
+                "generator_model": self.writer.model_label,
+            })
+            if index % 25 == 0:
+                logger.info("Processed %d/%d parents, kept %d", index, len(shuffled), len(produced))
+        return produced
 
 
-def main(input_file=None, level2_file=None):
-    """Main function"""
-    # Load data
-    print("Loading triple data...")
+def stub_question(descriptions: Sequence[str]) -> str:
+    """Deterministic offline stand-in for the model call."""
+    cleaned = []
+    for description in descriptions:
+        text = description
+        if text.startswith("abstract [") and "] As [" in text:
+            text = text.split("] As [", 1)[1].rstrip("]")
+        cleaned.append(text.strip())
+    return "Which entity is described by all of the following: " + "; ".join(cleaned) + "?"
 
-    # Determine input file
-    if input_file:
-        if not os.path.exists(input_file):
-            raise FileNotFoundError(f"Input file not found: {input_file}")
-        print(f"Using specified input file: {input_file}")
 
-        # Check if it's from 0_extract_triple_changes.py (has new_value column)
-        df_test = pd.read_csv(input_file, nrows=1)
-        if 'new_value' in df_test.columns:
-            df = convert_extracted_triples_to_format(input_file)
-        else:
-            df = pd.read_csv(input_file)
-            print(f"Loaded {len(df)} triples")
-    else:
-        # Try to load from extracted triples first, fallback to old format
-        extracted_triples_path = './outputs/extracted_triples/triple_changes_latest.csv'
-        old_format_path = './data/final_changed_item_with_id.csv'
+def default_output_path(count: int, year: str) -> Path:
+    return PROJECT_ROOT / "outputs" / "questions" / f"level3_{count}_questions_{year}.json"
 
-        if os.path.exists(extracted_triples_path):
-            print(f"Found extracted triples: {extracted_triples_path}")
-            df = convert_extracted_triples_to_format(extracted_triples_path)
-        elif os.path.exists(old_format_path):
-            print(f"Using old format: {old_format_path}")
-            df = pd.read_csv(old_format_path)
-            print(f"Loaded {len(df)} triples")
-        else:
-            raise FileNotFoundError(f"No input file found. Please provide either:\n"
-                                    f"  - {extracted_triples_path} (from 0_extract_triple_changes.py)\n"
-                                    f"  - {old_format_path} (old format)")
 
-    # Create Level 3 generator
-    generator = Level3Generator(df)
+def build_arg_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description="Generate Level 3 abstracted questions from Level 2 questions.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument("--input", default=None,
+                        help="Triple CSV used as a local source of entity descriptions. "
+                             "When omitted, the historical default locations are tried")
+    parser.add_argument("--level2", default=None,
+                        help="Level 2 questions JSON (default: the newest "
+                             "outputs/questions/level2_*.json)")
+    parser.add_argument("--output", default=None,
+                        help="Output JSON path (default: outputs/questions/"
+                             "level3_<kept>_questions_<year>.json)")
+    parser.add_argument("--report", default=None,
+                        help="Run report JSON path (default: <output>.run_report.json)")
+    parser.add_argument("--num-questions", type=int, default=DEFAULT_NUM_QUESTIONS,
+                        help="How many Level 3 questions to produce")
+    parser.add_argument("--max-constraints", type=int, default=3,
+                        help="How many parent constraints to abstract per question")
+    parser.add_argument("--max-descriptions", type=int, default=5,
+                        help="How many candidate descriptions to keep per entity")
+    parser.add_argument("--abstraction-source", default="auto",
+                        choices=["auto", "wikidata", "local", "reverse_hop"],
+                        help="Where indirect descriptions come from: Wikidata statements, the "
+                             "input CSV, a reverse hop, or all of them in that order")
+    parser.add_argument("--verify", default="count", choices=["count", "answer", "inherit", "skip"],
+                        help="How answer_verified is decided: 'count' re-runs the inherited "
+                             "COUNT program (== 1); 'answer' additionally checks that the "
+                             "endpoint returns the gold string; 'inherit' copies the parent's "
+                             "flag without checking; 'skip' writes answer_verified=false")
+    parser.add_argument("--keep-unverified", action="store_true",
+                        help="Keep instances that failed verification (with "
+                             "answer_verified=false) instead of dropping them")
+    parser.add_argument("--seed", type=int, default=0,
+                        help="Random seed for parent order and description choice")
+    parser.add_argument("--year", default=None,
+                        help="Release year recorded in the metadata and the default filename")
+    parser.add_argument("--model", default=None,
+                        help=f"Chat model used to phrase the questions "
+                             f"(default: $LSB_GENERATOR_MODEL or {DEFAULT_MODEL})")
+    parser.add_argument("--base-url", default=None,
+                        help="OpenAI-compatible base URL (default: $OPENAI_BASE_URL)")
+    parser.add_argument("--api-key", default=None,
+                        help="API key (default: $OPENAI_API_KEY, then .env)")
+    parser.add_argument("--temperature", type=float, default=0.3, help="Sampling temperature")
+    parser.add_argument("--max-tokens", type=int, default=256,
+                        help="Completion token cap for a single question")
+    parser.add_argument("--endpoint", default=None,
+                        help=f"SPARQL endpoint (default: $SPARQL_ENDPOINT, then "
+                             f"{config.DEFAULT_SPARQL_ENDPOINT})")
+    parser.add_argument("--min-interval", type=float, default=1.0,
+                        help="Minimum seconds between SPARQL requests")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Replace the model call with a deterministic template stub "
+                             "(no API key required). SPARQL verification still runs")
+    parser.add_argument("--log-level", default="INFO",
+                        choices=["DEBUG", "INFO", "WARNING", "ERROR"], help="Logging verbosity")
+    return parser
 
-    # Determine Level 2 questions file
-    if level2_file is None:
-        level2_file = './data/level2_filtered.json'
 
-    generator.load_level2_questions(level2_file)
+def main(argv: Optional[Sequence[str]] = None) -> int:
+    args = build_arg_parser().parse_args(argv)
+    logging.basicConfig(level=getattr(logging, args.log_level),
+                        format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 
-    # Generate questions
-    level3_questions = generator.generate_level3_questions(max_questions=200)
+    if args.num_questions <= 0:
+        raise SystemExit("--num-questions must be positive")
 
-    if not level3_questions:
-        print("No Level 3 questions generated")
-        return
+    input_path = resolve_input(args.input)
+    level2_path = resolve_level2(args.level2)
+    started = datetime.now(timezone.utc)
+    year = args.year or str(started.year)
+    model = config.get("LSB_GENERATOR_MODEL", override=args.model, default=DEFAULT_MODEL)
+    rng = random.Random(args.seed)
+    random.seed(args.seed)
+    stats = filters.FilterStats()
 
-    # Save results
-    result = {
-        'metadata': {
-            'description': 'Level 3 highly abstract questions with cultural metaphors',
-            'total_questions': len(level3_questions),
-            'abstraction_level': 'maximum',
-            'cultural_depth': 'very_high',
-            'generation_method': 'node_expansion_with_metaphors',
-            'generation_date': '2025-09-07'
-        },
-        'qa_pairs': level3_questions
+    provisional_output = Path(args.output) if args.output else default_output_path(0, year)
+    ensure_parent(provisional_output)
+
+    try:
+        parents, level2_meta = load_instances(level2_path)
+    except DatasetFormatError as exc:
+        raise SystemExit(f"Could not read the Level 2 file: {exc}")
+    stats.stage("level 2 parents", len(parents))
+    logger.info("Loaded %d Level 2 questions from %s", len(parents), level2_path)
+
+    try:
+        writer = QuestionWriter(model=model, base_url=args.base_url, api_key=args.api_key,
+                                dry_run=args.dry_run, temperature=args.temperature,
+                                max_tokens=args.max_tokens)
+    except MissingCredential as exc:
+        raise SystemExit(f"{exc}\n  Or pass --dry-run to exercise the pipeline without a model.")
+
+    keep_unverified = args.keep_unverified
+    if args.verify == "skip" and not keep_unverified:
+        # Nothing is checked in this mode, so dropping "unverified" items would
+        # discard the whole run.
+        logger.info("--verify skip keeps every instance; they are written with "
+                    "answer_verified=false")
+        keep_unverified = True
+
+    needs_sparql = args.verify in ("count", "answer") or args.abstraction_source != "local"
+    client = SparqlClient(endpoint=args.endpoint,
+                          min_interval=args.min_interval) if needs_sparql else None
+
+    try:
+        frame = load_triples(input_path)
+        engine = NodeExpansionEngine(frame, client, source=args.abstraction_source,
+                                     max_properties=args.max_descriptions, stats=stats)
+        generator = Level3Generator(engine=engine, writer=writer, client=client,
+                                    verify=args.verify, keep_unverified=keep_unverified,
+                                    max_constraints=args.max_constraints, rng=rng, stats=stats,
+                                    endpoint=None if client is None else client.endpoint)
+        qa_pairs = generator.run(parents, args.num_questions)
+    finally:
+        writer.close()
+
+    stats.stage("questions written", len(qa_pairs))
+    finished = datetime.now(timezone.utc)
+    output_path = Path(args.output) if args.output else default_output_path(len(qa_pairs), year)
+    ensure_parent(output_path)
+
+    verified_count = sum(1 for qa in qa_pairs if qa["answer_verified"])
+    metadata = {
+        "description": "Level 3 abstracted questions derived from Level 2",
+        "level": 3,
+        "year": year,
+        "total_questions": len(qa_pairs),
+        "answer_verified_count": verified_count,
+        "verification_mode": args.verify,
+        "verification_method": {
+            "count": "the inherited Level 2 COUNT program was re-run and returned 1",
+            "answer": "the inherited Level 2 program was re-run and returned exactly the "
+                      "gold answer",
+            "inherit": "no check was run; the flag was copied from the Level 2 parent",
+            "skip": "no check was run; answer_verified is false everywhere",
+        }[args.verify],
+        "sparql_verification_source": "inherited_from_level2",
+        "sparql_endpoint": None if client is None else client.endpoint,
+        "abstraction_source": args.abstraction_source,
+        "model": writer.model_label,
+        "requested_model": model,
+        "question_source": writer.source_label,
+        "dry_run": bool(args.dry_run),
+        "seed": args.seed,
+        "num_questions_requested": args.num_questions,
+        "keep_unverified": bool(keep_unverified),
+        "input_file": str(input_path),
+        "level2_file": str(level2_path),
+        "level2_metadata": level2_meta,
+        "generator": "scripts/generate_level3.py",
+        "generation_started_utc": started.isoformat(timespec="seconds"),
+        "generation_finished_utc": finished.isoformat(timespec="seconds"),
     }
+    output_path.write_text(
+        json.dumps({"metadata": metadata, "qa_pairs": qa_pairs}, ensure_ascii=False, indent=2),
+        encoding="utf-8")
 
-    import os
-    os.makedirs('./outputs/questions', exist_ok=True)
-    filename = './outputs/questions/level3_advanced_questions_913.json'
-    with open(filename, 'w', encoding='utf-8') as f:
-        json.dump(result, f, ensure_ascii=False, indent=2)
+    report_path = Path(args.report) if args.report else output_path.with_suffix(".run_report.json")
+    ensure_parent(report_path)
+    report_path.write_text(json.dumps({"metadata": metadata, "funnel": stats.to_dict(),
+                                       "llm_calls": writer.calls,
+                                       "llm_failures": writer.failures},
+                                      ensure_ascii=False, indent=2), encoding="utf-8")
 
-    # Display results
-    print(f"\n=== Level 3 Advanced Question Generation Complete ===")
-    print(f"Total: {len(level3_questions)} questions")
-    print(f"Saved to: {filename}")
-
-    # Display examples
-    print(f"\n=== Question Examples ===")
-    for i, qa in enumerate(level3_questions[:3]):
-        print(f"\n{i+1}. [{qa['type']}]")
-        print(f"Level 3: {qa['question']}")
-        print(f"Answer: {qa['answer']}")
-        print(f"Original Level 2: {qa['original_level2_question']}")
+    print(f"\nLevel 3 generation complete: {len(qa_pairs)} questions "
+          f"({verified_count} with answer_verified=true, mode '{args.verify}')")
+    print(f"  questions : {output_path}")
+    print(f"  run report: {report_path}")
+    print()
+    print(stats.render())
+    if qa_pairs:
+        print("\nExamples:")
+        for qa in qa_pairs[:3]:
+            print(f"  L3: {qa['question']}")
+            print(f"  L2: {qa['original_level2_question']}")
+            print(f"  A : {qa['answer']}  [verified={qa['answer_verified']}]")
+    if len(qa_pairs) < args.num_questions:
+        logger.warning("Produced %d of the %d requested questions; see the drop reasons above.",
+                       len(qa_pairs), args.num_questions)
+    return 0
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generate Level 3 questions from knowledge triples and Level 2 questions")
-    parser.add_argument("--input", type=str, default=None,
-                        help="Input CSV file path (auto-detects format from 0_extract_triple_changes.py or old format)")
-    parser.add_argument("--level2", type=str, default=None,
-                        help="Level 2 questions JSON file path (default: ./data/level2_filtered.json)")
-    args = parser.parse_args()
-
-    main(input_file=args.input, level2_file=args.level2)
+    raise SystemExit(main())

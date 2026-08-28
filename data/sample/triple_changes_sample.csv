@@ -1,0 +1,25 @@
+entity_id,entity_label,property_id,property_label,property_type,old_value,new_value,new_value_label,change_type,change_timestamp,wiki_url
+Q142,France,P36,capital,wikibase-item,,Q90,Paris,update,2025-01-06T09:12:44Z,https://www.wikidata.org/wiki/Q142
+Q142,France,P30,continent,wikibase-item,,Q46,Europe,update,2025-01-06T09:12:44Z,https://www.wikidata.org/wiki/Q142
+Q142,France,P38,currency,wikibase-item,,Q4916,euro,update,2025-01-06T09:12:44Z,https://www.wikidata.org/wiki/Q142
+Q183,Germany,P36,capital,wikibase-item,,Q64,Berlin,update,2025-01-06T10:03:11Z,https://www.wikidata.org/wiki/Q183
+Q183,Germany,P30,continent,wikibase-item,,Q46,Europe,update,2025-01-06T10:03:11Z,https://www.wikidata.org/wiki/Q183
+Q30,United States of America,P36,capital,wikibase-item,,Q61,"Washington, D.C.",update,2025-01-06T11:41:02Z,https://www.wikidata.org/wiki/Q30
+Q30,United States of America,P30,continent,wikibase-item,,Q49,North America,update,2025-01-06T11:41:02Z,https://www.wikidata.org/wiki/Q30
+Q30,United States of America,P38,currency,wikibase-item,,Q4917,United States dollar,update,2025-01-06T11:41:02Z,https://www.wikidata.org/wiki/Q30
+Q937,Albert Einstein,P19,place of birth,wikibase-item,,Q3012,Ulm,update,2025-01-07T08:20:35Z,https://www.wikidata.org/wiki/Q937
+Q937,Albert Einstein,P20,place of death,wikibase-item,,Q138518,Princeton,update,2025-01-07T08:20:35Z,https://www.wikidata.org/wiki/Q937
+Q937,Albert Einstein,P735,given name,wikibase-item,,Q577011,Albert,update,2025-01-07T08:20:35Z,https://www.wikidata.org/wiki/Q937
+Q937,Albert Einstein,P734,family name,wikibase-item,,Q16834800,Einstein,update,2025-01-07T08:20:35Z,https://www.wikidata.org/wiki/Q937
+Q937,Albert Einstein,P31,instance of,wikibase-item,,Q5,human,update,2025-01-07T08:20:35Z,https://www.wikidata.org/wiki/Q937
+Q937,Albert Einstein,P106,occupation,wikibase-item,,Q169470,physicist,update,2025-01-07T08:20:35Z,https://www.wikidata.org/wiki/Q937
+Q7186,Marie Curie,P19,place of birth,wikibase-item,,Q270,Warsaw,update,2025-01-07T09:55:18Z,https://www.wikidata.org/wiki/Q7186
+Q7186,Marie Curie,P20,place of death,wikibase-item,,Q2364887,Sancellemoz,update,2025-01-07T09:55:18Z,https://www.wikidata.org/wiki/Q7186
+Q7186,Marie Curie,P735,given name,wikibase-item,,Q632104,Marie,update,2025-01-07T09:55:18Z,https://www.wikidata.org/wiki/Q7186
+Q7186,Marie Curie,P734,family name,wikibase-item,,Q21429443,Curie,update,2025-01-07T09:55:18Z,https://www.wikidata.org/wiki/Q7186
+Q4810517,Astakhov Glacier,P4552,mountain range,wikibase-item,,Q2961803,Bowers Mountains,update,2025-01-08T02:14:09Z,https://www.wikidata.org/wiki/Q4810517
+Q3012,Ulm,P17,country,wikibase-item,,Q183,Germany,update,2025-01-07T08:20:35Z,https://www.wikidata.org/wiki/Q3012
+Q270,Warsaw,P17,country,wikibase-item,,Q36,Poland,update,2025-01-07T09:55:18Z,https://www.wikidata.org/wiki/Q270
+Q4810517,Astakhov Glacier,P30,continent,wikibase-item,,Q51,Antarctica,update,2025-01-08T02:14:09Z,https://www.wikidata.org/wiki/Q4810517
+Q142,France,P571,inception,time,,+0843-08-10T00:00:00Z,843,update,2025-01-06T09:12:44Z,https://www.wikidata.org/wiki/Q142
+Q90,Paris,P1082,population,quantity,2145906,2133111,2133111,update,2025-01-06T09:30:00Z,https://www.wikidata.org/wiki/Q90

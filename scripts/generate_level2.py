@@ -1,299 +1,621 @@
 #!/usr/bin/env python3
+"""Level 2 (multi-constraint and bridge) question generation.
+
+Two generators share the same triple CSV:
+
+* ``multi_attribute`` -- grow a conjunction of (relation, value) constraints on
+  one subject until the conjunction identifies exactly one Wikidata entity, and
+  check that this entity really is the subject the constraints came from.
+* ``bridge`` -- chain A --r1--> B --r2--> C from the input and keep the chain
+  only when the two-hop program returns exactly one answer. The previous
+  release built these paths with ``if True:  # Previously: if answer_count == 1``,
+  i.e. with the verification disabled; here it runs, and the generator is opt-in
+  via ``--include-bridge``.
+
+Predicates are routed through :func:`livesearchbench.filters.is_allowed_relation`,
+so meta predicates such as ``P31`` (instance of) can no longer become question
+constraints, and counting goes through :meth:`SparqlClient.count`, which raises
+on a failed request instead of returning 0 and having it read as "no match".
+
+Examples:
+    python scripts/generate_level2.py --input data/sample/triple_changes_sample.csv \
+        --dry-run --num-questions 2 --output outputs/questions/demo_level2.json
+
+    python scripts/generate_level2.py --input outputs/extracted_triples/triple_changes.csv \
+        --model gpt-4o --num-questions 300 --seed 0 --include-bridge
 """
-Level 2 Question Generation System
-1. Bridge questions: A-B-C, ask for final C entity, avoid duplication
-2. Multi-attribute questions: gradually add constraints until answer is unique
-"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import logging
+import random
+import sys
+from collections import defaultdict
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Dict, List, Optional, Sequence, Tuple
 
 import pandas as pd
-import json
-import requests
-import time
-import random
-import argparse
-import os
-from collections import defaultdict
 
-# API Configuration
-API_KEY = "your_api_key_here"
-API_BASE_URL = "https://api.openai.com/v1/chat/completions"
-API_MODEL = "gpt-4o"
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
-def call_gpt_api(messages, model=None, temperature=0.7, max_tokens=2000):
-    """Call GPT API to generate questions"""
-    if model is None:
-        model = API_MODEL
-        
-    headers = {
-        "Authorization": f"Bearer {API_KEY}",
-        "Content-Type": "application/json"
-    }
-    
-    data = {
-        "model": model,
-        "messages": messages,
-        "temperature": temperature,
-        "max_tokens": max_tokens
-    }
-    
-    try:
-        response = requests.post(API_BASE_URL, headers=headers, json=data, timeout=30)
-        if response.status_code == 200:
-            result = response.json()
-            return result['choices'][0]['message']['content'].strip()
-        else:
-            print(f"API error: {response.status_code}")
+from livesearchbench import config, filters
+from livesearchbench.config import MissingCredential
+from livesearchbench.dataio import ensure_parent
+from livesearchbench.http import PoliteSession, RequestFailed
+from livesearchbench.sparql import SparqlClient, SparqlError
+
+logger = logging.getLogger("generate_level2")
+
+#: Shared default across the three generators; override with --model.
+DEFAULT_MODEL = "gpt-4o"
+DEFAULT_NUM_QUESTIONS = 300
+DEFAULT_CANDIDATE_POOL = 2000
+DEFAULT_MAX_ROWS = 30000
+
+EXTRACTOR_COLUMNS = ("entity_id", "entity_label", "property_id", "property_label", "new_value")
+TRIPLE_COLUMNS = ("subject_id", "subject_label", "predicate_id", "predicate_label",
+                  "object_id", "object_label")
+
+FALLBACK_INPUTS = (
+    PROJECT_ROOT / "outputs" / "extracted_triples" / "triple_changes_latest.csv",
+    PROJECT_ROOT / "data" / "final_changed_item_with_id.csv",
+    PROJECT_ROOT / "data" / "sample" / "triple_changes_sample.csv",
+)
+
+#: Extra properties fetched from Wikidata when --extend-attributes is on. The
+#: deny-listed IDs from filters.EXCLUDED_PROPERTY_IDS are removed below, which
+#: is what drops P31 -- it was in this list in the previous release even though
+#: the paper excludes it.
+EXTENSION_PROPERTY_IDS: Tuple[str, ...] = tuple(
+    pid for pid in (
+        "P27", "P19", "P20", "P106", "P31", "P136", "P495", "P37", "P36", "P17",
+        "P131", "P276", "P57", "P50", "P175", "P364", "P407", "P840", "P159",
+        "P937", "P108", "P69", "P463", "P102", "P641", "P30", "P38", "P122",
+        "P735", "P734", "P4552",
+    ) if pid not in filters.EXCLUDED_PROPERTY_IDS
+)
+
+#: Relation pairs that make a two-hop chain vacuous (A follows B follows C, ...).
+TEMPORAL_RELATIONS = frozenset({"P155", "P156", "P1365", "P1366"})
+INVERSE_PAIRS = (
+    ("P155", "P156"),
+    ("P1365", "P1366"),
+    ("P527", "P361"),
+    ("P749", "P355"),
+    ("P276", "P131"),
+)
+
+
+class QuestionWriter:
+    """Chat-completions client with a deterministic offline stub.
+
+    ``--dry-run`` returns the caller's template instead of calling a model, and
+    every instance records ``question_source`` so stub output is never mistaken
+    for model output.
+    """
+
+    def __init__(self, *, model: str, base_url: Optional[str] = None, api_key: Optional[str] = None,
+                 dry_run: bool = False, temperature: float = 0.8, max_tokens: int = 256,
+                 max_attempts: int = 3) -> None:
+        self.model = model
+        self.dry_run = dry_run
+        self.temperature = temperature
+        self.max_tokens = max_tokens
+        self.calls = 0
+        self.failures = 0
+        self._session: Optional[PoliteSession] = None
+        self._endpoint = ""
+        self._api_key = ""
+        if not dry_run:
+            base, key = config.openai_credentials(base_url=base_url, api_key=api_key)
+            base = base.rstrip("/")
+            self._endpoint = base if base.endswith("/chat/completions") else base + "/chat/completions"
+            self._api_key = key
+            self._session = PoliteSession(component="LiveSearchBench-L2", max_attempts=max_attempts)
+
+    @property
+    def source_label(self) -> str:
+        return "template_stub" if self.dry_run else "llm"
+
+    @property
+    def model_label(self) -> str:
+        return "template-stub (dry run)" if self.dry_run else self.model
+
+    def write(self, messages: Sequence[Dict[str, str]], *, stub: str) -> Optional[str]:
+        self.calls += 1
+        if self.dry_run:
+            return stub
+        payload = {"model": self.model, "messages": list(messages),
+                   "temperature": self.temperature, "max_tokens": self.max_tokens}
+        try:
+            response = self._session.post(
+                self._endpoint,
+                headers={"Authorization": f"Bearer {self._api_key}",
+                         "Content-Type": "application/json"},
+                json=payload,
+            )
+        except RequestFailed as exc:
+            logger.warning("chat completion failed: %s", exc)
+            self.failures += 1
             return None
-    except Exception as e:
-        print(f"API call failed: {e}")
-        return None
-
-def query_wikidata_sparql(query):
-    """Execute SPARQL query"""
-    endpoint = "https://query.wikidata.org/sparql"
-    headers = {
-        'User-Agent': 'Level2-Generator/1.0',
-        'Accept': 'application/json'
-    }
-    params = {'query': query, 'format': 'json'}
-    
-    try:
-        response = requests.get(endpoint, headers=headers, params=params, timeout=30)
-        if response.status_code == 200:
-            return response.json()
-        else:
-            print(f"SPARQL query failed: {response.status_code}")
+        if response.status_code != 200:
+            logger.warning("chat completion HTTP %d: %s", response.status_code, response.text[:200])
+            self.failures += 1
             return None
-    except Exception as e:
-        print(f"SPARQL query exception: {e}")
-        return None
+        try:
+            return response.json()["choices"][0]["message"]["content"].strip()
+        except (KeyError, IndexError, ValueError) as exc:
+            logger.warning("unexpected chat completion payload: %s", exc)
+            self.failures += 1
+            return None
 
-def count_sparql_results(query):
-    """Count SPARQL query results"""
-    result = query_wikidata_sparql(query)
-    if result and result['results']['bindings']:
-        if 'count' in result['results']['bindings'][0]:
-            return int(result['results']['bindings'][0]['count']['value'])
-        else:
-            return len(result['results']['bindings'])
-    return 0
+    def close(self) -> None:
+        if self._session is not None:
+            self._session.close()
 
-class BridgeQuestionGenerator:
-    """Bridge question generator: A-B-C, ask for C entity"""
-    
-    def __init__(self, df):
-        self.df = df
-        self.used_entities = set()  # Avoid reusing entities
-        self.valid_bridges = []     # Store valid bridge paths
-        
-    def build_relation_index(self):
-        """Build bidirectional relation index"""
-        print("Building bidirectional relation index...")
-        
-        # Subject -> Objects index
-        self.subject_relations = defaultdict(list)
-        # Object -> Subjects index (reverse)
-        self.object_relations = defaultdict(list)
-        
-        for _, row in self.df.iterrows():
-            # Forward index: subject -> object
-            self.subject_relations[row['subject_id']].append({
-                'predicate_id': row['predicate_id'],
-                'predicate_label': row['predicate_label'],
-                'object_id': row['object_id'],
-                'object_label': row['object_label']
-            })
-            
-            # Reverse index: object -> subject
-            self.object_relations[row['object_id']].append({
-                'predicate_id': row['predicate_id'],
-                'predicate_label': row['predicate_label'],
-                'subject_id': row['subject_id'],
-                'subject_label': row['subject_label']
-            })
-        
-        print(f"Index complete, forward: {len(self.subject_relations)} entities, reverse: {len(self.object_relations)} entities")
-    
-    def find_bridge_paths_efficient(self, max_paths=50, max_intermediate_threshold=5):
-        """Efficiently find bridge paths: A + relation1 ∩ C + relation2^-1"""
-        print(f"Efficiently finding bridge paths using intersection method")
-        
-        if not hasattr(self, 'subject_relations'):
-            self.build_relation_index()
-        
-        bridge_count = 0
-        
-        # Iterate through all (A, relation1) combinations
-        for entity_a, a_relations in self.subject_relations.items():
-            if bridge_count >= max_paths:
+
+def resolve_input(argument: Optional[str]) -> Path:
+    """Return the CSV to read, honouring the historical auto-detection order."""
+    if argument:
+        path = Path(argument)
+        if not path.is_file():
+            raise SystemExit(f"Input file not found: {path}")
+        return path
+    for candidate in FALLBACK_INPUTS:
+        if candidate.is_file():
+            logger.info("No --input given; using %s", candidate)
+            return candidate
+    raise SystemExit(
+        "No input CSV given and none of the default locations exist:\n  "
+        + "\n  ".join(str(c) for c in FALLBACK_INPUTS)
+        + "\n  Produce one with scripts/extract_triple_changes.py."
+    )
+
+
+def load_triples(path: Path, *, max_rows: int, rng: random.Random,
+                 stats: filters.FilterStats) -> pd.DataFrame:
+    """Load a triple CSV in either the extractor format or the legacy format."""
+    frame = pd.read_csv(path)
+    stats.stage("csv rows", len(frame))
+    logger.info("Loaded %d rows from %s", len(frame), path)
+
+    if "new_value" in frame.columns:
+        missing = [c for c in EXTRACTOR_COLUMNS if c not in frame.columns]
+        if missing:
+            raise ValueError(f"{path} looks like extractor output but lacks columns: {missing}")
+        entity_valued = frame[frame["new_value"].astype(str).str.match(r"^Q\d+$", na=False)]
+        if len(entity_valued) < len(frame):
+            stats.drop("object_is_not_an_entity", len(frame) - len(entity_valued))
+        frame = pd.DataFrame({
+            "subject_id": entity_valued["entity_id"],
+            "subject_label": entity_valued["entity_label"],
+            "predicate_id": entity_valued["property_id"],
+            "predicate_label": entity_valued["property_label"],
+            "object_id": entity_valued["new_value"],
+            "object_label": entity_valued["new_value_label"],
+        })
+    else:
+        missing = [c for c in TRIPLE_COLUMNS if c not in frame.columns]
+        if missing:
+            raise ValueError(
+                f"{path} is neither extractor output (needs 'new_value') nor a triple CSV "
+                f"(missing {missing})."
+            )
+        frame = frame[list(TRIPLE_COLUMNS)]
+
+    frame = frame.dropna(subset=["subject_id", "predicate_id", "object_id"]).astype(str)
+    stats.stage("entity-valued triples", len(frame))
+    if frame.empty:
+        raise ValueError(f"{path} yielded zero usable triples after format conversion.")
+    if len(frame) > max_rows:
+        frame = frame.sample(n=max_rows, random_state=rng.randrange(2 ** 31))
+        logger.info("Sampled the input down to %d rows (--max-rows)", max_rows)
+    return frame
+
+
+def filter_relations(frame: pd.DataFrame, *, use_allowlist: bool,
+                     stats: filters.FilterStats) -> pd.DataFrame:
+    """Drop rows whose predicate or subject the paper's filters exclude."""
+    mask: List[bool] = []
+    for row in frame.itertuples(index=False):
+        pid = str(row.predicate_id).upper()
+        if pid in filters.EXCLUDED_PROPERTY_IDS:
+            stats.drop(f"excluded_property:{pid}")
+            mask.append(False)
+            continue
+        if not filters.is_allowed_relation(pid, str(row.predicate_label),
+                                           use_allowlist=use_allowlist):
+            stats.drop("relation_not_in_allowlist")
+            mask.append(False)
+            continue
+        ok, reason = filters.is_allowed_entity(label=str(row.subject_label), require_enwiki=False)
+        if not ok:
+            stats.drop(f"subject_rejected:{reason}")
+            mask.append(False)
+            continue
+        mask.append(True)
+    kept = frame[mask]
+    stats.stage("allowed relations", len(kept))
+    if kept.empty:
+        raise ValueError(
+            "No triple survived relation filtering.\n"
+            "  Pass --no-relation-allowlist to keep every non-excluded predicate."
+        )
+    return kept
+
+
+def index_attributes(frame: pd.DataFrame) -> Dict[str, List[Dict[str, str]]]:
+    """subject_id -> list of {predicate_id, predicate_label, object_id, object_label}."""
+    index: Dict[str, List[Dict[str, str]]] = defaultdict(list)
+    seen: set = set()
+    for row in frame.itertuples(index=False):
+        key = filters.dedup_key(str(row.subject_id), str(row.predicate_id)) + f"|{row.object_id}"
+        if key in seen:
+            continue
+        seen.add(key)
+        index[str(row.subject_id)].append({
+            "predicate_id": str(row.predicate_id),
+            "predicate_label": str(row.predicate_label),
+            "object_id": str(row.object_id),
+            "object_label": str(row.object_label),
+        })
+    return index
+
+
+def entity_labels(frame: pd.DataFrame) -> Dict[str, str]:
+    """Best-effort id -> label map built from both ends of every triple."""
+    labels: Dict[str, str] = {}
+    for row in frame.itertuples(index=False):
+        labels.setdefault(str(row.subject_id), str(row.subject_label))
+        labels.setdefault(str(row.object_id), str(row.object_label))
+    return labels
+
+
+def constraint_where(attributes: Sequence[Dict[str, str]]) -> str:
+    return " ".join(f"?entity wdt:{a['predicate_id']} wd:{a['object_id']} ."
+                    for a in attributes)
+
+
+def count_query(attributes: Sequence[Dict[str, str]]) -> str:
+    """The COUNT program stored in ``sparql_verification``."""
+    return (f"SELECT (COUNT(?entity) AS ?count) WHERE {{\n"
+            f"  {constraint_where(attributes)}\n"
+            f"}}")
+
+
+def matching_entities(client: SparqlClient, attributes: Sequence[Dict[str, str]],
+                      limit: int = 2) -> List[str]:
+    """Return up to ``limit`` QIDs satisfying the conjunction.
+
+    Returning the identifiers rather than only a count lets the caller confirm
+    that the unique match is the entity the constraints were taken from; a count
+    of one on its own does not prove that.
+    """
+    query = (f"SELECT DISTINCT ?entity WHERE {{\n  {constraint_where(attributes)}\n}}\n"
+             f"LIMIT {limit}")
+    data = client.query(query)
+    out = []
+    for row in data.get("results", {}).get("bindings", []):
+        value = row.get("entity", {}).get("value", "")
+        if value:
+            out.append(value.rsplit("/", 1)[-1])
+    return out
+
+
+class MultiAttributeGenerator:
+    """Grow constraint conjunctions until they pin down exactly one entity."""
+
+    def __init__(self, frame: pd.DataFrame, client: SparqlClient, *, rng: random.Random,
+                 stats: filters.FilterStats, min_constraints: int, max_constraints: int,
+                 attempts: int, extend: bool, use_allowlist: bool,
+                 max_consecutive_errors: int, candidate_pool: int) -> None:
+        self.frame = frame
+        self.client = client
+        self.rng = rng
+        self.stats = stats
+        self.min_constraints = min_constraints
+        self.max_constraints = max_constraints
+        self.attempts = attempts
+        self.extend = extend
+        self.use_allowlist = use_allowlist
+        self.max_consecutive_errors = max_consecutive_errors
+        self.candidate_pool = candidate_pool
+        self.attributes = index_attributes(frame)
+        self.labels = entity_labels(frame)
+        self._consecutive_errors = 0
+
+    def _note_error(self, message: str) -> None:
+        self._consecutive_errors += 1
+        self.stats.drop("sparql_error")
+        logger.warning("%s", message)
+        if self._consecutive_errors >= self.max_consecutive_errors:
+            raise SystemExit(
+                f"Aborting: {self._consecutive_errors} consecutive SPARQL failures against "
+                f"{self.client.endpoint}.\n  Check connectivity or raise --max-sparql-errors."
+            )
+
+    def find_entities(self, target: int) -> List[Dict]:
+        """Return at most ``target`` entities with a verified constraint set."""
+        ordered = sorted(self.attributes.items(), key=lambda kv: (-len(kv[1]), kv[0]))
+        candidates = [(eid, attrs) for eid, attrs in ordered if len(attrs) >= self.min_constraints]
+        self.stats.stage("multi-attribute: subjects with enough attributes", len(candidates))
+        candidates = candidates[:self.candidate_pool]
+        self.stats.stage("multi-attribute: subjects examined", len(candidates))
+        for entity_id, attrs in ordered:
+            if len(attrs) < self.min_constraints:
+                self.stats.drop("too_few_attributes")
+
+        found: List[Dict] = []
+        for entity_id, attrs in candidates:
+            if len(found) >= target:
                 break
-                
-            if entity_a in self.used_entities:
+            constraints = self.find_constraints(entity_id, attrs)
+            if constraints is None:
                 continue
-                
-            entity_a_label = self.get_entity_label(entity_a)
-            
-            for relation1 in a_relations:
-                if bridge_count >= max_paths:
+            found.append({
+                "entity_id": entity_id,
+                "entity_label": self.labels.get(entity_id, entity_id),
+                "constraints": constraints,
+                "total_attributes": len(attrs),
+            })
+            logger.info("constraint set found for %s (%d constraints)",
+                        self.labels.get(entity_id, entity_id), constraints["constraint_count"])
+        self.stats.stage("multi-attribute: constraint sets verified", len(found))
+        return found
+
+    def find_constraints(self, entity_id: str, attributes: Sequence[Dict[str, str]]) -> Optional[Dict]:
+        """Search for a conjunction that matches ``entity_id`` and nothing else."""
+        pool = list(attributes)
+        if self.extend:
+            pool = self.extended_attributes(entity_id, pool)
+
+        for attempt in range(max(1, self.attempts)):
+            shuffled = self.rng.sample(pool, len(pool))
+            upper = min(self.max_constraints, len(shuffled))
+            for size in range(self.min_constraints, upper + 1):
+                selected = shuffled[:size]
+                try:
+                    matches = matching_entities(self.client, selected)
+                except SparqlError as exc:
+                    self._note_error(f"constraint query failed for {entity_id}: {exc}")
                     break
-                    
-                relation1_id = relation1['predicate_id']
-                relation1_label = relation1['predicate_label']
-                
-                # Step 1: Find all B where A --relation1--> B
-                b_candidates_from_a = set()
-                for rel in a_relations:
-                    if rel['predicate_id'] == relation1_id:
-                        b_candidates_from_a.add(rel['object_id'])
-                
-                # Iterate through all (C, relation2) combinations
-                for entity_c, c_relations in self.object_relations.items():
-                    if bridge_count >= max_paths:
-                        break
-                        
-                    if (entity_c in self.used_entities or entity_c == entity_a):
-                        continue
-                    
-                    entity_c_label = self.get_entity_label(entity_c)
-                    
-                    for relation2 in c_relations:
-                        if bridge_count >= max_paths:
-                            break
-                            
-                        relation2_id = relation2['predicate_id']
-                        relation2_label = relation2['predicate_label']
-                        
-                        # Step 2: Find all B where B --relation2--> C
-                        b_candidates_from_c = set()
-                        for rel in c_relations:
-                            if rel['predicate_id'] == relation2_id:
-                                b_candidates_from_c.add(rel['subject_id'])
-                        
-                        # Step 3: Find intersection
-                        intersection = b_candidates_from_a & b_candidates_from_c
-                        
-                        if len(intersection) == 1:
-                            entity_b = list(intersection)[0]
-                            
-                            # Basic checks
-                            if (entity_b in self.used_entities or 
-                                entity_b == entity_a or 
-                                entity_b == entity_c):
-                                continue
-                            
-                            # Construct relation objects for checking
-                            ab_relation = {
-                                'predicate_id': relation1_id,
-                                'predicate_label': relation1_label
-                            }
-                            bc_relation = {
-                                'predicate_id': relation2_id, 
-                                'predicate_label': relation2_label
-                            }
-                            
-                            # Filter meaningless bridges
-                            if self.is_meaningless_bridge(ab_relation, bc_relation, entity_a, entity_b, entity_c):
-                                continue
-                            
-                            # Construct SPARQL query (temporarily skip verification for efficiency)
-                            bridge_query = f"""
-SELECT (COUNT(?answer) AS ?count) WHERE {{
-  wd:{entity_a} wdt:{relation1_id} ?intermediate .
-  ?intermediate wdt:{relation2_id} ?answer .
+                self._consecutive_errors = 0
+                if not matches:
+                    # Monotone: adding constraints cannot bring matches back.
+                    self.stats.drop("constraints_match_nothing")
+                    break
+                if len(matches) > 1:
+                    continue
+                if matches[0] != entity_id:
+                    self.stats.drop("unique_match_is_a_different_entity")
+                    continue
+                return {
+                    "attributes": list(selected),
+                    "sparql_query": count_query(selected),
+                    "constraint_count": size,
+                    "attempt": attempt + 1,
+                }
+            else:
+                self.stats.drop("not_unique_within_constraint_budget")
+        return None
+
+    def extended_attributes(self, entity_id: str,
+                            existing: Sequence[Dict[str, str]]) -> List[Dict[str, str]]:
+        """Fetch extra allowed attributes for the entity from Wikidata."""
+        known = {a["predicate_id"] for a in existing}
+        wanted = [pid for pid in EXTENSION_PROPERTY_IDS if pid not in known]
+        if not wanted:
+            return list(existing)
+        values = " ".join(f"wd:{pid}" for pid in wanted)
+        query = f"""
+SELECT ?prop ?propLabel ?value ?valueLabel WHERE {{
+  VALUES ?prop {{ {values} }}
+  ?prop wikibase:directClaim ?property .
+  wd:{entity_id} ?property ?value .
+  SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
 }}
+LIMIT 50
 """
-                            
-                            # Temporarily skip SPARQL verification to test intersection logic
-                            if True:  # Previously: if answer_count == 1
-                                entity_b_label = self.get_entity_label(entity_b)
-                                
-                                bridge_path = {
-                                    'entity_a': entity_a,
-                                    'entity_a_label': entity_a_label,
-                                    'relation_ab_id': relation1_id,
-                                    'relation_ab_label': relation1_label,
-                                    'entity_b': entity_b,
-                                    'entity_b_label': entity_b_label,
-                                    'relation_bc_id': relation2_id,
-                                    'relation_bc_label': relation2_label,
-                                    'entity_c': entity_c,
-                                    'entity_c_label': entity_c_label,
-                                    'sparql_query': bridge_query.strip(),
-                                    'intermediate_count': 1
-                                }
-                                
-                                self.valid_bridges.append(bridge_path)
-                                
-                                # Mark entities as used
-                                self.used_entities.add(entity_a)
-                                self.used_entities.add(entity_b)
-                                self.used_entities.add(entity_c)
-                                
-                                bridge_count += 1
-                                
-                                print(f"  ✓ Found bridge: {entity_a_label} --{relation1_label}--> {entity_b_label} --{relation2_label}--> {entity_c_label}")
-                            
-                            time.sleep(0.05)
-        
-        print(f"Efficient bridge path search complete, found {len(self.valid_bridges)} valid paths")
-        return self.valid_bridges
-    
-    def find_bridge_paths(self, max_paths=50, max_intermediate_threshold=5):
-        """Entry method for bridge path search"""
-        return self.find_bridge_paths_efficient(max_paths, max_intermediate_threshold)
-    
-    def is_meaningless_bridge(self, ab_relation, bc_relation, entity_a, entity_b, entity_c):
-        """Determine if this is a meaningless bridge question"""
-        
-        # Filter temporal sequence problems (predecessor/successor relations)
-        temporal_relations = ['P155', 'P156', 'P1365', 'P1366']  # follows, followed by, replaces, replaced by
-        
-        if (ab_relation['predicate_id'] in temporal_relations and 
-            bc_relation['predicate_id'] in temporal_relations):
-            return True  # Temporal sequence bridges are usually meaningless
-        
-        # Filter inverse relations (A->B relation is inverse of B->C relation)
-        inverse_pairs = [
-            ('P155', 'P156'),  # follows / followed by
-            ('P1365', 'P1366'),  # replaces / replaced by  
-            ('P527', 'P361'),  # has part / part of
-            ('P749', 'P355'),  # parent organization / subsidiary
-            ('P276', 'P131'),  # location / located in administrative territorial entity
-        ]
-        
-        ab_pred = ab_relation['predicate_id']
-        bc_pred = bc_relation['predicate_id']
-        
-        for pred1, pred2 in inverse_pairs:
-            if (ab_pred == pred1 and bc_pred == pred2) or (ab_pred == pred2 and bc_pred == pred1):
-                return True  # Inverse relation bridges are usually meaningless
-        
-        return False
-    
-    def get_entity_label(self, entity_id):
-        """Get entity label"""
-        # Find from subject
-        for _, row in self.df[self.df['subject_id'] == entity_id].head(1).iterrows():
-            return row['subject_label']
-        
-        # Find from object
-        for _, row in self.df[self.df['object_id'] == entity_id].head(1).iterrows():
-            return row['object_label']
-        
-        return f"Entity_{entity_id}"
-    
-    def generate_bridge_questions(self, bridge_paths):
-        """Generate questions for bridge paths"""
-        print(f"Generating questions for {len(bridge_paths)} bridge paths...")
-        
-        qa_pairs = []
-        
-        for idx, bridge in enumerate(bridge_paths):
-            if idx % 5 == 0:
-                print(f"Bridge question generation progress: {idx}/{len(bridge_paths)}")
-            
-            # Construct GPT prompt
-            prompt = f"""
+        try:
+            data = self.client.query(query)
+        except SparqlError as exc:
+            self._note_error(f"attribute extension failed for {entity_id}: {exc}")
+            return list(existing)
+        self._consecutive_errors = 0
+
+        out = list(existing)
+        for row in data.get("results", {}).get("bindings", []):
+            property_uri = row.get("prop", {}).get("value", "")
+            value_uri = row.get("value", {}).get("value", "")
+            property_label = row.get("propLabel", {}).get("value", "")
+            value_label = row.get("valueLabel", {}).get("value", "")
+            if not property_uri or not value_uri:
+                continue
+            property_id = property_uri.rsplit("/", 1)[-1]
+            object_id = value_uri.rsplit("/", 1)[-1]
+            if not property_id.startswith("P") or not object_id.startswith("Q"):
+                continue
+            if not filters.is_allowed_relation(property_id, property_label,
+                                               use_allowlist=self.use_allowlist):
+                self.stats.drop("extension_relation_not_allowed")
+                continue
+            if not value_label or value_label == object_id:
+                continue
+            out.append({"predicate_id": property_id,
+                        "predicate_label": property_label or property_id,
+                        "object_id": object_id,
+                        "object_label": value_label})
+        if len(out) > len(existing):
+            logger.debug("extended %s with %d attributes", entity_id, len(out) - len(existing))
+        return out
+
+
+def stub_multi_attribute_question(entity: Dict) -> str:
+    """Deterministic offline stand-in for the model call."""
+    parts = [f"{a['predicate_label']} {a['object_label']}"
+             for a in entity["constraints"]["attributes"]]
+    return "Which entity has " + " and ".join(parts) + "?"
+
+
+def multi_attribute_prompt(entity: Dict) -> List[Dict[str, str]]:
+    described = " and ".join(f"has {a['predicate_label']} {a['object_label']}"
+                             for a in entity["constraints"]["attributes"])
+    prompt = f"""
+Generate a natural question asking about an entity with multiple specific constraints:
+
+Entity: {entity['entity_label']}
+Constraints: The entity {described}
+
+The question should ask "Which entity..." or "What..." and describe these constraints naturally.
+
+Answer: {entity['entity_label']}
+
+Examples:
+- "Which country has Paris as its capital and French as its official language?"
+- "What company was founded by Steve Jobs and is headquartered in Cupertino?"
+- "Which university is located in Cambridge and was founded in 1209?"
+
+Make it flow naturally and be specific. Generate only the question:"""
+    return [{"role": "system",
+             "content": "You generate natural multi-constraint questions that require reasoning "
+                        "through multiple attributes."},
+            {"role": "user", "content": prompt}]
+
+
+def generate_multi_attribute_questions(entities: Sequence[Dict], writer: QuestionWriter, *,
+                                       stats: filters.FilterStats) -> List[Dict]:
+    qa_pairs: List[Dict] = []
+    for entity in entities:
+        constraints = entity["constraints"]
+        attributes = constraints["attributes"]
+        question = writer.write(multi_attribute_prompt(entity),
+                                stub=stub_multi_attribute_question(entity))
+        if not question or len(question.strip()) <= 5:
+            stats.drop("llm_failure")
+            logger.warning("no question for %s", entity["entity_label"])
+            continue
+        qa_pairs.append({
+            "question": question.strip(),
+            "answer": entity["entity_label"],
+            "level": 2,
+            "type": "multi_attribute",
+            "reasoning_chain": [[entity["entity_label"], a["predicate_label"], a["object_label"]]
+                                for a in attributes],
+            "sparql_verification": constraints["sparql_query"],
+            "verified_with_sparql": True,
+            "question_source": writer.source_label,
+            "generator_model": writer.model_label,
+            "constraint_info": {
+                "constraint_count": constraints["constraint_count"],
+                "total_attributes": entity["total_attributes"],
+                "constraints": [f"{a['predicate_label']}: {a['object_label']}" for a in attributes],
+            },
+            "source_entity": {"entity_id": entity["entity_id"],
+                              "entity_label": entity["entity_label"]},
+        })
+    return qa_pairs
+
+
+def is_meaningless_bridge(relation_ab: str, relation_bc: str) -> bool:
+    """Reject chains whose two hops cancel out or are pure sequence links."""
+    if relation_ab in TEMPORAL_RELATIONS and relation_bc in TEMPORAL_RELATIONS:
+        return True
+    for first, second in INVERSE_PAIRS:
+        if {relation_ab, relation_bc} == {first, second}:
+            return True
+    return relation_ab == relation_bc
+
+
+def bridge_count_query(entity_a: str, relation_ab: str, relation_bc: str) -> str:
+    return (f"SELECT (COUNT(DISTINCT ?answer) AS ?count) WHERE {{\n"
+            f"  wd:{entity_a} wdt:{relation_ab} ?intermediate .\n"
+            f"  ?intermediate wdt:{relation_bc} ?answer .\n"
+            f"}}")
+
+
+def find_bridge_paths(frame: pd.DataFrame, client: SparqlClient, *, max_paths: int,
+                      rng: random.Random, stats: filters.FilterStats,
+                      max_consecutive_errors: int) -> List[Dict]:
+    """Join the triple table on the intermediate entity and verify each chain."""
+    by_subject: Dict[str, List[Dict[str, str]]] = defaultdict(list)
+    for row in frame.itertuples(index=False):
+        by_subject[str(row.subject_id)].append({
+            "predicate_id": str(row.predicate_id),
+            "predicate_label": str(row.predicate_label),
+            "object_id": str(row.object_id),
+            "object_label": str(row.object_label),
+            "subject_label": str(row.subject_label),
+        })
+
+    chains: List[Tuple[str, Dict[str, str], Dict[str, str]]] = []
+    for entity_a, first_hops in by_subject.items():
+        for first in first_hops:
+            for second in by_subject.get(first["object_id"], []):
+                if second["object_id"] in (entity_a, first["object_id"]):
+                    continue
+                if is_meaningless_bridge(first["predicate_id"], second["predicate_id"]):
+                    stats.drop("meaningless_bridge")
+                    continue
+                chains.append((entity_a, first, second))
+    stats.stage("bridge: candidate chains", len(chains))
+    rng.shuffle(chains)
+
+    verified: List[Dict] = []
+    used: set = set()
+    consecutive_errors = 0
+    for entity_a, first, second in chains:
+        if len(verified) >= max_paths:
+            break
+        if used & {entity_a, first["object_id"], second["object_id"]}:
+            stats.drop("bridge_entity_already_used")
+            continue
+        query = bridge_count_query(entity_a, first["predicate_id"], second["predicate_id"])
+        try:
+            count = client.count(query)
+        except SparqlError as exc:
+            consecutive_errors += 1
+            stats.drop("sparql_error")
+            logger.warning("bridge verification failed for %s: %s", entity_a, exc)
+            if consecutive_errors >= max_consecutive_errors:
+                raise SystemExit(
+                    f"Aborting: {consecutive_errors} consecutive SPARQL failures against "
+                    f"{client.endpoint}."
+                )
+            continue
+        consecutive_errors = 0
+        if count != 1:
+            stats.drop("bridge_answer_not_unique")
+            continue
+        verified.append({
+            "entity_a": entity_a,
+            "entity_a_label": first["subject_label"],
+            "relation_ab_id": first["predicate_id"],
+            "relation_ab_label": first["predicate_label"],
+            "entity_b": first["object_id"],
+            "entity_b_label": first["object_label"],
+            "relation_bc_id": second["predicate_id"],
+            "relation_bc_label": second["predicate_label"],
+            "entity_c": second["object_id"],
+            "entity_c_label": second["object_label"],
+            "sparql_query": query,
+        })
+        used.update({entity_a, first["object_id"], second["object_id"]})
+    stats.stage("bridge: chains verified", len(verified))
+    return verified
+
+
+def stub_bridge_question(bridge: Dict) -> str:
+    return (f"What is the {bridge['relation_bc_label']} of the "
+            f"{bridge['relation_ab_label']} of {bridge['entity_a_label']}?")
+
+
+def bridge_prompt(bridge: Dict) -> List[Dict[str, str]]:
+    prompt = f"""
 Generate a natural two-hop question that asks about the final destination in this path:
 
 Path: {bridge['entity_a_label']} --{bridge['relation_ab_label']}--> {bridge['entity_b_label']} --{bridge['relation_bc_label']}--> {bridge['entity_c_label']}
@@ -303,476 +625,235 @@ The question should ask: "What is the {bridge['relation_bc_label']} of the {brid
 But make it more natural and conversational. The answer should be: {bridge['entity_c_label']}
 
 Examples:
-- "Where was the director of Inception born?" 
+- "Where was the director of Inception born?"
 - "What genre does the author of Harry Potter write?"
 - "Which country is the capital of France located in?"
 
 Generate only the question:"""
+    return [{"role": "system",
+             "content": "You generate natural multi-hop questions that require reasoning through "
+                        "intermediate entities."},
+            {"role": "user", "content": prompt}]
 
-            messages = [
-                {"role": "system", "content": "You generate natural multi-hop questions that require reasoning through intermediate entities."},
-                {"role": "user", "content": prompt}
-            ]
-            
-            question = call_gpt_api(messages, temperature=0.8)
-            
-            if question:
-                qa_pairs.append({
-                    'question': question,
-                    'answer': bridge['entity_c_label'],
-                    'level': 2,
-                    'type': 'bridge',
-                    'reasoning_chain': [
-                        [bridge['entity_a_label'], bridge['relation_ab_label'], bridge['entity_b_label']],
-                        [bridge['entity_b_label'], bridge['relation_bc_label'], bridge['entity_c_label']]
-                    ],
-                    'sparql_verification': bridge['sparql_query'],
-                    'bridge_info': {
-                        'start_entity': bridge['entity_a_label'],
-                        'intermediate_entity': bridge['entity_b_label'], 
-                        'final_entity': bridge['entity_c_label'],
-                        'intermediate_count': bridge['intermediate_count']
-                    }
-                })
-            
-            time.sleep(0.3)  # Control API call frequency
-        
-        return qa_pairs
 
-class MultiAttributeQuestionGenerator:
-    """Multi-attribute question generator: gradually add constraints until unique"""
-    
-    def __init__(self, df):
-        self.df = df
-        self.used_entities = set()
-        
-    def build_entity_attributes(self):
-        """Build entity attribute index"""
-        print("Building entity attribute index...")
-        
-        self.entity_attributes = defaultdict(list)
-        
-        for _, row in self.df.iterrows():
-            self.entity_attributes[row['subject_id']].append({
-                'predicate_id': row['predicate_id'],
-                'predicate_label': row['predicate_label'],
-                'object_id': row['object_id'],
-                'object_label': row['object_label']
-            })
-        
-        print(f"Attribute index complete, {len(self.entity_attributes)} entities")
-    
-    def find_multi_attribute_entities(self, max_entities=30):
-        """Find entities suitable for multi-attribute constraints"""
-        print("Finding entities suitable for multi-attribute constraints...")
-        
-        if not hasattr(self, 'entity_attributes'):
-            self.build_entity_attributes()
-        
-        valid_entities = []
-        
-        for entity_id, attributes in self.entity_attributes.items():
-            if len(valid_entities) >= max_entities:
-                break
-                
-            if entity_id in self.used_entities or len(attributes) < 3:
-                continue  # Need at least 3 attributes for constraints
-            
-            entity_label = self.get_entity_label(entity_id)
-            
-            # Try gradually adding constraints to find unique answer
-            constraints = self.find_optimal_constraints(entity_id, attributes)
-            
-            if constraints:
-                valid_entities.append({
-                    'entity_id': entity_id,
-                    'entity_label': entity_label,
-                    'constraints': constraints,
-                    'total_attributes': len(attributes)
-                })
-                
-                self.used_entities.add(entity_id)
-                print(f"  ✓ Found entity: {entity_label} ({len(constraints)} constraints)")
-            
-            time.sleep(0.1)
-        
-        print(f"Multi-attribute entity search complete, found {len(valid_entities)} entities")
-        return valid_entities
-    
-    def find_optimal_constraints(self, entity_id, attributes):
-        """Find optimal constraint combination for entity (gradually add until unique)"""
-        
-        print(f"    Finding optimal constraint combination for entity {entity_id}, available attributes: {len(attributes)}")
-        
-        # Randomly shuffle attribute order
-        shuffled_attrs = random.sample(attributes, len(attributes))
-        
-        # Start from 1 constraint and gradually increase
-        for constraint_count in range(2, min(6, len(attributes) + 1)):  # 2-5 constraints
-            selected_attrs = shuffled_attrs[:constraint_count]
-            
-            # Construct SPARQL query (query entire Wikidata)
-            where_clauses = []
-            for attr in selected_attrs:
-                where_clauses.append(f"?entity wdt:{attr['predicate_id']} wd:{attr['object_id']} .")
-            
-            sparql_query = f"""
-SELECT (COUNT(?entity) AS ?count) WHERE {{
-  {' '.join(where_clauses)}
-}}
-"""
-            
-            print(f"      Testing {constraint_count} constraints...")
-            result_count = count_sparql_results(sparql_query)
-            print(f"      Result: {result_count} entities")
-            
-            if result_count == 1:  # Found unique answer
-                print(f"      ✓ Found unique constraint combination")
-                return {
-                    'attributes': selected_attrs,
-                    'sparql_query': sparql_query.strip(),
-                    'constraint_count': constraint_count
-                }
-            elif result_count == 0:  # No results, constraints too restrictive
-                print(f"      ✗ Too many constraints, no matching entities")
-                break
-        
-        # If CSV attributes are insufficient, try to get more attributes from Wikidata
-        print(f"    CSV attributes insufficient, trying to get more attributes from Wikidata...")
-        extended_attributes = self.get_wikidata_attributes(entity_id, attributes)
-        
-        if len(extended_attributes) > len(attributes):
-            print(f"    Got {len(extended_attributes) - len(attributes)} additional attributes from Wikidata")
-            return self.find_optimal_constraints_extended(entity_id, extended_attributes)
-        
-        return None  # No suitable constraint combination found
-    
-    def get_wikidata_attributes(self, entity_id, existing_attributes):
-        """Get additional attributes for entity from Wikidata"""
-        
-        # Get existing attribute IDs to avoid duplication
-        existing_predicates = set(attr['predicate_id'] for attr in existing_attributes)
-        
-        # SPARQL query to get more entity attributes
-        sparql_query = f"""
-SELECT ?predicate ?object ?predicateLabel ?objectLabel WHERE {{
-  wd:{entity_id} ?predicate ?object .
-  
-  # Filter out some useful attribute types
-  FILTER(?predicate IN (
-    wdt:P27,   # country of citizenship
-    wdt:P19,   # place of birth  
-    wdt:P20,   # place of death
-    wdt:P106,  # occupation
-    wdt:P31,   # instance of
-    wdt:P136,  # genre
-    wdt:P495,  # country of origin
-    wdt:P37,   # official language
-    wdt:P36,   # capital
-    wdt:P17,   # country
-    wdt:P131,  # located in administrative territorial entity
-    wdt:P276,  # location
-    wdt:P57,   # director
-    wdt:P50,   # author
-    wdt:P175,  # performer
-    wdt:P364,  # original language of work
-    wdt:P407,  # language of work or name
-    wdt:P840,  # narrative location
-    wdt:P159,  # headquarters location
-    wdt:P937,  # work location
-    wdt:P108,  # employer
-    wdt:P69,   # educated at
-    wdt:P463,  # member of
-    wdt:P102,  # member of political party
-    wdt:P641   # sport
-  ))
-  
-  # Filter out existing attributes
-  FILTER(?predicate NOT IN ({', '.join(f'wdt:{pid}' for pid in existing_predicates)}))
-  
-  SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en" . }}
-}}
-LIMIT 20
-"""
-        
-        result = query_wikidata_sparql(sparql_query)
-        extended_attributes = list(existing_attributes)  # Copy existing attributes
-        
-        if result and result.get('results', {}).get('bindings'):
-            for binding in result['results']['bindings']:
-                predicate_uri = binding.get('predicate', {}).get('value', '')
-                object_uri = binding.get('object', {}).get('value', '')
-                predicate_label = binding.get('predicateLabel', {}).get('value', '')
-                object_label = binding.get('objectLabel', {}).get('value', '')
-                
-                if predicate_uri and object_uri:
-                    predicate_id = predicate_uri.split('/')[-1]
-                    object_id = object_uri.split('/')[-1]
-                    
-                    # If no label, use URI as fallback
-                    if not predicate_label or predicate_label == predicate_uri:
-                        predicate_label = predicate_uri
-                    if not object_label or object_label == object_uri:
-                        object_label = object_uri
-                    
-                    # Only add attributes with valid labels
-                    if predicate_id.startswith('P') and object_id.startswith('Q') and predicate_label and object_label:
-                        extended_attributes.append({
-                            'predicate_id': predicate_id,
-                            'predicate_label': predicate_label,
-                            'object_id': object_id,
-                            'object_label': object_label
-                        })
-        
-        return extended_attributes
-    
-    def find_optimal_constraints_extended(self, entity_id, attributes):
-        """Find optimal constraint combination using extended attributes"""
-        
-        print(f"    Using extended attributes to find constraint combination for entity {entity_id}")
-        
-        # Randomly shuffle attribute order
-        shuffled_attrs = random.sample(attributes, len(attributes))
-        
-        # Start from 2 constraints and gradually increase
-        for constraint_count in range(2, min(7, len(attributes) + 1)):  # 2-6 constraints
-            selected_attrs = shuffled_attrs[:constraint_count]
-            
-            # First verify if target entity satisfies these constraints
-            verification_query = f"""
-ASK WHERE {{
-  wd:{entity_id} ?p ?o .
-  {' '.join([f'wd:{entity_id} wdt:{attr["predicate_id"]} wd:{attr["object_id"]} .' for attr in selected_attrs])}
-}}
-"""
-            
-            verification_result = query_wikidata_sparql(verification_query)
-            if not (verification_result and verification_result.get('boolean', False)):
-                print(f"      Skip: target entity does not satisfy these {constraint_count} constraints")
-                continue
-            
-            # Construct SPARQL query (query entire Wikidata)
-            where_clauses = []
-            for attr in selected_attrs:
-                where_clauses.append(f"?entity wdt:{attr['predicate_id']} wd:{attr['object_id']} .")
-            
-            sparql_query = f"""
-SELECT (COUNT(?entity) AS ?count) WHERE {{
-  {' '.join(where_clauses)}
-}}
-"""
-            
-            print(f"      Testing extended constraints {constraint_count}...")
-            result_count = count_sparql_results(sparql_query)
-            print(f"      Result: {result_count} entities")
-            
-            if result_count == 1:  # Found unique answer
-                print(f"      ✓ Found unique constraint combination (extended attributes)")
-                return {
-                    'attributes': selected_attrs,
-                    'sparql_query': sparql_query.strip(),
-                    'constraint_count': constraint_count
-                }
-            elif result_count == 0:  # No results, possibly inconsistent data
-                print(f"      ✗ Extended constraints no match (possibly inconsistent data)")
-                continue
-        
-        return None
-    
-    def get_entity_label(self, entity_id):
-        """Get entity label"""
-        for _, row in self.df[self.df['subject_id'] == entity_id].head(1).iterrows():
-            return row['subject_label']
-        return f"Entity_{entity_id}"
-    
-    def generate_multi_attribute_questions(self, entities):
-        """Generate questions for multi-attribute entities"""
-        print(f"Generating questions for {len(entities)} multi-attribute entities...")
-        
-        qa_pairs = []
-        
-        for idx, entity_info in enumerate(entities):
-            if idx % 5 == 0:
-                print(f"Multi-attribute question generation progress: {idx}/{len(entities)}")
-            
-            constraints = entity_info['constraints']
-            attributes = constraints['attributes']
-            
-            # Construct constraint descriptions
-            constraint_descriptions = []
-            for attr in attributes:
-                constraint_descriptions.append(f"has {attr['predicate_label']} {attr['object_label']}")
-            
-            constraints_text = " and ".join(constraint_descriptions)
-            
-            prompt = f"""
-Generate a natural question asking about an entity with multiple specific constraints:
+def generate_bridge_questions(bridges: Sequence[Dict], writer: QuestionWriter, *,
+                              stats: filters.FilterStats) -> List[Dict]:
+    qa_pairs: List[Dict] = []
+    for bridge in bridges:
+        question = writer.write(bridge_prompt(bridge), stub=stub_bridge_question(bridge))
+        if not question or len(question.strip()) <= 5:
+            stats.drop("llm_failure")
+            continue
+        qa_pairs.append({
+            "question": question.strip(),
+            "answer": bridge["entity_c_label"],
+            "level": 2,
+            "type": "bridge",
+            "reasoning_chain": [
+                [bridge["entity_a_label"], bridge["relation_ab_label"], bridge["entity_b_label"]],
+                [bridge["entity_b_label"], bridge["relation_bc_label"], bridge["entity_c_label"]],
+            ],
+            "sparql_verification": bridge["sparql_query"],
+            "verified_with_sparql": True,
+            "question_source": writer.source_label,
+            "generator_model": writer.model_label,
+            "bridge_info": {
+                "start_entity": bridge["entity_a_label"],
+                "intermediate_entity": bridge["entity_b_label"],
+                "final_entity": bridge["entity_c_label"],
+                "intermediate_count": 1,
+            },
+        })
+    return qa_pairs
 
-Entity: {entity_info['entity_label']}
-Constraints: The entity {constraints_text}
 
-The question should ask "Which entity..." or "What..." and describe these constraints naturally.
+def default_output_path(count: int, year: str) -> Path:
+    return PROJECT_ROOT / "outputs" / "questions" / f"level2_{count}_questions_{year}.json"
 
-Answer: {entity_info['entity_label']}
 
-Examples:
-- "Which country has Paris as its capital and French as its official language?"
-- "What company was founded by Steve Jobs and is headquartered in Cupertino?"
-- "Which university is located in Cambridge and was founded in 1209?"
+def build_arg_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description="Generate Level 2 multi-constraint (and optional bridge) questions.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument("--input", default=None,
+                        help="Triple CSV: extractor output (11 columns incl. new_value) or a "
+                             "legacy subject/predicate/object CSV. When omitted, the historical "
+                             "default locations are tried in order")
+    parser.add_argument("--output", default=None,
+                        help="Output JSON path (default: outputs/questions/"
+                             "level2_<kept>_questions_<year>.json)")
+    parser.add_argument("--report", default=None,
+                        help="Run report JSON path (default: <output>.run_report.json)")
+    parser.add_argument("--num-questions", type=int, default=DEFAULT_NUM_QUESTIONS,
+                        help="How many verified questions to produce in total")
+    parser.add_argument("--candidate-pool", type=int, default=DEFAULT_CANDIDATE_POOL,
+                        help="Cap on how many subjects are examined for constraint sets")
+    parser.add_argument("--max-rows", type=int, default=DEFAULT_MAX_ROWS,
+                        help="Sub-sample the input CSV to at most this many rows")
+    parser.add_argument("--min-constraints", type=int, default=2,
+                        help="Smallest conjunction size to test")
+    parser.add_argument("--max-constraints", type=int, default=5,
+                        help="Largest conjunction size to test")
+    parser.add_argument("--constraint-attempts", type=int, default=3,
+                        help="Random attribute orderings tried per subject")
+    parser.add_argument("--extend-attributes", action="store_true",
+                        help="Fetch extra attributes from Wikidata when the CSV alone cannot "
+                             "pin down the entity (they are filtered the same way)")
+    parser.add_argument("--include-bridge", action="store_true",
+                        help="Also generate two-hop bridge questions (verified, unlike the "
+                             "previous release)")
+    parser.add_argument("--max-bridges", type=int, default=50,
+                        help="Cap on verified bridge chains when --include-bridge is set")
+    parser.add_argument("--seed", type=int, default=0,
+                        help="Random seed for attribute ordering (recorded in the metadata)")
+    parser.add_argument("--year", default=None,
+                        help="Release year recorded in the metadata and the default filename")
+    parser.add_argument("--model", default=None,
+                        help=f"Chat model used to phrase the questions "
+                             f"(default: $LSB_GENERATOR_MODEL or {DEFAULT_MODEL})")
+    parser.add_argument("--base-url", default=None,
+                        help="OpenAI-compatible base URL (default: $OPENAI_BASE_URL)")
+    parser.add_argument("--api-key", default=None,
+                        help="API key (default: $OPENAI_API_KEY, then .env)")
+    parser.add_argument("--temperature", type=float, default=0.8, help="Sampling temperature")
+    parser.add_argument("--max-tokens", type=int, default=256,
+                        help="Completion token cap for a single question")
+    parser.add_argument("--endpoint", default=None,
+                        help=f"SPARQL endpoint (default: $SPARQL_ENDPOINT, then "
+                             f"{config.DEFAULT_SPARQL_ENDPOINT})")
+    parser.add_argument("--min-interval", type=float, default=1.0,
+                        help="Minimum seconds between SPARQL requests")
+    parser.add_argument("--max-sparql-errors", type=int, default=20,
+                        help="Abort after this many consecutive SPARQL failures")
+    parser.add_argument("--no-relation-allowlist", action="store_true",
+                        help="Keep every predicate that is not on the exclusion list, instead "
+                             "of only the 198 allow-listed relation labels")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Replace the model call with a deterministic template stub "
+                             "(no API key required). SPARQL verification still runs")
+    parser.add_argument("--log-level", default="INFO",
+                        choices=["DEBUG", "INFO", "WARNING", "ERROR"], help="Logging verbosity")
+    return parser
 
-Make it flow naturally and be specific. Generate only the question:"""
 
-            messages = [
-                {"role": "system", "content": "You generate natural multi-constraint questions that require reasoning through multiple attributes."},
-                {"role": "user", "content": prompt}
-            ]
-            
-            question = call_gpt_api(messages, temperature=0.8)
-            
-            if question:
-                reasoning_chain = []
-                for attr in attributes:
-                    reasoning_chain.append([entity_info['entity_label'], attr['predicate_label'], attr['object_label']])
-                
-                qa_pairs.append({
-                    'question': question,
-                    'answer': entity_info['entity_label'],
-                    'level': 2,
-                    'type': 'multi_attribute',
-                    'reasoning_chain': reasoning_chain,
-                    'sparql_verification': constraints['sparql_query'],
-                    'constraint_info': {
-                        'constraint_count': constraints['constraint_count'],
-                        'total_attributes': entity_info['total_attributes'],
-                        'constraints': [f"{attr['predicate_label']}: {attr['object_label']}" for attr in attributes]
-                    }
-                })
-            
-            time.sleep(0.3)
-        
-        return qa_pairs
+def main(argv: Optional[Sequence[str]] = None) -> int:
+    args = build_arg_parser().parse_args(argv)
+    logging.basicConfig(level=getattr(logging, args.log_level),
+                        format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 
-def convert_extracted_triples_to_format(input_csv):
-    """
-    Convert extracted triples CSV to the format expected by generate_level2
+    if args.num_questions <= 0:
+        raise SystemExit("--num-questions must be positive")
+    if args.min_constraints < 1 or args.max_constraints < args.min_constraints:
+        raise SystemExit("--min-constraints must be >= 1 and <= --max-constraints")
 
-    Input columns (from 0_extract_triple_changes.py):
-        entity_id, entity_label, property_id, property_label, property_type,
-        old_value, new_value, new_value_label, change_type, change_timestamp, wiki_url
+    input_path = resolve_input(args.input)
+    started = datetime.now(timezone.utc)
+    year = args.year or str(started.year)
+    model = config.get("LSB_GENERATOR_MODEL", override=args.model, default=DEFAULT_MODEL)
+    rng = random.Random(args.seed)
+    random.seed(args.seed)
+    stats = filters.FilterStats()
 
-    Output columns (expected by generate_level2.py):
-        subject_id, subject_label, predicate_id, predicate_label, object_id, object_label
-    """
-    print(f"Converting extracted triples from {input_csv}...")
-    df = pd.read_csv(input_csv)
-    print(f"Loaded {len(df)} extracted triples")
+    provisional_output = Path(args.output) if args.output else default_output_path(0, year)
+    ensure_parent(provisional_output)
 
-    # Filter: only keep triples where new_value is a Wikibase Item (starts with Q)
-    df_filtered = df[df['new_value'].str.startswith('Q', na=False)].copy()
-    print(f"Filtered to {len(df_filtered)} triples with entity values (Q-items)")
+    try:
+        writer = QuestionWriter(model=model, base_url=args.base_url, api_key=args.api_key,
+                                dry_run=args.dry_run, temperature=args.temperature,
+                                max_tokens=args.max_tokens)
+    except MissingCredential as exc:
+        raise SystemExit(f"{exc}\n  Or pass --dry-run to exercise the pipeline without a model.")
 
-    # Rename columns to match expected format
-    df_converted = pd.DataFrame({
-        'subject_id': df_filtered['entity_id'],
-        'subject_label': df_filtered['entity_label'],
-        'predicate_id': df_filtered['property_id'],
-        'predicate_label': df_filtered['property_label'],
-        'object_id': df_filtered['new_value'],
-        'object_label': df_filtered['new_value_label']
-    })
+    client = SparqlClient(endpoint=args.endpoint, min_interval=args.min_interval)
+    try:
+        frame = load_triples(input_path, max_rows=args.max_rows, rng=rng, stats=stats)
+        frame = filter_relations(frame, use_allowlist=not args.no_relation_allowlist, stats=stats)
 
-    print(f"Converted to format with {len(df_converted)} triples")
-    return df_converted
+        qa_pairs: List[Dict] = []
+        bridges: List[Dict] = []
+        if args.include_bridge:
+            bridges = find_bridge_paths(frame, client, max_paths=min(args.max_bridges,
+                                                                     args.num_questions),
+                                        rng=rng, stats=stats,
+                                        max_consecutive_errors=args.max_sparql_errors)
+            qa_pairs.extend(generate_bridge_questions(bridges, writer, stats=stats))
 
-def main(input_file=None):
-    """Main function: only generate multi-attribute questions"""
+        remaining = max(0, args.num_questions - len(qa_pairs))
+        generator = MultiAttributeGenerator(
+            frame, client, rng=rng, stats=stats,
+            min_constraints=args.min_constraints, max_constraints=args.max_constraints,
+            attempts=args.constraint_attempts, extend=args.extend_attributes,
+            use_allowlist=not args.no_relation_allowlist,
+            max_consecutive_errors=args.max_sparql_errors,
+            candidate_pool=args.candidate_pool)
+        entities = generator.find_entities(remaining)
+        qa_pairs.extend(generate_multi_attribute_questions(entities, writer, stats=stats))
+    finally:
+        writer.close()
 
-    # Load data
-    print("Loading triple data...")
+    stats.stage("questions written", len(qa_pairs))
+    finished = datetime.now(timezone.utc)
+    output_path = Path(args.output) if args.output else default_output_path(len(qa_pairs), year)
+    ensure_parent(output_path)
 
-    # Determine input file
-    if input_file:
-        if not os.path.exists(input_file):
-            raise FileNotFoundError(f"Input file not found: {input_file}")
-        print(f"Using specified input file: {input_file}")
-
-        # Check if it's from 0_extract_triple_changes.py (has new_value column)
-        df_test = pd.read_csv(input_file, nrows=1)
-        if 'new_value' in df_test.columns:
-            df = convert_extracted_triples_to_format(input_file)
-        else:
-            df = pd.read_csv(input_file)
-            print(f"Loaded {len(df)} triples")
-    else:
-        # Try to load from extracted triples first, fallback to old format
-        extracted_triples_path = './outputs/extracted_triples/triple_changes_latest.csv'
-        old_format_path = './data/final_changed_item_with_id.csv'
-
-        if os.path.exists(extracted_triples_path):
-            print(f"Found extracted triples: {extracted_triples_path}")
-            df = convert_extracted_triples_to_format(extracted_triples_path)
-        elif os.path.exists(old_format_path):
-            print(f"Using old format: {old_format_path}")
-            df = pd.read_csv(old_format_path)
-            print(f"Loaded {len(df)} triples")
-        else:
-            raise FileNotFoundError(f"No input file found. Please provide either:\n"
-                                    f"  - {extracted_triples_path} (from 0_extract_triple_changes.py)\n"
-                                    f"  - {old_format_path} (old format)")
-    
-    all_qa_pairs = []
-    
-    # Temporarily skip bridge question generation
-    print("\n=== Skip bridge questions (too time-consuming) ===")
-    
-    # Generate multi-attribute questions
-    print("\n=== Generate multi-attribute questions ===")
-    multi_attr_generator = MultiAttributeQuestionGenerator(df)
-    multi_attr_entities = multi_attr_generator.find_multi_attribute_entities(max_entities=400)
-    
-    if multi_attr_entities:
-        multi_attr_qa_pairs = multi_attr_generator.generate_multi_attribute_questions(multi_attr_entities)
-        all_qa_pairs.extend(multi_attr_qa_pairs)
-        print(f"Generated {len(multi_attr_qa_pairs)} multi-attribute questions")
-    
-    # Save results
-    result = {
-        'metadata': {
-            'description': 'Level 2 multi-attribute questions with unique answers',
-            'total_questions': len(all_qa_pairs),
-            'bridge_questions': 0,  # Temporarily skipped
-            'multi_attribute_questions': len(all_qa_pairs),
-            'verification_method': 'SPARQL uniqueness check on full Wikidata',
-            'generation_date': '2025-09-07'
-        },
-        'qa_pairs': all_qa_pairs
+    multi_attribute_count = sum(1 for qa in qa_pairs if qa["type"] == "multi_attribute")
+    metadata = {
+        "description": "Level 2 multi-constraint questions with SPARQL-verified unique answers",
+        "level": 2,
+        "year": year,
+        "total_questions": len(qa_pairs),
+        "multi_attribute_questions": multi_attribute_count,
+        "bridge_questions": len(qa_pairs) - multi_attribute_count,
+        "verification_method": "SPARQL: the constraint conjunction matches exactly the source "
+                               "entity (bridge chains: COUNT(DISTINCT ?answer) == 1)",
+        "sparql_endpoint": client.endpoint,
+        "model": writer.model_label,
+        "requested_model": model,
+        "question_source": writer.source_label,
+        "dry_run": bool(args.dry_run),
+        "seed": args.seed,
+        "min_constraints": args.min_constraints,
+        "max_constraints": args.max_constraints,
+        "constraint_attempts": args.constraint_attempts,
+        "extend_attributes": bool(args.extend_attributes),
+        "include_bridge": bool(args.include_bridge),
+        "candidate_pool": args.candidate_pool,
+        "num_questions_requested": args.num_questions,
+        "relation_allowlist": not args.no_relation_allowlist,
+        "input_file": str(input_path),
+        "generator": "scripts/generate_level2.py",
+        "generation_started_utc": started.isoformat(timespec="seconds"),
+        "generation_finished_utc": finished.isoformat(timespec="seconds"),
     }
-    
-    # Save file
-    import os
-    os.makedirs('./outputs/questions', exist_ok=True)
-    filename = './outputs/questions/level2_multi_attribute_only.json'
-    with open(filename, 'w', encoding='utf-8') as f:
-        json.dump(result, f, ensure_ascii=False, indent=2)
-    
-    # Display results
-    print(f"\n=== Level 2 multi-attribute question generation complete ===")
-    print(f"Total generated: {len(all_qa_pairs)} multi-attribute questions")
-    print(f"Saved to: {filename}")
-    
-    # Display examples
-    if all_qa_pairs:
-        print(f"\n=== Question Examples ===")
-        for i, qa in enumerate(all_qa_pairs[:3]):
-            print(f"{i+1}. Q: {qa['question']}")
-            print(f"   A: {qa['answer']}")
-            print(f"   Constraints: {len(qa['constraint_info']['constraints'])} items")
-            print()
+    output_path.write_text(
+        json.dumps({"metadata": metadata, "qa_pairs": qa_pairs}, ensure_ascii=False, indent=2),
+        encoding="utf-8")
+
+    report_path = Path(args.report) if args.report else output_path.with_suffix(".run_report.json")
+    ensure_parent(report_path)
+    report_path.write_text(json.dumps({"metadata": metadata, "funnel": stats.to_dict(),
+                                       "llm_calls": writer.calls,
+                                       "llm_failures": writer.failures},
+                                      ensure_ascii=False, indent=2), encoding="utf-8")
+
+    print(f"\nLevel 2 generation complete: {len(qa_pairs)} questions "
+          f"({multi_attribute_count} multi-attribute, "
+          f"{len(qa_pairs) - multi_attribute_count} bridge)")
+    print(f"  questions : {output_path}")
+    print(f"  run report: {report_path}")
+    print()
+    print(stats.render())
+    if qa_pairs:
+        print("\nExamples:")
+        for qa in qa_pairs[:3]:
+            print(f"  Q: {qa['question']}")
+            print(f"  A: {qa['answer']}  [{qa['type']}]")
+    if len(qa_pairs) < args.num_questions:
+        logger.warning("Produced %d of the %d requested questions; see the drop reasons above.",
+                       len(qa_pairs), args.num_questions)
+    return 0
+
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generate Level 2 questions from knowledge triples")
-    parser.add_argument("--input", type=str, default=None,
-                        help="Input CSV file path (auto-detects format from 0_extract_triple_changes.py or old format)")
-    args = parser.parse_args()
-
-    main(input_file=args.input)
+    raise SystemExit(main())
