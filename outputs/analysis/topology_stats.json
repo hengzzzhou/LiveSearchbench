@@ -1,0 +1,98 @@
+{
+  "input_items": 30,
+  "description_total_qa_pairs": 1000,
+  "description_level_distribution": {
+    "L1": 500,
+    "L2": 300,
+    "L3": 200
+  },
+  "description_unique_subjects": null,
+  "description_unique_relations": null,
+  "description_unique_objects": null,
+  "description_diversity_note": "Subject/relation/object diversity counts are intentionally omitted from this metadata file; compute them from the final release files when preparing full-dataset diversity statistics.",
+  "demo_unique_predicates": 39,
+  "demo_unique_anchors": 59,
+  "demo_unique_topology_signatures": 12,
+  "level_summary": [
+    {
+      "level": 1,
+      "family": "single-hop",
+      "n": 10,
+      "share": "33.3%",
+      "avg_edges": 1,
+      "max_edges": 1,
+      "avg_anchors": 1,
+      "unique_signatures": 1
+    },
+    {
+      "level": 2,
+      "family": "multi-constraint intersection",
+      "n": 10,
+      "share": "33.3%",
+      "avg_edges": 2.9,
+      "max_edges": 5,
+      "avg_anchors": 2.9,
+      "unique_signatures": 6
+    },
+    {
+      "level": 3,
+      "family": "fuzzed/indirect constrained selection",
+      "n": 10,
+      "share": "33.3%",
+      "avg_edges": 2.5,
+      "max_edges": 4,
+      "avg_anchors": 2.5,
+      "unique_signatures": 5
+    }
+  ],
+  "topology_signatures": [
+    [
+      "L1|edges=1|unique_pred=1|anchors=1|repeated_pred=0",
+      10
+    ],
+    [
+      "L2|edges=2|unique_pred=2|anchors=2|repeated_pred=0",
+      5
+    ],
+    [
+      "L3|edges=2|unique_pred=1|anchors=2|repeated_pred=1",
+      4
+    ],
+    [
+      "L3|edges=2|unique_pred=2|anchors=2|repeated_pred=0",
+      3
+    ],
+    [
+      "L2|edges=5|unique_pred=3|anchors=5|repeated_pred=2",
+      1
+    ],
+    [
+      "L2|edges=4|unique_pred=3|anchors=4|repeated_pred=1",
+      1
+    ],
+    [
+      "L3|edges=4|unique_pred=1|anchors=4|repeated_pred=3",
+      1
+    ],
+    [
+      "L3|edges=4|unique_pred=3|anchors=4|repeated_pred=1",
+      1
+    ],
+    [
+      "L2|edges=4|unique_pred=1|anchors=4|repeated_pred=3",
+      1
+    ],
+    [
+      "L2|edges=3|unique_pred=3|anchors=3|repeated_pred=0",
+      1
+    ],
+    [
+      "L2|edges=3|unique_pred=1|anchors=3|repeated_pred=2",
+      1
+    ],
+    [
+      "L3|edges=3|unique_pred=2|anchors=3|repeated_pred=1",
+      1
+    ]
+  ]
+}
