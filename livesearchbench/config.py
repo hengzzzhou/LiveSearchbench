@@ -26,7 +26,7 @@ DEFAULT_WIKIDATA_API = "https://www.wikidata.org/w/api.php"
 
 #: Contact string embedded in the User-Agent. Wikimedia's User-Agent policy
 #: asks for a way to reach the operator; override via ``LSB_CONTACT``.
-DEFAULT_CONTACT = "https://github.com/hengzzzhou/LiveSearchbench"
+DEFAULT_CONTACT = "https://github.com/hengzzzhou/LiveSearchbench; hengzzzhou@gmail.com"
 
 
 class MissingCredential(RuntimeError):

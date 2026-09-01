@@ -8,6 +8,9 @@ abstract: >-
 type: software
 license: MIT
 repository-code: "https://github.com/hengzzzhou/LiveSearchbench"
+contact:
+  - email: "hengzzzhou@gmail.com"
+    name: "LiveSearchBench maintainers"
 keywords:
   - question-answering
   - retrieval-augmented-generation
@@ -15,20 +18,50 @@ keywords:
   - knowledge-graph
   - wikidata
 authors:
-  # TODO: replace with the full author list exactly as it appears on the paper,
-  # in the same order, and add an ORCID for each author who has one.
-  - family-names: Zhou
-    given-names: Heng
+  - {family-names: Zhou, given-names: Heng}
+  - {family-names: Yu, given-names: Ao}
+  - {family-names: Fan, given-names: Yuchen}
+  - {family-names: Kang, given-names: Li}
+  - {family-names: Shi, given-names: Jianing}
+  - {family-names: Zhang, given-names: Yongting}
+  - {family-names: Fan, given-names: Yutao}
+  - {family-names: He, given-names: Tiancheng}
+  - {family-names: Lin, given-names: Yibing}
+  - {family-names: Geng, given-names: Hejia}
+  - {family-names: Wu, given-names: Yuhao}
+  - {family-names: Song, given-names: Xiufeng}
+  - {family-names: Zhang, given-names: Zhemeng}
+  - {family-names: Huang, given-names: Songtao}
+  - {family-names: Qin, given-names: Yiran}
+  - {family-names: Zhang, given-names: Wenlong}
+  - {family-names: Bai, given-names: Lei}
+  - {family-names: Yin, given-names: Zhenfei}
 preferred-citation:
-  # TODO: after the proceedings appear (expected around the conference,
-  # 24-29 October 2026), replace the arXiv fields below with the ACL Anthology
-  # entry from https://aclanthology.org/2026.findings-emnlp.N.bib
+  # Replace with the ACL Anthology entry once the proceedings appear
+  # (expected around the conference, 24-29 October 2026):
+  # https://aclanthology.org/2026.findings-emnlp.N.bib
   type: conference-paper
-  title: "LiveSearchBench: An Automated Pipeline for Benchmark Construction over Dynamic Knowledge"
+  title: "An Automated Pipeline for Snapshot-Grounded Benchmark Construction over Dynamic Knowledge"
   collection-title: "Findings of the Association for Computational Linguistics: EMNLP 2026"
   publisher:
     name: "Association for Computational Linguistics"
   year: 2026
   authors:
-    - family-names: Zhou
-      given-names: Heng
+    - {family-names: Zhou, given-names: Heng}
+    - {family-names: Yu, given-names: Ao}
+    - {family-names: Fan, given-names: Yuchen}
+    - {family-names: Kang, given-names: Li}
+    - {family-names: Shi, given-names: Jianing}
+    - {family-names: Zhang, given-names: Yongting}
+    - {family-names: Fan, given-names: Yutao}
+    - {family-names: He, given-names: Tiancheng}
+    - {family-names: Lin, given-names: Yibing}
+    - {family-names: Geng, given-names: Hejia}
+    - {family-names: Wu, given-names: Yuhao}
+    - {family-names: Song, given-names: Xiufeng}
+    - {family-names: Zhang, given-names: Zhemeng}
+    - {family-names: Huang, given-names: Songtao}
+    - {family-names: Qin, given-names: Yiran}
+    - {family-names: Zhang, given-names: Wenlong}
+    - {family-names: Bai, given-names: Lei}
+    - {family-names: Yin, given-names: Zhenfei}
