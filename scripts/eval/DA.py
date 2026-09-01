@@ -226,19 +226,37 @@ def safe_model_tag(model_name: str) -> str:
     return re.sub(r"[^A-Za-z0-9]+", "_", str(model_name)).strip("_") or "model"
 
 
+
+def run_fingerprint(**parts) -> str:
+    """Short stable hash of the settings that make two runs incomparable.
+
+    Resuming used to match on level, method and model only, so changing the
+    temperature, the sample count or even the dataset silently reused the old
+    answers while the summary reported the new settings.
+    """
+    import hashlib
+    payload = "\x1f".join(f"{k}={parts[k]!r}" for k in sorted(parts))
+    return hashlib.blake2b(payload.encode("utf-8"), digest_size=5).hexdigest()
+
 def default_partial_path(
     *,
     output_dir: Optional[str],
     meta: Dict[str, Any],
     model_name: str,
     budget: Optional[int] = None,
+    fingerprint: str = "",
 ) -> Path:
-    """Deterministic sidecar path, so ``--resume`` can find a previous run."""
+    """Deterministic sidecar path, so ``--resume`` can find a previous run.
+
+    ``fingerprint`` separates runs whose settings differ, so ``--resume`` can
+    only ever continue a run that used the same configuration.
+    """
     level = meta.get("level") or "unknown"
     year = meta.get("year") or "unknown"
     tag = f"_maxiter_{budget}" if budget is not None else ""
+    fp = f"_{fingerprint}" if fingerprint else ""
     directory = Path(output_dir or os.path.join("outputs", "evaluations", str(year)))
-    return directory / f"{level}_{METHOD}_{safe_model_tag(model_name)}{tag}_partial.jsonl"
+    return directory / f"{level}_{METHOD}_{safe_model_tag(model_name)}{tag}{fp}_partial.jsonl"
 
 
 def load_partial(path: Path) -> Dict[str, Dict[str, Any]]:
@@ -557,8 +575,19 @@ def run(args: argparse.Namespace) -> int:
         LOGGER.warning("--n-samples %d with --temperature 0 will produce identical samples",
                        args.n_samples)
 
+    fingerprint = run_fingerprint(dataset=str(args.data), model=model_name, temperature=args.temperature,
+
+
+        n_samples=args.n_samples, max_tokens=args.max_tokens, method=METHOD)
+
+
     partial_path = Path(args.partial_file) if args.partial_file else default_partial_path(
-        output_dir=args.output_dir, meta=meta, model_name=model_name)
+
+
+        output_dir=args.output_dir, meta=meta, model_name=model_name,
+
+
+        fingerprint=fingerprint)
     dataio.ensure_parent(partial_path)
     # Fail before any model call if the results directory is not writable.
     results_dir = args.output_dir or os.path.join(

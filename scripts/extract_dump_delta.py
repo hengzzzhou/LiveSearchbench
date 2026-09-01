@@ -196,14 +196,23 @@ def canonical_value(snak: Dict[str, Any]) -> Optional[str]:
     if isinstance(value, dict):
         if "id" in value:
             return str(value["id"])
+        # Structured values carry more than their headline number. Dropping the
+        # unit, the time precision or the coordinate globe made a change from
+        # metres to kilometres, from year to day precision, or from Earth to
+        # Mars look like no change at all.
         if "amount" in value:
-            return str(value["amount"])
+            unit = str(value.get("unit") or "1")
+            unit = unit.rsplit("/", 1)[-1] if unit != "1" else "1"
+            return f"{value['amount']}|{unit}"
         if "time" in value:
-            return str(value["time"])
+            return (f"{value['time']}|p{value.get('precision', '')}"
+                    f"|{str(value.get('calendarmodel') or '').rsplit('/', 1)[-1]}")
         if "latitude" in value and "longitude" in value:
-            return f"{value['latitude']},{value['longitude']}"
+            globe = str(value.get("globe") or "").rsplit("/", 1)[-1]
+            return (f"{value['latitude']},{value['longitude']}"
+                    f"|p{value.get('precision', '')}|{globe}")
         if "text" in value:
-            return str(value["text"])
+            return f"{value['text']}|{value.get('language', '')}"
         return None
     return str(value)
 
@@ -284,29 +293,34 @@ def normalise_entity(
             counts["statement: denied predicate"] = counts.get("statement: denied predicate", 0) + len(group)
             continue
 
-        chosen = filters.best_statement(group)
-        if chosen is None:
+        # Every non-deprecated statement is kept, not one representative. With
+        # a single pick, a property whose values went from {A, B} to {A, C}
+        # could resolve to A in both snapshots and register as unchanged.
+        usable = [st for st in group
+                  if st.get("rank", "normal") not in filters.EXCLUDED_RANKS]
+        if not usable:
             counts["statement: deprecated rank"] = counts.get("statement: deprecated rank", 0) + len(group)
             continue
 
-        mainsnak = chosen.get("mainsnak") or {}
-        datatype = str(mainsnak.get("datatype") or "unknown")
-        if datatype not in allowed_types:
-            counts["statement: datatype not answerable"] = counts.get("statement: datatype not answerable", 0) + 1
-            continue
+        for chosen in usable:
+            mainsnak = chosen.get("mainsnak") or {}
+            datatype = str(mainsnak.get("datatype") or "unknown")
+            if datatype not in allowed_types:
+                counts["statement: datatype not answerable"] = counts.get("statement: datatype not answerable", 0) + 1
+                continue
 
-        value = canonical_value(mainsnak)
-        if value is None:
-            counts["statement: novalue/somevalue"] = counts.get("statement: novalue/somevalue", 0) + 1
-            continue
+            value = canonical_value(mainsnak)
+            if value is None:
+                counts["statement: novalue/somevalue"] = counts.get("statement: novalue/somevalue", 0) + 1
+                continue
 
-        statements.append((
-            property_id,
-            datatype,
-            value,
-            value_hash(datatype, value),
-            str(chosen.get("id") or ""),
-        ))
+            statements.append((
+                property_id,
+                datatype,
+                value,
+                value_hash(datatype, value),
+                str(chosen.get("id") or ""),
+            ))
 
     return {
         "id": entity_id,
@@ -431,13 +445,15 @@ def iter_records(
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS t0 (
     s TEXT NOT NULL, p TEXT NOT NULL, vhash TEXT NOT NULL, val TEXT NOT NULL,
-    PRIMARY KEY (s, p)
+    -- Keyed by value, not by (s, p): a multivalued property needs a row per
+    -- value or a change within the value set is invisible.
+    PRIMARY KEY (s, p, vhash)
 ) WITHOUT ROWID;
 CREATE TABLE IF NOT EXISTS delta (
     s TEXT NOT NULL, p TEXT NOT NULL, entity_label TEXT, datatype TEXT,
     old_value TEXT, new_value TEXT, change_type TEXT, ts TEXT, wiki_url TEXT,
     stmt_id TEXT,
-    PRIMARY KEY (s, p)
+    PRIMARY KEY (s, p, new_value)
 ) WITHOUT ROWID;
 CREATE TABLE IF NOT EXISTS labels (
     qid TEXT PRIMARY KEY, label TEXT NOT NULL
@@ -551,20 +567,31 @@ def compute_delta(
             label_batch.append((record["id"], record["label"]))
 
         timestamp = record["modified"] or fallback_timestamp
+        # Cache the T0 value set per (s, p) so a multivalued property costs one
+        # query rather than one per value.
+        t0_sets: Dict[str, Tuple[set, list]] = {}
         for property_id, datatype, value, vhash, stmt_id in record["statements"]:
             counters["statements"] += 1
-            cursor.execute("SELECT vhash, val FROM t0 WHERE s = ? AND p = ?", (record["id"], property_id))
-            row = cursor.fetchone()
-            if row is None:
+            if property_id not in t0_sets:
+                cursor.execute("SELECT vhash, val FROM t0 WHERE s = ? AND p = ?",
+                               (record["id"], property_id))
+                rows = cursor.fetchall()
+                t0_sets[property_id] = ({r[0] for r in rows}, [r[1] for r in rows])
+            old_hashes, old_values = t0_sets[property_id]
+
+            if not old_hashes:
+                # Delta_plus: the (subject, relation) pair is new in T1.
                 change_type, old_value = "created", NEW_CREATED
                 counters["created"] += 1
-            elif row[0] != vhash:
-                change_type, old_value = "updated", row[1]
-                counters["updated"] += 1
-            else:
+            elif vhash in old_hashes:
                 counters["unchanged"] += 1
                 stats.drop("statement: unchanged between T0 and T1", 1)
                 continue
+            else:
+                # Delta_circle: the pair existed, but this value is new to it.
+                change_type = "updated"
+                old_value = old_values[0] if len(old_values) == 1 else "|".join(sorted(old_values))
+                counters["updated"] += 1
 
             delta_batch.append((
                 record["id"], property_id, record["label"], datatype, old_value, value,
@@ -784,6 +811,36 @@ def _objects(modified):
     return out
 
 
+def _quantity_claim(qid, property_id, amount, *, unit="1", rank="normal", suffix="q"):
+    """A quantity statement, including its unit."""
+    unit_uri = "1" if unit == "1" else f"http://www.wikidata.org/entity/{unit}"
+    return {
+        "id": f"{qid}${property_id}-{suffix}",
+        "rank": rank,
+        "type": "statement",
+        "mainsnak": {
+            "snaktype": "value", "property": property_id, "datatype": "quantity",
+            "datavalue": {"type": "quantity",
+                          "value": {"amount": amount, "unit": unit_uri}},
+        },
+    }
+
+
+def _time_claim(qid, property_id, time_value, *, precision=11, rank="normal", suffix="t"):
+    """A time statement, including its precision and calendar model."""
+    return {
+        "id": f"{qid}${property_id}-{suffix}",
+        "rank": rank,
+        "type": "statement",
+        "mainsnak": {
+            "snaktype": "value", "property": property_id, "datatype": "time",
+            "datavalue": {"type": "time",
+                          "value": {"time": time_value, "precision": precision,
+                                    "calendarmodel": "http://www.wikidata.org/entity/Q1985727"}},
+        },
+    }
+
+
 def build_fixture_entities(which: str) -> List[Dict[str, Any]]:
     """Entities for the T0 or T1 synthetic snapshot. See the module docstring."""
     modified = "2021-01-04T00:00:00Z" if which == "T0" else "2025-01-06T00:00:00Z"
@@ -794,6 +851,9 @@ def build_fixture_entities(which: str) -> List[Dict[str, Any]]:
         _property("P54", "member of sports team", "wikibase-item"),
         _property("P18", "image", "commonsMedia"),
         _property("P31", "instance of", "wikibase-item"),
+        _property("P106", "occupation", "wikibase-item"),
+        _property("P2046", "area", "quantity"),
+        _property("P569", "date of birth", "time"),
     ]
 
     if which == "T0":
@@ -802,6 +862,12 @@ def build_fixture_entities(which: str) -> List[Dict[str, Any]]:
             "P19": [_claim("Q42", "P19", "Q84")],
             "P17": [_claim("Q42", "P17", "Q145")],
             "P18": [_claim("Q42", "P18", "Old_portrait.jpg", datatype="commonsMedia")],
+            # Multivalued: the set {Q901, Q902} becomes {Q901, Q903} in T1.
+            "P106": [_claim("Q42", "P106", "Q901"), _claim("Q42", "P106", "Q902", suffix="b")],
+            # Same amount, different unit: metres in T0, kilometres in T1.
+            "P2046": [_quantity_claim("Q42", "P2046", "+100", unit="Q11573")],
+            # Same instant, coarser precision in T1.
+            "P569": [_time_claim("Q42", "P569", "+1815-12-10T00:00:00Z", precision=11)],
         }, enwiki="Ada Fixture", modified=modified)
         q7259 = _item("Q7259", "Fixture Devices Ltd", {
             "P31": [_claim("Q7259", "P31", "Q5")],
@@ -824,6 +890,12 @@ def build_fixture_entities(which: str) -> List[Dict[str, Any]]:
             "P17": [_claim("Q42", "P17", "Q145")],
             # Denied predicate: changed, but P18 is on the deny-list.
             "P18": [_claim("Q42", "P18", "New_portrait.jpg", datatype="commonsMedia", suffix="b")],
+            # One value of the set changed; the other is untouched.
+            "P106": [_claim("Q42", "P106", "Q901"), _claim("Q42", "P106", "Q903", suffix="c")],
+            # Unit change only. With the amount alone this looked unchanged.
+            "P2046": [_quantity_claim("Q42", "P2046", "+100", unit="Q828224")],
+            # Precision change only. With the timestamp alone this looked unchanged.
+            "P569": [_time_claim("Q42", "P569", "+1815-12-10T00:00:00Z", precision=9)],
         }, enwiki="Ada Fixture", modified=modified)
         q7259 = _item("Q7259", "Fixture Devices Ltd", {
             "P31": [_claim("Q7259", "P31", "Q5")],

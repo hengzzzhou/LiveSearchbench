@@ -151,6 +151,17 @@ class QuestionWriter:
             logger.warning("chat completion failed: %s", exc)
             self.failures += 1
             return None
+        if response.status_code in (401, 403, 404):
+            # A bad key, a forbidden model or a wrong base URL will fail for
+            # every candidate. Continuing produced an empty dataset and exit 0.
+            raise SystemExit(
+                f"Model endpoint rejected the request with HTTP {response.status_code}.\n"
+                f"  endpoint: {self._endpoint}\n"
+                f"  model:    {self.model}\n"
+                f"  response: {response.text[:200]}\n"
+                f"  Check OPENAI_API_KEY / --api-key, --base-url and --model, "
+                f"or pass --dry-run to generate without a model."
+            )
         if response.status_code != 200:
             logger.warning("chat completion HTTP %d: %s", response.status_code, response.text[:200])
             self.failures += 1
@@ -613,6 +624,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     report = {"metadata": metadata, "funnel": stats.to_dict(),
               "llm_calls": writer.calls, "llm_failures": writer.failures}
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    if not qa_pairs:
+
+        raise SystemExit(
+
+            "No questions were generated. The run report lists why every candidate\n"
+
+            "  was dropped: " + str(report_path) + "\n"
+
+            "  A dataset of zero questions is not a successful run."
+
+        )
+
 
     print(f"\nLevel 1 generation complete: {len(qa_pairs)} questions")
     print(f"  questions : {output_path}")

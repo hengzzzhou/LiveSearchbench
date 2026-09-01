@@ -179,3 +179,182 @@ class TestIsCorrectConsistency:
                        "scripts/eval/oracle.py", "scripts/eval/wiki_corpus.py"):
             text = (ROOT / script).read_text()
             assert '"is_correct": bool(scores["contains_match"])' not in text, script
+
+
+class TestDumpDeltaValueSets:
+    """The T0 index kept one value per (s, p), hiding real changes."""
+
+    @staticmethod
+    def _run(tmp_path, extra=()):
+        import subprocess
+        fixture = ROOT / "data" / "sample"
+        out = tmp_path / "delta.csv"
+        cmd = [sys.executable, str(ROOT / "scripts" / "extract_dump_delta.py"),
+               "--t0", str(fixture / "dump_T0.json.gz"),
+               "--t1", str(fixture / "dump_T1.json.gz"),
+               "--output", str(out), "--offline", *extra]
+        proc = subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT)
+        assert proc.returncode == 0, proc.stderr
+        with out.open() as handle:
+            return {(r["property_id"], r["old_value"], r["new_value"]): r
+                    for r in csv.DictReader(handle)}
+
+    def test_multivalued_change_is_detected(self, tmp_path):
+        """{Q901, Q902} -> {Q901, Q903}: picking one value saw no change."""
+        rows = self._run(tmp_path, ["--no-allowlist"])
+        p106 = [k for k in rows if k[0] == "P106"]
+        assert p106, "the changed value of a multivalued property must appear"
+        assert p106[0][2] == "Q903"
+        assert "Q902" in p106[0][1]
+
+    def test_unchanged_value_of_a_multivalued_property_is_not_emitted(self, tmp_path):
+        rows = self._run(tmp_path, ["--no-allowlist"])
+        assert not any(k[0] == "P106" and k[2] == "Q901" for k in rows), \
+            "Q901 is in both snapshots and is not a change"
+
+    def test_unit_change_is_detected(self, tmp_path):
+        """Same amount, metres -> kilometres. The amount alone looked equal."""
+        rows = self._run(tmp_path, ["--no-allowlist"])
+        p2046 = [k for k in rows if k[0] == "P2046"]
+        assert p2046, "a unit change is a change"
+        assert "Q11573" in p2046[0][1] and "Q828224" in p2046[0][2]
+
+    def test_time_precision_change_is_detected(self, tmp_path):
+        """Same instant, day -> year precision. The timestamp alone looked equal."""
+        rows = self._run(tmp_path, ["--no-allowlist"])
+        p569 = [k for k in rows if k[0] == "P569"]
+        assert p569, "a precision change is a change"
+        assert "p11" in p569[0][1] and "p9" in p569[0][2]
+
+    def test_entity_values_remain_bare_qids(self, tmp_path):
+        """Downstream generators match new_value against ^Q\\d+$."""
+        rows = self._run(tmp_path)
+        for (pid, _old, new), row in rows.items():
+            if row["property_type"] == "wikibase-item":
+                assert filters.is_qid(new), f"{pid} emitted {new!r}"
+
+    def test_allowlist_still_filters(self, tmp_path):
+        """occupation/area/date of birth are not on the curated list."""
+        with_list = self._run(tmp_path / "a")
+        without = self._run(tmp_path / "b", ["--no-allowlist"])
+        assert len(with_list) < len(without)
+        assert {k[0] for k in with_list} <= {"P176", "P19", "P54"}
+
+
+class TestCanonicalValue:
+    """Structured values must not be truncated to their headline field."""
+
+    @staticmethod
+    def _canon(snak):
+        module = _load("scripts/extract_dump_delta.py")
+        return module.canonical_value(snak)
+
+    def _quantity(self, amount, unit):
+        return {"snaktype": "value", "datatype": "quantity",
+                "datavalue": {"type": "quantity",
+                              "value": {"amount": amount,
+                                        "unit": f"http://www.wikidata.org/entity/{unit}"}}}
+
+    def test_same_amount_different_unit_differs(self):
+        assert self._canon(self._quantity("+100", "Q11573")) != \
+               self._canon(self._quantity("+100", "Q828224"))
+
+    def test_same_amount_same_unit_matches(self):
+        assert self._canon(self._quantity("+100", "Q11573")) == \
+               self._canon(self._quantity("+100", "Q11573"))
+
+    def test_time_precision_is_significant(self):
+        def t(precision):
+            return {"snaktype": "value", "datatype": "time",
+                    "datavalue": {"type": "time",
+                                  "value": {"time": "+1815-12-10T00:00:00Z",
+                                            "precision": precision,
+                                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"}}}
+        assert self._canon(t(11)) != self._canon(t(9))
+
+    def test_coordinate_globe_is_significant(self):
+        def c(globe):
+            return {"snaktype": "value", "datatype": "globe-coordinate",
+                    "datavalue": {"type": "globecoordinate",
+                                  "value": {"latitude": 1.0, "longitude": 2.0,
+                                            "precision": 0.1,
+                                            "globe": f"http://www.wikidata.org/entity/{globe}"}}}
+        assert self._canon(c("Q2")) != self._canon(c("Q111"))
+
+    def test_novalue_snaks_are_skipped(self):
+        assert self._canon({"snaktype": "novalue", "datatype": "quantity"}) is None
+
+
+class TestGeneratorFailsLoud:
+    """A permanent model error produced an empty dataset and exit 0."""
+
+    def test_permanent_http_errors_abort(self):
+        for script in ("scripts/generate_level1.py", "scripts/generate_level2.py",
+                       "scripts/generate_level3.py"):
+            text = (ROOT / script).read_text()
+            assert "401, 403, 404" in text, f"{script} still swallows auth failures"
+            assert "raise SystemExit(" in text
+
+    def test_empty_output_is_not_success(self):
+        for script in ("scripts/generate_level1.py", "scripts/generate_level2.py",
+                       "scripts/generate_level3.py"):
+            text = (ROOT / script).read_text()
+            assert "No questions were generated" in text, script
+
+
+class TestResumeIsolation:
+    """Resume matched on level/method/model only, ignoring the real settings."""
+
+    @staticmethod
+    def _path(**over):
+        module = _load("scripts/eval/DA.py")
+        base = dict(dataset="demo.json", model="m", temperature=0.0,
+                    n_samples=1, max_tokens=256, method="DA")
+        base.update(over)
+        fp = module.run_fingerprint(**base)
+        return module.default_partial_path(
+            output_dir="/tmp", meta={"level": "level1", "year": "2025"},
+            model_name="m", fingerprint=fp).name
+
+    def test_identical_settings_share_a_sidecar(self):
+        assert self._path() == self._path()
+
+    @pytest.mark.parametrize("field,value", [
+        ("temperature", 0.9), ("n_samples", 4),
+        ("dataset", "bench/2025/level1.json"), ("max_tokens", 512),
+    ])
+    def test_changed_setting_gets_its_own_sidecar(self, field, value):
+        assert self._path() != self._path(**{field: value}), \
+            f"changing {field} must not reuse the previous run's answers"
+
+    def test_fingerprint_is_order_independent(self):
+        module = _load("scripts/eval/DA.py")
+        assert module.run_fingerprint(a=1, b=2) == module.run_fingerprint(b=2, a=1)
+
+
+class TestPassAtKDoesNotPoolAcrossRuns:
+    """The combined report merged generations from different models."""
+
+    def test_one_sample_per_run_cannot_yield_pass_at_2(self, tmp_path):
+        import json
+        import subprocess
+
+        for model, answer in (("modelA", "Paris"), ("modelB", "Berlin")):
+            (tmp_path / f"{model}_results.json").write_text(json.dumps({
+                "metadata": {"method": "DA", "model": model},
+                "results": [{"question": "Capital of France?", "expected_answer": "Paris",
+                             "model_answer": answer, "is_correct": answer == "Paris",
+                             "level": 1}],
+            }))
+        proc = subprocess.run(
+            [sys.executable, str(ROOT / "scripts/analysis/score.py"),
+             *[str(p) for p in sorted(tmp_path.glob("*_results.json"))],
+             "--pass-at-k", "2", "--format", "json"],
+            capture_output=True, text=True, cwd=ROOT)
+        assert proc.returncode == 0, proc.stderr
+        report = json.loads(proc.stdout)
+        pk = report["combined"]["scores"]["pass_at_k"]
+        assert pk["n_runs"] == 2
+        assert pk["n_questions"] == 2, "one group per (run, question)"
+        assert pk["values"]["exact_match"]["2"]["value"] is None
+        assert pk["values"]["exact_match"]["2"]["skipped"] == 2

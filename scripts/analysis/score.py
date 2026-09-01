@@ -361,18 +361,31 @@ def compute_pass_at_k(
     counted in ``skipped``, so a single-sample file does not silently inflate
     pass@4 to plain accuracy.
     """
-    groups: Dict[str, List[Dict[str, Any]]] = {}
+    # Group by (source run, question). Grouping on the question alone let the
+    # combined report pool one sample from model A with one from model B and
+    # report a pass@2 for a run that never existed.
+    groups: Dict[Tuple[str, str], List[Dict[str, Any]]] = {}
     for item in items:
-        groups.setdefault(scoring.normalize_answer(item.get("question", "")), []).append(item)
+        run = str(item.get("_source") or item.get("_run") or "")
+        groups.setdefault(
+            (run, scoring.normalize_answer(item.get("question", ""))), []
+        ).append(item)
 
     metrics = [RECORDED_METRIC] if fallback else ["exact_match", "contains_match", RECORDED_METRIC]
     sample_counts = sorted(len(v) for v in groups.values())
+    runs = {key[0] for key in groups}
     out: Dict[str, Any] = {
         "n_questions": len(groups),
+        "n_runs": len(runs),
         "samples_per_question_min": sample_counts[0] if sample_counts else 0,
         "samples_per_question_max": sample_counts[-1] if sample_counts else 0,
         "values": {},
     }
+    if len(runs) > 1:
+        out["note"] = (
+            f"samples grouped within each of {len(runs)} runs; "
+            f"generations from different runs are never pooled into one pass@k"
+        )
 
     for metric in metrics:
         per_k: Dict[str, Any] = {}
@@ -617,7 +630,14 @@ def build_report(
         scorable = [e for e in loaded if not e["notes"]["used_is_correct_fallback"]]
         excluded = [lbl for e, lbl in zip(loaded, labels) if e["notes"]["used_is_correct_fallback"]]
         pooled = scorable or loaded
-        all_items = [it for entry in pooled for it in entry["items"]]
+        pooled_labels = [lbl for e, lbl in zip(loaded, labels)
+                         if e in pooled] if scorable else list(labels)
+        # Stamp each item with the run it came from so pass@k groups within a
+        # run instead of merging generations from different models.
+        all_items = []
+        for entry, label in zip(pooled, pooled_labels):
+            for it in entry["items"]:
+                all_items.append({**it, "_source": label})
         merged_notes = {
             "n": len(all_items),
             "n_with_prediction": sum(e["notes"]["n_with_prediction"] for e in pooled),
