@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 import re
 import time
 from pathlib import Path
@@ -127,25 +128,52 @@ def evaluate_item(item: dict[str, Any], sleep: float) -> dict[str, Any]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("data", type=Path)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("data", type=Path, nargs="?", default=None,
+                        help="Benchmark split to replay (or use --data)")
+    parser.add_argument("--data", dest="data_flag", type=Path, default=None,
+                        help="Alias for the positional data argument")
     parser.add_argument("--output", type=Path, default=Path("outputs/structured_sparql_upper_bound.json"))
+    parser.add_argument("--limit", type=int, default=None,
+                        help="Only replay the first N instances")
     parser.add_argument("--sleep", type=float, default=0.1, help="Delay between Wikidata requests")
+    parser.add_argument("--fail-on-error", action="store_true",
+                        help="Exit non-zero if any query errored, instead of "
+                             "counting it as an incorrect answer")
     args = parser.parse_args()
+    args.data = args.data_flag or args.data
+    if args.data is None:
+        parser.error("a dataset is required: pass it positionally or with --data")
 
     items = load_items(args.data)
+    if args.limit is not None:
+        items = items[: args.limit]
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+
     results = [evaluate_item(item, args.sleep) for item in items]
     total = len(results)
-    correct = sum(1 for row in results if row["is_correct"])
+    # An endpoint failure is not a wrong answer. Counting errored queries in the
+    # denominator let a WDQS outage publish a spuriously low "upper bound".
+    errored = [row for row in results if row.get("error")]
+    scored = [row for row in results if not row.get("error")]
+    correct = sum(1 for row in scored if row["is_correct"])
     summary = {
         "total_questions": total,
+        "scored_questions": len(scored),
+        "errored_questions": len(errored),
         "correct_answers": correct,
-        "accuracy": correct / total if total else 0.0,
+        "accuracy": correct / len(scored) if scored else None,
         "results": results,
     }
-    args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps({k: summary[k] for k in ("total_questions", "correct_answers", "accuracy")}, indent=2))
+    print(json.dumps({k: summary[k] for k in
+                      ("total_questions", "scored_questions", "errored_questions",
+                       "correct_answers", "accuracy")}, indent=2))
+    if errored:
+        print(f"WARNING: {len(errored)}/{total} queries errored and are excluded "
+              f"from accuracy.", file=sys.stderr)
+        if args.fail_on_error:
+            raise SystemExit(1)
 
 
 if __name__ == "__main__":

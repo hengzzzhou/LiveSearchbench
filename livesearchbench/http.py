@@ -46,6 +46,25 @@ class RequestFailed(RuntimeError):
     """Raised when a request still fails after the configured attempts."""
 
 
+def _parse_retry_after(value: Optional[str]) -> Optional[float]:
+    """Parse a ``Retry-After`` header, which may be seconds or an HTTP-date."""
+    if not value:
+        return None
+    value = value.strip()
+    if value.isdigit():
+        return float(value)
+    try:
+        from email.utils import parsedate_to_datetime
+        import datetime as _dt
+
+        when = parsedate_to_datetime(value)
+        if when.tzinfo is None:
+            when = when.replace(tzinfo=_dt.timezone.utc)
+        return max(0.0, (when - _dt.datetime.now(_dt.timezone.utc)).total_seconds())
+    except Exception:
+        return None
+
+
 class PoliteSession:
     """A ``requests.Session`` with a compliant UA, retries, and backoff."""
 
@@ -111,7 +130,7 @@ class PoliteSession:
                 logger.warning("%s throttled (attempt %d/%d), Retry-After=%s",
                                url, attempt, self.max_attempts, retry_after)
                 if attempt < self.max_attempts:
-                    self._sleep(attempt, float(retry_after) if retry_after and retry_after.isdigit() else None)
+                    self._sleep(attempt, _parse_retry_after(retry_after))
                 continue
 
             if 500 <= response.status_code < 600:
@@ -146,9 +165,29 @@ class PoliteSession:
         query.setdefault("format", "json")
         query.setdefault("maxlag", "5")
 
+        # ``get`` retries transport-level failures on its own. Nesting a second
+        # full-length loop around it would allow max_attempts^2 requests, so the
+        # transport budget is reduced to one attempt per outer iteration and the
+        # outer loop owns the retry policy for in-body errors.
         last_error = ""
         for attempt in range(1, self.max_attempts + 1):
-            response = self.get(url, params=query)
+            saved = self.max_attempts
+            try:
+                self.max_attempts = 1
+                response = self.get(url, params=query)
+            except RequestFailed as exc:
+                self.max_attempts = saved
+                last_error = str(exc)
+                logger.warning("Wikidata API transport failure (attempt %d/%d): %s",
+                               attempt, saved, last_error)
+                if attempt < saved:
+                    self._sleep(attempt)
+                    continue
+                raise RequestFailed(
+                    f"Wikidata API failed after {saved} attempts. Last error: {last_error}"
+                ) from exc
+            finally:
+                self.max_attempts = saved
             try:
                 data = response.json()
             except ValueError:

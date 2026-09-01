@@ -149,7 +149,10 @@ def save_run(
     meta = dict(metadata or {})
     level = meta.get("level") or infer_level(data_path, results) or "unknown"
     year = meta.get("year") or infer_year(data_path, []) or "unknown"
-    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    # Millisecond resolution plus a short random suffix: two identical jobs
+    # finishing in the same second used to overwrite each other.
+    import secrets
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S_") + secrets.token_hex(3)
     safe_model = re.sub(r"[^A-Za-z0-9]+", "_", str(model_name)).strip("_") or "model"
 
     budget = summary.get("max_search_calls_allowed")

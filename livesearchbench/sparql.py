@@ -17,7 +17,10 @@ from .http import PoliteSession, RequestFailed
 
 logger = logging.getLogger("livesearchbench.sparql")
 
-_COUNT_SELECT = re.compile(r"SELECT\s*\(\s*COUNT\s*\(\s*(\??\w+)\s*\)\s+AS\s+\?(\w+)\s*\)", re.IGNORECASE)
+_COUNT_SELECT = re.compile(
+    r"SELECT\s*\(\s*COUNT\s*\(\s*(?:(DISTINCT)\s+)?(\??\w+)\s*\)\s+AS\s+\?(\w+)\s*\)",
+    re.IGNORECASE,
+)
 
 
 class SparqlError(RuntimeError):
@@ -58,7 +61,16 @@ class SparqlClient:
         network problem is never mistaken for "this query matched nothing".
         """
         data = self.query(sparql)
-        bindings = data.get("results", {}).get("bindings", [])
+        if "results" not in data or "bindings" not in data.get("results", {}):
+            # A proxy or error page can return HTTP 200 with a body that is
+            # valid JSON but not a SPARQL result set. Treating that as "zero
+            # answers" is exactly the confusion this method promises to avoid.
+            raise SparqlError(
+                f"{self.endpoint} returned HTTP 200 but no SPARQL result set "
+                f"(keys: {sorted(data)[:6]}). This is usually a proxy or an "
+                f"error page rather than a query that matched nothing."
+            )
+        bindings = data["results"]["bindings"]
         if not bindings:
             return 0
         row = bindings[0]
@@ -106,7 +118,7 @@ def count_to_select(sparql: str) -> Optional[str]:
     match = _COUNT_SELECT.search(sparql or "")
     if not match:
         return None
-    var = match.group(1)
+    var = match.group(2)
     if not var.startswith("?"):
         var = "?" + var
     return _COUNT_SELECT.sub(f"SELECT DISTINCT {var}", sparql, count=1)
@@ -134,7 +146,7 @@ def to_label_select(sparql: str, *, lang: str = "en") -> Optional[str]:
     match = _COUNT_SELECT.search(sparql or "")
     if not match:
         return None
-    var = match.group(1).lstrip("?")
+    var = match.group(2).lstrip("?")
     projected = f"SELECT DISTINCT ?{var} ?{var}Label"
     rewritten = _COUNT_SELECT.sub(projected, sparql, count=1)
     return with_labels(rewritten, lang=lang)

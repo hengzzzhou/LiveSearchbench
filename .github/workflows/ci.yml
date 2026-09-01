@@ -46,4 +46,9 @@ jobs:
           python-version: "3.11"
       - run: pip install -r requirements-dev.txt
       - name: Replay released SPARQL programs against live Wikidata
-        run: python scripts/eval/SPARQLUpperBound.py --data demo.json --limit 10 || true
+        # No `|| true`: this job exists to surface endpoint breakage. It is
+        # scheduled/manual only, so a WDQS outage cannot redden pull requests.
+        run: |
+          python scripts/eval/SPARQLUpperBound.py \
+            --data demo.json --limit 10 \
+            --output outputs/ci_sparql_upper_bound.json

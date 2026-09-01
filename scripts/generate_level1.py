@@ -313,10 +313,25 @@ def prepare_candidates(frame: pd.DataFrame, *, pool_size: int, rng: random.Rando
 
 
 def build_verification_query(candidate: Dict[str, str]) -> str:
-    """The COUNT program shipped with every released instance."""
+    """The COUNT program shipped with every released instance.
+
+    Identifiers are validated rather than interpolated blindly: a malformed CSV
+    cell would otherwise be spliced into the query string.
+    """
+    subject = filters.require_qid(candidate["subject_id"], field="subject_id")
+    predicate = filters.require_pid(candidate["predicate_id"], field="predicate_id")
     return (f"SELECT (COUNT(?object) AS ?count) WHERE {{\n"
-            f"  wd:{candidate['subject_id']} wdt:{candidate['predicate_id']} ?object .\n"
+            f"  wd:{subject} wdt:{predicate} ?object .\n"
             f"}}")
+
+
+def build_answer_query(candidate: Dict[str, str]) -> str:
+    """SELECT the single object so it can be compared with the recorded gold."""
+    subject = filters.require_qid(candidate["subject_id"], field="subject_id")
+    predicate = filters.require_pid(candidate["predicate_id"], field="predicate_id")
+    return (f"SELECT ?object WHERE {{\n"
+            f"  wd:{subject} wdt:{predicate} ?object .\n"
+            f"}} LIMIT 2")
 
 
 def verify_candidates(candidates: Sequence[Dict[str, str]], client: Optional[SparqlClient], *,
@@ -333,7 +348,13 @@ def verify_candidates(candidates: Sequence[Dict[str, str]], client: Optional[Spa
     for index, candidate in enumerate(candidates, start=1):
         if len(verified) >= target:
             break
-        query = build_verification_query(candidate)
+        try:
+            query = build_verification_query(candidate)
+        except filters.InvalidIdentifier as exc:
+            # One malformed CSV row must not abort a long run.
+            stats.drop("invalid_identifier")
+            logger.warning("Skipping row with %s", exc)
+            continue
         if client is None:
             candidate = dict(candidate, sparql_query=query, verified=False, answer_count=None)
             verified.append(candidate)
@@ -353,7 +374,27 @@ def verify_candidates(candidates: Sequence[Dict[str, str]], client: Optional[Spa
             continue
         consecutive_errors = 0
         if count == 1:
-            verified.append(dict(candidate, sparql_query=query, verified=True, answer_count=1))
+            # Uniqueness alone is not verification: the single value Wikidata
+            # returns now must also be the answer recorded in the CSV. Without
+            # this, a fact that changed upstream keeps its stale gold answer and
+            # is still marked verified.
+            try:
+                returned = client.select_labels(build_answer_query(candidate))
+            except SparqlError as exc:
+                stats.drop("sparql_error")
+                logger.warning("Answer lookup failed for %s/%s: %s",
+                               candidate["subject_id"], candidate["predicate_id"], exc)
+                continue
+            expected = str(candidate.get("object_id") or "").strip()
+            returned_ids = [r.rsplit("/", 1)[-1] for r in returned]
+            if expected and expected not in returned_ids:
+                stats.drop("answer_changed_upstream")
+                logger.debug("answer drift: %s/%s recorded %s, endpoint returns %s",
+                             candidate["subject_id"], candidate["predicate_id"],
+                             expected, returned_ids)
+                continue
+            verified.append(dict(candidate, sparql_query=query, verified=True,
+                                 answer_count=1, answer_confirmed=bool(expected)))
             logger.debug("unique: %s --%s--> %s", candidate["subject_label"],
                          candidate["predicate_label"], candidate["object_label"])
         else:

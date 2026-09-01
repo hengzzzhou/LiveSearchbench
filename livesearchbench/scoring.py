@@ -24,6 +24,7 @@ All three take the same ``(prediction, gold)`` argument order.
 
 from __future__ import annotations
 
+import math
 import random
 import re
 import string
@@ -31,14 +32,24 @@ import unicodedata
 from typing import Dict, Iterable, List, Optional, Sequence
 
 _ARTICLES = re.compile(r"\b(a|an|the)\b", re.UNICODE)
-_PUNCT_TABLE = {ord(c): " " for c in string.punctuation}
+
+# Unicode punctuation, not just ASCII: Wikidata labels contain en/em dashes
+# (Baden-Wurttemberg), CJK full stops, and typographic quotes. Built once by
+# scanning the BMP for characters in the P* and S* general categories.
+_PUNCT_TABLE = {
+    cp: " "
+    for cp in range(0x110000)
+    if unicodedata.category(chr(cp)).startswith("P")
+}
+_PUNCT_TABLE.update({ord(c): " " for c in string.punctuation})
 
 
 def normalize_answer(text: str) -> str:
     """Lower-case, strip articles and punctuation, collapse whitespace."""
     if text is None:
         return ""
-    text = unicodedata.normalize("NFKC", str(text)).lower()
+    # casefold(), not lower(): German "Stra\u00dfe" must match "STRASSE".
+    text = unicodedata.normalize("NFKC", str(text)).casefold()
     text = text.translate(_PUNCT_TABLE)
     text = _ARTICLES.sub(" ", text)
     return " ".join(text.split())
@@ -131,9 +142,13 @@ def bootstrap_ci(
             total += vals[rng.randrange(n)]
         means.append(total / n)
     means.sort()
+    # Symmetric nearest-rank percentiles. The upper index previously used
+    # int((1-alpha)*R) while the lower used int(alpha*R)-1, which is one order
+    # statistic wider at the top than at the bottom.
     alpha = (1.0 - confidence) / 2.0
-    lo = means[max(0, int(alpha * resamples) - 1)]
-    hi = means[min(resamples - 1, int((1.0 - alpha) * resamples))]
+    lo_idx = max(0, min(resamples - 1, int(math.ceil(alpha * resamples)) - 1))
+    hi_idx = max(0, min(resamples - 1, int(math.ceil((1.0 - alpha) * resamples)) - 1))
+    lo, hi = means[lo_idx], means[hi_idx]
     return {"mean": mean, "lo": lo, "hi": hi, "n": n,
             "resamples": resamples, "confidence": confidence}
 
@@ -142,9 +157,24 @@ def pass_at_k(n_samples: int, n_correct: int, k: int) -> float:
     """Unbiased pass@k estimator of Chen et al. (2021).
 
     ``n_samples`` generations were drawn, ``n_correct`` of them were correct.
+
+    The estimator is only defined for ``1 <= k <= n_samples``. Asking for a
+    larger k than was actually sampled has no answer, so this raises rather
+    than returning a number: the previous behaviour returned 1.0 for
+    ``pass_at_k(2, 0, 3)``, reporting a perfect score for an item that was
+    never answered correctly.
     """
-    if k <= 0 or n_samples <= 0:
-        return 0.0
+    if n_samples <= 0:
+        raise ValueError("n_samples must be positive")
+    if not 0 <= n_correct <= n_samples:
+        raise ValueError(f"n_correct={n_correct} outside [0, {n_samples}]")
+    if k <= 0:
+        raise ValueError("k must be positive")
+    if k > n_samples:
+        raise ValueError(
+            f"pass@{k} is undefined with only {n_samples} sample(s); "
+            f"draw at least k samples or report a smaller k"
+        )
     if n_samples - n_correct < k:
         return 1.0
     prob = 1.0

@@ -437,7 +437,10 @@ def evaluate_item(
     record.update({
         "model_answer": answer,
         "reasoning_process": content,
-        "is_correct": bool(scores["contains_match"]),
+        # Normalised exact match, matching DA/CoT/RAG. Previously this was
+        # contains_match, so accuracy from this runner was not comparable
+        # with theirs. contains_match is still recorded alongside.
+        "is_correct": bool(scores["exact_match"]),
         "dry_run": False,
         "error": error,
     })

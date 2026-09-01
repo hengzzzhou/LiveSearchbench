@@ -12,6 +12,7 @@ Implements the three filters described in the paper's Step 2:
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Sequence, Set, Tuple
 
@@ -177,3 +178,48 @@ class FilterStats:
             for reason, n in d["drop_reasons"].items():
                 lines.append(f"| {reason} | {n:,} |")
         return "\n".join(lines)
+
+
+# --- Identifier validation ------------------------------------------------
+#
+# Entity and property ids read from a CSV are interpolated straight into SPARQL
+# strings. Validating their shape keeps a malformed or hostile row from either
+# producing a silently wrong query or injecting extra clauses into whatever
+# endpoint is configured.
+
+_QID_RE = re.compile(r"^Q[1-9][0-9]*$")
+_PID_RE = re.compile(r"^P[1-9][0-9]*$")
+
+
+class InvalidIdentifier(ValueError):
+    """Raised when a Wikidata identifier is not well formed."""
+
+
+def is_qid(value: str) -> bool:
+    """True for a well-formed Wikidata entity id such as ``Q42``."""
+    return bool(_QID_RE.match(str(value or "").strip()))
+
+
+def is_pid(value: str) -> bool:
+    """True for a well-formed Wikidata property id such as ``P31``."""
+    return bool(_PID_RE.match(str(value or "").strip()))
+
+
+def require_qid(value: str, *, field: str = "entity id") -> str:
+    """Return the normalised QID or raise :class:`InvalidIdentifier`."""
+    text = str(value or "").strip()
+    if not is_qid(text):
+        raise InvalidIdentifier(
+            f"{field} {text!r} is not a Wikidata entity id (expected Q followed by digits)"
+        )
+    return text
+
+
+def require_pid(value: str, *, field: str = "property id") -> str:
+    """Return the normalised PID or raise :class:`InvalidIdentifier`."""
+    text = str(value or "").strip()
+    if not is_pid(text):
+        raise InvalidIdentifier(
+            f"{field} {text!r} is not a Wikidata property id (expected P followed by digits)"
+        )
+    return text

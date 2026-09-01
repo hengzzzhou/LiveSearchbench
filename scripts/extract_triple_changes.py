@@ -113,15 +113,18 @@ class CsvSink:
 
     def __init__(self, path: str, *, resume: bool = False) -> None:
         self.path = dataio.ensure_parent(Path(path))
-        self.seen_entities: Set[str] = set()
+        # Keyed on (entity_id, property_id), not entity_id alone. Keying on the
+        # entity dropped every changed property after the first, which also made
+        # Level-2 generation impossible: it needs several attributes per subject.
+        self.seen_keys: Set[Tuple[str, str]] = set()
         exists = self.path.is_file() and self.path.stat().st_size > 0
 
         if resume and exists:
-            self.seen_entities = self._read_existing_entities()
+            self.seen_keys = self._read_existing_keys()
             self._handle = self.path.open("a", newline="", encoding="utf-8")
             self._writer = csv.writer(self._handle)
             logger.info("Resuming: %d entities already present in %s",
-                        len(self.seen_entities), self.path)
+                        len(self.seen_keys), self.path)
         else:
             if resume:
                 logger.info("--resume requested but %s does not exist yet; starting fresh", self.path)
@@ -131,7 +134,7 @@ class CsvSink:
             self._handle.flush()
         self.rows_written = 0
 
-    def _read_existing_entities(self) -> Set[str]:
+    def _read_existing_keys(self) -> Set[Tuple[str, str]]:
         with self.path.open("r", newline="", encoding="utf-8") as handle:
             reader = csv.reader(handle)
             try:
@@ -144,16 +147,16 @@ class CsvSink:
                     f"  expected: {','.join(CSV_HEADER)}\n"
                     f"  found:    {','.join(header)}"
                 )
-            return {row[0] for row in reader if row}
+            return {(row[0], row[2]) for row in reader if len(row) > 2}
 
     def write_rows(self, rows: Sequence[Sequence[str]]) -> int:
         """Append rows, skipping entities already written. Returns the count."""
         added = 0
         for row in rows:
-            entity_id = row[0]
-            if entity_id in self.seen_entities:
+            key = (row[0], row[2])
+            if key in self.seen_keys:
                 continue
-            self.seen_entities.add(entity_id)
+            self.seen_keys.add(key)
             self._writer.writerow(row)
             added += 1
         if added:
@@ -660,7 +663,8 @@ class TripleChangeExtractor:
             "require_enwiki": self.require_enwiki,
             "api_endpoint": self.api_endpoint,
             "rows_written_this_run": self._counts["written"],
-            "rows_in_file": len(sink.seen_entities),
+            "rows_in_file": len(sink.seen_keys),
+            "distinct_entities": len({e for e, _ in sink.seen_keys}),
             "duration_seconds": round(duration, 2),
         }
         json_path = Path(str(sink.path) + ".stats.json")
